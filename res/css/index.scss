@@ -1,0 +1,94 @@
+:root {
+
+    --back-color-1: rgb(15, 15, 15);
+    --back-color-2: rgb(26, 26, 26);
+    --back-color-3: rgb(39, 39, 39);
+
+    --shadow-color: rgb(20, 20, 20);
+
+    --text-color-1: rgb(228, 228, 228);
+    --text-color-2: rgb(189, 189, 189);
+}
+
+html {
+
+    background-color: var(--back-color-3);
+}
+
+.pop-out-box {
+    background-color: var(--back-color-3);
+    border-radius: 10px;
+    box-shadow: 0 0 10px var(--shadow-color);
+}
+
+.pop-in-box {
+    background-color: var(--back-color-1);
+    border-radius: 10px;
+    // box-shadow: 0 0 10px #dadada;
+}
+
+main {
+
+    width: 90%;
+    max-width: 900px;
+    margin: 50px auto !important;
+    height: 80vh;
+    padding: 10px;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 10px;
+
+    >h2 {
+
+        color: var(--text-color-2);
+        margin: 0px;
+    }
+}
+
+#light {
+
+    // display: grid;
+    // grid-template-columns: repeat(1, 1fr);
+    padding: 10px;
+
+    >label {
+
+        display: inline-block;
+        margin-top: 20px;
+        color: var(--text-color-2);
+    }
+
+    >input {
+
+        background-color: var(--back-color-2);
+        color: var(--text-color-2);
+        border: none;
+        border-radius: 4px;
+        width: 100%;
+        box-shadow: 0 0 10px var(--shadow-color);
+        margin: 10px 0px;
+    }
+}
+
+#devices {
+
+    div {
+
+        margin: 10px;
+        padding: 10px;
+
+        h2 {
+            margin: 0px;
+            color: var(--text-color-2);
+
+        }
+    }
+
+    .selected {
+
+        background-color: var(--back-color-3);
+        border-radius: 10px;
+        box-shadow: 0 0 10px var(--shadow-color);
+    }
+}

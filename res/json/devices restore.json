@@ -1,0 +1,126 @@
+[
+    {
+        "device_name": "all_devices",
+        "type": "lamp",
+        "address": "||",
+        "local_key": "||",
+        "version": -1,
+        "dev_id": "all",
+        "custom_data": {}
+    },
+    {
+        "device_name": "kitchen_lamp",
+        "type": "lamp",
+        "address": "192.168.1.107",
+        "local_key": "GLnXMT'[eeEmtUrn",
+        "version": "3.3",
+        "dev_id": "bf4fa034d3c9ac7098ph7w",
+        "custom_data": {},
+        "adress": "192.168.1.100"
+    },
+    {
+        "device_name": "living_room",
+        "type": "lamp",
+        "address": "192.168.1.109",
+        "local_key": "t-|nEwU$k#|:^Ltq",
+        "version": "3.3",
+        "dev_id": "bfcccf66fd73a707a4gg6p",
+        "custom_data": {
+            "disabled": false
+        },
+        "adress": "192.168.1.104"
+    },
+    {
+        "device_name": "living_room_side_table",
+        "type": "lamp",
+        "address": "192.168.1.120",
+        "local_key": "Cdb8PhQ-Ffe%DbTj",
+        "version": "3.4",
+        "dev_id": "bf8087041160e29f82g91k",
+        "custom_data": {
+            "disabled": false
+        },
+        "adress": "192.168.1.104"
+    },
+    {
+        "device_name": "living_room_roof",
+        "type": "lamp",
+        "address": "192.168.1.110",
+        "local_key": "jmi4FviN!cP}wJ06",
+        "version": "3.3",
+        "dev_id": "bfd28f75e02b9072a3hudj",
+        "custom_data": {
+            "disabled": false
+        },
+        "adress": "192.168.1.104"
+    },
+    {
+        "device_name": "hallway",
+        "type": "lamp",
+        "address": "192.168.1.102",
+        "local_key": "JpN5I%=lVh?L;`||",
+        "version": "3.1",
+        "dev_id": "012001325ccf7f4fdc09",
+        "custom_data": {},
+        "adress": "192.168.1.111"
+    },
+    {
+        "device_name": "hallway2",
+        "type": "lamp",
+        "address": "192.168.1.106",
+        "local_key": "~)XMc)'#%YF|ePnr",
+        "version": "3.3",
+        "dev_id": "bfb5957295e16fb3b6wafi",
+        "custom_data": {
+            "disabled": false
+        },
+        "adress": "192.168.1.107"
+    },
+    {
+        "device_name": "hallway_3",
+        "type": "lamp",
+        "address": "192.168.1.108",
+        "local_key": "&C&DeG;2?:%AjhpK",
+        "version": "3.3",
+        "dev_id": "bfc330da7e100ae958ndr2",
+        "custom_data": {
+            "disabled": true
+        },
+        "adress": "192.168.1.105"
+    },
+    {
+        "device_name": "bedroom_lamp",
+        "type": "lamp",
+        "address": "192.168.1.100",
+        "local_key": "Dw53|RCt8h.!_DNs",
+        "version": "3.3",
+        "dev_id": "bf7b959ea53f595febzjzo",
+        "custom_data": {
+            "disabled": true
+        },
+        "adress": "192.168.1.112"
+    },
+    {
+        "device_name": "kitchen",
+        "type": "outlet",
+        "address": "192.168.1.101",
+        "local_key": "]2T:dnTtgP9I/KFi",
+        "version": "3.3",
+        "dev_id": "bf3c614423c3feede9r2wq",
+        "custom_data": {
+            "brightness": 70,
+            "disabled": false
+        },
+        "adress": "192.168.1.103"
+    },
+    {
+        "device_name": "pc_lamp",
+        "type": "lamp",
+        "address": "192.168.1.105",
+        "local_key": "?fdM6-vkAkGX}+;Y",
+        "version": "3.3",
+        "dev_id": "bf41a36ec86143ad5c5jte",
+        "custom_data": {},
+        "adress": "192.168.1.101"
+    }
+]

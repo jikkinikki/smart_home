@@ -1,0 +1,14 @@
+/node_modules
+.vscode
+.cache
+/__pycache__
+/venv
+/res/py/secrets.py
+/res/py/__pycache__
+/res/py/devices/__pycache__
+/webmin
+tuya-raw.json
+tinytuya.json
+snapshot.json
+devices.json
+decrypt.json
