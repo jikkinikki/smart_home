@@ -4,7 +4,9 @@ from device_handler import DeviceHandler
 
 class DeviceCommands:
 
-    def __init__(self):
+    def __init__(self, device_handler):
+
+        self.device_handler = device_handler
 
         self.ambient = False
         self.devices_selector = ""
@@ -45,16 +47,16 @@ class DeviceCommands:
             }
         ]
 
-    def set_lamps_RGB(self, r, g, b, devicesToUpdate, noWaitResp, onlyRGB):
+    def set_lamps_RGB(self, r, g, b, noWaitResp, onlyRGB):
 
-        for device in devicesToUpdate:
+        for device in self.get_devices():
             if device.customData["type"] == "lamp" and device.has_colour:
                 device.set_colour(r, g, b, nowait=noWaitResp)
             
             elif onlyRGB:
                 device.turn_off(nowait=noWaitResp)
 
-    def set_lamps_brightness(self, brightness, devicesToUpdate, noWaitResp):
+    def set_lamps_brightness(self, brightness, noWaitResp):
 
         # If you get error that from setting brigtness then check if
         # you are changing color temperature of the lamp at the same time. DONT DO THAT.
@@ -62,45 +64,34 @@ class DeviceCommands:
 
         # New note. Is probably that you need the noWaitResp to be False.
 
-        for device in devicesToUpdate:
-
+        for device in self.get_devices():
             device.set_brightness(brightness=brightness, nowait=noWaitResp)
 
-            # elif device.customData["type"] == "outlet":
 
-            #     outlet_status = device.status()
-            #     brightnessLimit = device.customData["brightness"]
-
-            #     if brightness < brightnessLimit and outlet_status["dps"]["1"] is True:
-            #         device.turn_off(nowait=noWaitResp)
-            #     elif brightness >= brightnessLimit and outlet_status["dps"]["1"] is False:
-            #         device.turn_on(nowait=noWaitResp)
-
-
-    def switch_power(self, power, devicesToUpdate, noWaitResp):
-        for device in devicesToUpdate:
+    def switch_power(self, power, noWaitResp):
+        for device in self.get_devices():
             device.turn_on(nowait=noWaitResp) if power == "on" else device.turn_off(nowait=noWaitResp)
 
-    def set_lamps_temperature(self, temp, devicesToUpdate, noWaitResp):
+    def set_lamps_temperature(self, temp, noWaitResp):
         
-        for device in devicesToUpdate:
+        for device in self.get_devices():
                 device.set_temperature(temperature=temp, nowait=noWaitResp)
 
     def morningRoutine(self):
         
-            self.turn_on_devices(self.get_devices(), True)
-            self.set_lamps_brightness(65, self.get_devices(), True)
-            self.set_lamps_temperature(10, self.get_devices(), True)
+            self.turn_on_devices(True)
+            self.set_lamps_brightness(65, True)
+            self.set_lamps_temperature(10, True)
             self.assistant.speak("Good morning Oskar!")
 
-    def turn_off_devices(self, devicesToUpdate, noWaitResp):
+    def turn_off_devices(self, noWaitResp):
 
-        for device in devicesToUpdate:
+        for device in self.get_devices():
             device.turn_off(nowait=noWaitResp)
 
-    def turn_on_devices(self, devicesToUpdate, noWaitResp):
+    def turn_on_devices(self, noWaitResp):
         
-        for device in devicesToUpdate:
+        for device in self.get_devices():
             print(device)
             device.turn_on(nowait=noWaitResp)
 
@@ -109,7 +100,7 @@ class DeviceCommands:
         if not b:
             b = input("set brightness: ")
         
-        self.set_lamps_brightness(int(b), self.get_devices(), False)
+        self.set_lamps_brightness(int(b), False)
 
     def multithread(self, func):
         background_thread = threading.Thread(target=func, daemon=True)
@@ -118,7 +109,7 @@ class DeviceCommands:
         return background_thread
     
     def get_devices(self):
-        return dh.getSelectedDevices(self.devices_selector)
+        return self.device_handler.getSelectedDevices(self.devices_selector)
     
     def set_device_selector(self, selector):
             self.devices_selector = selector
@@ -126,13 +117,14 @@ class DeviceCommands:
 # -TEST CODE------------------------------------------------------------------------------------------------
 
 if(__name__ == "__main__"):
-    dc = DeviceCommands()
+    
     dh = DeviceHandler()
+    dc = DeviceCommands(DeviceHandler())
 
     dc.set_device_selector("all")
 
-    dc.turn_on_devices(dc.get_devices(), False)
+    dc.turn_on_devices(False)
 
     while True:
         time.sleep(1)
-        dc.turn_on_devices(dc.get_devices(), False)
+        dc.turn_on_devices(False)

@@ -17,8 +17,8 @@ def multithread(func):
 
         return background_thread
 
-device_commands = dc.DeviceCommands()
 device_handler = dh.DeviceHandler()
+device_commands = dc.DeviceCommands(device_handler)
 # lamp_cycle = lc.Lamp_cycle(device_handler, "all", device_commands)
 
 device_commands.set_device_selector("all")

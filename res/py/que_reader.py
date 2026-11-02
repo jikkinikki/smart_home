@@ -46,7 +46,7 @@ class Que_reader():
                 if len(devicesToUpdate) == 0:
                     return
 
-                self.action_functions[jsonDevices["action"]](self.smart_parse(jsonDevices["value"]), devicesToUpdate, True)
+                self.action_functions[jsonDevices["action"]](self.smart_parse(jsonDevices["value"]), True)
 
             except json.JSONDecodeError as e:
                 print(f"Error reading {filename}: {e}")
