@@ -5,6 +5,11 @@
 TTS_ENGINE = "drama-3"
 TTS_AUDIO_FORMAT = "mp3"   # mp3, wav, opus, pcm
 
+# ---------- OpenRouter LLM ----------
+
+OPENROUTER_MODEL = "openai/gpt-4o-mini"
+OPENROUTER_API_BASE = "https://openrouter.ai/api/v1"
+
 # Voice models: name -> Fish Audio model id.
 # Find ids with FishTTS().search_voice_models("narrator") or on fish.audio.
 VOICE_MODELS = {

@@ -3,3 +3,4 @@
 
 fish_api_key = ""   # https://fish.audio/app/api-keys
 gpt_api_key = ""
+openrouter_api_key = ""  # https://openrouter.ai/keys
