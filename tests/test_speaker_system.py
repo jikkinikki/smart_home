@@ -8,6 +8,7 @@ from person import Person
 from speaker_manager import SpeakerManager
 from speaker import Speaker
 from smart_home_assistant import Action, SmartHomeAssistant
+from json_repair import JsonRepair
 
 
 class FakeLLM:
@@ -69,6 +70,32 @@ class SpeakerSystemTests(unittest.TestCase):
         self.assertEqual(calls, ["lights on"])
         self.assertTrue(pipeline.last_response)
         self.assertIn("says:", pipeline.last_response)
+
+    def test_json_repair_repairs_common_json_issues(self):
+        broken_json = "{'name': 'Ava', 'voice_model': 'bixby',}"
+        repaired = JsonRepair().repair_text(broken_json)
+
+        self.assertIsNotNone(repaired)
+        self.assertEqual(repaired["name"], "Ava")
+
+        broken_json_2 = '{"people": [{"name": "Leo", "voice_model": "bixby",}, {"name": "Nia", "voice_model": "bixby"}]}'
+        repaired_2 = JsonRepair().repair_text(broken_json_2)
+
+        self.assertIsNotNone(repaired_2)
+        self.assertEqual(repaired_2["people"][0]["name"], "Leo")
+
+        broken_json_3 = '{people: [{name: "Ava", prompt: "You are Ava.", voice_model: "bixby", active: true,}, {name: "Leo", prompt: "You are Leo.", voice_model: "bixby", active: false,}]}'
+        repaired_3 = JsonRepair().repair_text(broken_json_3)
+
+        self.assertIsNotNone(repaired_3)
+        self.assertEqual(repaired_3["people"][0]["name"], "Ava")
+        self.assertTrue(repaired_3["people"][0]["active"])
+
+        broken_json_4 = '{people: [{name: "Ava" prompt: "You are Ava." voice_model: "bixby"}]}'
+        repaired_4 = JsonRepair().repair_text(broken_json_4)
+
+        self.assertIsNotNone(repaired_4)
+        self.assertEqual(repaired_4["people"][0]["prompt"], "You are Ava.")
 
 
 if __name__ == "__main__":
