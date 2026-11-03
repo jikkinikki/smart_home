@@ -12,3 +12,4 @@ tinytuya.json
 snapshot.json
 devices.json
 decrypt.json
+/res/py/keys.py
