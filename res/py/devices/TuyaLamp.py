@@ -47,8 +47,8 @@ class TuyaLamp(Device.Device, Lamp.Lamp):
 
         self.tuyaDevice.set_colourtemp_percentage(temperature, nowait=nowait)
 
-    def set_color(self, color: tuple[int, int, int]):
+    def set_color(self, color: tuple[int, int, int], nowait: bool = False):
         if not super().set_color(color, nowait=nowait):
             return False;
 
-        self.tuyaDevice.set_colour(color)
+        self.tuyaDevice.set_colour(color[0], color[1], color[2], nowait=nowait)

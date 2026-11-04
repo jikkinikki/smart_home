@@ -47,12 +47,18 @@ class DeviceCommands:
             }
         ]
 
-    def set_lamps_RGB(self, r, g, b, noWaitResp, onlyRGB):
+    def set_lamps_RGB(self, color, noWaitResp, onlyRGB = False):
+        """color: '#rrggbb' (what the web colour picker sends) or an (r, g, b) tuple.
+        onlyRGB: turn off the lamps that can't show colours."""
+
+        if isinstance(color, str):
+            hex_color = color.lstrip("#")
+            color = tuple(int(hex_color[i:i + 2], 16) for i in (0, 2, 4))
 
         for device in self.get_devices():
-            if device.customData["type"] == "lamp" and device.has_colour:
-                device.set_colour(r, g, b, nowait=noWaitResp)
-            
+            if getattr(device, "_hasRGB", False):
+                device.set_color(tuple(color), nowait=noWaitResp)
+
             elif onlyRGB:
                 device.turn_off(nowait=noWaitResp)
 

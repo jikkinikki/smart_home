@@ -49,7 +49,11 @@ class Que_reader():
                 self.action_functions[jsonDevices["action"]](self.smart_parse(jsonDevices["value"]), True)
 
             except json.JSONDecodeError as e:
-                print(f"Error reading {filename}: {e}")
+                print(f"Error reading {file_path}: {e}")
+
+            # One bad queue file must not kill the queue reader thread
+            except Exception as e:
+                print(f"Error running {file_path}: {e.__class__.__name__}: {e}")
 
     def read_que(self):
         que_path = "../change_que" 
