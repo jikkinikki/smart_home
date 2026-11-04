@@ -2,7 +2,6 @@
 # python -m tinytuya wizard  - find devices on network
 # "Y`n" * 3 | python -m tinytuya wizard
 
-
 import time
 import threading
 

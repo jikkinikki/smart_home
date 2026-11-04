@@ -7,6 +7,17 @@ import threading
 import devices.TuyaLamp as TuyaLamp
 import devices.Device as Device
 
+device_loader_map = {
+
+    "lamp": {
+
+        "tuya": {
+
+            TuyaLamp.TuyaLamp
+        }
+    }
+}
+
 class DeviceHandler:
     def __init__(self):
         self._allDevices = []
@@ -18,7 +29,7 @@ class DeviceHandler:
         return dict.copy()
         # return json.loads(json.dumps(dict, default=lambda o: o.__dict__))
 
-    # Runs on seperate thread
+    # Starts and runs seperate thread
     def load_devices(self, debug_info = False):
         with open("res/json/devices.json", "r") as f:
             data = json.load(f)
@@ -38,7 +49,7 @@ class DeviceHandler:
                     self._allDevices.append(temp_device)
                     # self._allDevices.append({"loading": device["device_name"]})
 
-                    threads.append(threading.Thread(target=self.loadDevice, args=(i, device, debug_info)))
+                    threads.append(threading.Thread(target=self.load_device, args=(i, device, debug_info)))
                     self.devices_loading += 1
                     i += 1
 
@@ -113,51 +124,33 @@ class DeviceHandler:
         if debug_info:
             print("")
 
-    def loadDevice(self, device_index, device_data, debug_info = False):
+    def load_device(self, device_index, device_data, debug_info = False):
 
         device = ""
 
-        # if debug_info:
-            # print("device_info: ", device_type, id, adress, localKey, version, customData)
+        # if device_data["source"] == "tuya":
+            # if device_data["type"] == "lamp":
+                # device = TuyaLamp.TuyaLamp(True)
 
-        connection_timeout = 3
-        # adress = "Auto"
+        type = device_data["type"]
+        source = device_data["source"]
 
-        # elif device_type == "outlet":
-        #     device = tinytuya.OutletDevice(
-        #     dev_id=id,
-        #     address=adress,
-        #     local_key=localKey,
-        #     version=version,
-        #     connection_timeout=connection_timeout
-        #     )
+        try:
+            device_loader_map[type][source]
 
-        # if debug_info:
-        #     print(device_name, device.status())
+            device.load_device(device_data)
+            
+            self.devices_loading -= 1
+            print("waiting for devices: ", self.devices_loading, "time waited: ", time.time() - self.start_time)
+            
+            with self.devices_lock:
+                self._allDevices[device_index] = device
+            
+            self.printDevicesStatus("all")
 
-        if device_data["source"] == "tuya":
-            if device_data["type"] == "lamp":
-                device = TuyaLamp.TuyaLamp(True)
-
-        device.load_device(device_data)
-
-        self.devices_loading -= 1
-        print("waiting for devices: ", self.devices_loading, "time waited: ", time.time() - self.start_time)
-
-        # if "Error" in device.status():
-            # return
-        
-        # customData["type"] = device_type 
-        
-        # device.customData = customData 
-        # device.device_name = device_name
-        # device.set_socketPersistent(True)
-        
-        with self.devices_lock:
-            self._allDevices[device_index] = device
-        
-        # self.printDevicesInfo("all")
-        self.printDevicesStatus("all")
+        except:
+            print("missing loader for", type, source)
+            self.devices_loading -= 1
         
         # return device
    

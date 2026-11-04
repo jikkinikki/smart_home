@@ -1,0 +1,2633 @@
+{
+  "read_at": "2026-11-04T13:08:29+00:00",
+  "network": {
+    "role": "ROUTER",
+    "pan_id": "0xCB5D",
+    "extended_pan_id": "df:ea:c4:53:2c:16:0b:b1",
+    "channel": 25,
+    "tx_power": 8,
+    "nwk_update_id": 0,
+    "our_nwk": "0xD03A",
+    "our_ieee": "04:e3:e5:ff:fe:80:7c:f7",
+    "port": "COM4"
+  },
+  "devices": [
+    {
+      "nwk": "0x0000",
+      "ieee": "0c:43:14:ff:fe:6d:86:8e",
+      "role": "Coordinator",
+      "manufacturer": "LDS",
+      "model": "ZB-Gateway",
+      "capabilities": [],
+      "links": [
+        {
+          "seen_by": "0x4F53",
+          "relationship": "Parent",
+          "lqi": 80,
+          "depth": 0,
+          "rx_on_when_idle": "On",
+          "permit_joining": "Unknown"
+        },
+        {
+          "seen_by": "0x751B",
+          "relationship": "Parent",
+          "lqi": 100,
+          "depth": 0,
+          "rx_on_when_idle": "On",
+          "permit_joining": "Unknown"
+        },
+        {
+          "seen_by": "0xC799",
+          "relationship": "Sibling",
+          "lqi": 88,
+          "depth": 0,
+          "rx_on_when_idle": "On",
+          "permit_joining": "Unknown"
+        },
+        {
+          "seen_by": "0xCD16",
+          "relationship": "Parent",
+          "lqi": 44,
+          "depth": 0,
+          "rx_on_when_idle": "On",
+          "permit_joining": "Unknown"
+        }
+      ],
+      "errors": [],
+      "node_descriptor": {
+        "logical_type": "Coordinator",
+        "complex_descriptor_available": 0,
+        "user_descriptor_available": 0,
+        "reserved": 0,
+        "aps_flags": 0,
+        "frequency_band": [
+          "Freq2400MHz"
+        ],
+        "mac_capability_flags": [
+          "AlternatePanCoordinator",
+          "FullFunctionDevice",
+          "MainsPowered",
+          "RxOnWhenIdle",
+          "AllocateAddress"
+        ],
+        "manufacturer_code": 4456,
+        "maximum_buffer_size": 82,
+        "maximum_incoming_transfer_size": 82,
+        "server_mask": 11329,
+        "maximum_outgoing_transfer_size": 82,
+        "descriptor_capability_field": []
+      },
+      "power_descriptor": {
+        "current_power_mode": "RxOnSyncedWithNodeDesc",
+        "available_power_sources": [
+          "MainsPower"
+        ],
+        "current_power_source": [
+          "MainsPower"
+        ],
+        "current_power_source_level": "Percent100"
+      },
+      "endpoints": {
+        "1": {
+          "profile": "0x0104",
+          "profile_name": "Home Automation",
+          "device_type": "0x0007",
+          "device_type_name": "COMBINED_INTERFACE",
+          "device_version": 1,
+          "in_clusters": {
+            "0x0000": {
+              "name": "0x0000",
+              "attribute_source": "discovered",
+              "attributes": {
+                "zcl_version": {
+                  "id": "0x0000",
+                  "type": "uint8",
+                  "value": 3
+                },
+                "app_version": {
+                  "id": "0x0001",
+                  "type": "uint8",
+                  "value": 1
+                },
+                "stack_version": {
+                  "id": "0x0002",
+                  "type": "uint8",
+                  "value": 1
+                },
+                "hw_version": {
+                  "id": "0x0003",
+                  "type": "uint8",
+                  "value": 1
+                },
+                "manufacturer": {
+                  "id": "0x0004",
+                  "type": "string",
+                  "value": "LDS"
+                },
+                "model": {
+                  "id": "0x0005",
+                  "type": "string",
+                  "value": "ZB-Gateway"
+                },
+                "date_code": {
+                  "id": "0x0006",
+                  "type": "string",
+                  "value": "20190509-560"
+                },
+                "power_source": {
+                  "id": "0x0007",
+                  "type": "enum8",
+                  "value": 4,
+                  "meaning": "DC_Source"
+                },
+                "generic_device_class": {
+                  "id": "0x0008",
+                  "type": "enum8",
+                  "value": 255,
+                  "meaning": "undefined_0xff"
+                },
+                "generic_device_type": {
+                  "id": "0x0009",
+                  "type": "enum8",
+                  "value": 255,
+                  "meaning": "Unspecified"
+                },
+                "product_code": {
+                  "id": "0x000A",
+                  "type": "octstr",
+                  "value": "303130313030313538"
+                },
+                "product_url": {
+                  "id": "0x000B",
+                  "type": "string",
+                  "value": "www.Leedarson.com"
+                },
+                "device_enabled": {
+                  "id": "0x0012",
+                  "type": "bool_",
+                  "value": 1,
+                  "meaning": "true"
+                },
+                "sw_build_id": {
+                  "id": "0x4000",
+                  "type": "string",
+                  "value": "2.1"
+                },
+                "cluster_revision": {
+                  "id": "0xFFFD",
+                  "type": "uint16",
+                  "value": 1
+                }
+              }
+            },
+            "0x0003": {
+              "name": "0x0003",
+              "attribute_source": "discovered",
+              "attributes": {
+                "identify_time": {
+                  "id": "0x0000",
+                  "type": "uint16",
+                  "value": 0
+                },
+                "cluster_revision": {
+                  "id": "0xFFFD",
+                  "type": "uint16",
+                  "value": 1
+                }
+              }
+            },
+            "0x000A": {
+              "name": "0x000A",
+              "attribute_source": "discovered",
+              "attributes": {
+                "time": {
+                  "id": "0x0000",
+                  "type": "UTC",
+                  "value": 847116450
+                },
+                "time_status": {
+                  "id": "0x0001",
+                  "type": "map8",
+                  "value": 0,
+                  "meaning": []
+                },
+                "standard_time": {
+                  "id": "0x0006",
+                  "type": "uint32",
+                  "value": 847113175
+                },
+                "local_time": {
+                  "id": "0x0007",
+                  "type": "uint32",
+                  "value": 847113175
+                },
+                "cluster_revision": {
+                  "id": "0xFFFD",
+                  "type": "uint16",
+                  "value": 1
+                }
+              }
+            },
+            "0x0019": {
+              "name": "0x0019",
+              "attribute_source": "discovered",
+              "attributes": {
+                "cluster_revision": {
+                  "id": "0xFFFD",
+                  "type": "uint16",
+                  "value": 1
+                }
+              }
+            }
+          },
+          "out_clusters": {
+            "0x0000": "0x0000",
+            "0x0003": "0x0003",
+            "0x0004": "0x0004",
+            "0x0005": "0x0005",
+            "0x0006": "On/Off",
+            "0x0008": "Level control",
+            "0x0020": "Poll Control",
+            "0x0102": "Window Covering",
+            "0x0300": "Color Control",
+            "0x0500": "IAS Zone",
+            "0x0702": "0x0702",
+            "0x0B04": "Electrical Measurement"
+          }
+        },
+        "242": {
+          "profile": "0xA1E0",
+          "profile_name": "Green Power",
+          "device_type": "0x0061",
+          "device_type_name": null,
+          "device_version": 1,
+          "in_clusters": {},
+          "out_clusters": {
+            "0x0021": "Green Power"
+          }
+        }
+      },
+      "sw_build_id": "2.1",
+      "date_code": "20190509-560",
+      "power_source": "DC_Source",
+      "is_light": false
+    },
+    {
+      "nwk": "0x4F53",
+      "ieee": "a4:c1:38:9e:4e:72:45:7b",
+      "role": "Router",
+      "manufacturer": "innr",
+      "model": "RB 282 C",
+      "capabilities": [
+        "brightness",
+        "color",
+        "color_temperature",
+        "on_off"
+      ],
+      "links": [
+        {
+          "seen_by": "0x0000",
+          "relationship": "Sibling",
+          "lqi": 143,
+          "depth": 15,
+          "rx_on_when_idle": "On",
+          "permit_joining": "Unknown"
+        },
+        {
+          "seen_by": "0x751B",
+          "relationship": "Sibling",
+          "lqi": 59,
+          "depth": 0,
+          "rx_on_when_idle": "On",
+          "permit_joining": "Unknown"
+        },
+        {
+          "seen_by": "0xC799",
+          "relationship": "Sibling",
+          "lqi": 57,
+          "depth": 0,
+          "rx_on_when_idle": "On",
+          "permit_joining": "Unknown"
+        },
+        {
+          "seen_by": "0xCD16",
+          "relationship": "Sibling",
+          "lqi": 62,
+          "depth": 0,
+          "rx_on_when_idle": "On",
+          "permit_joining": "Unknown"
+        }
+      ],
+      "errors": [],
+      "node_descriptor": {
+        "logical_type": "Router",
+        "complex_descriptor_available": 0,
+        "user_descriptor_available": 0,
+        "reserved": 0,
+        "aps_flags": 0,
+        "frequency_band": [
+          "Freq2400MHz"
+        ],
+        "mac_capability_flags": [
+          "FullFunctionDevice",
+          "MainsPowered",
+          "RxOnWhenIdle",
+          "AllocateAddress"
+        ],
+        "manufacturer_code": 4454,
+        "maximum_buffer_size": 74,
+        "maximum_incoming_transfer_size": 80,
+        "server_mask": 11264,
+        "maximum_outgoing_transfer_size": 80,
+        "descriptor_capability_field": []
+      },
+      "power_descriptor": {
+        "current_power_mode": "RxOnSyncedWithNodeDesc",
+        "available_power_sources": [
+          "MainsPower"
+        ],
+        "current_power_source": [
+          "MainsPower"
+        ],
+        "current_power_source_level": "Percent100"
+      },
+      "endpoints": {
+        "1": {
+          "profile": "0x0104",
+          "profile_name": "Home Automation",
+          "device_type": "0x010D",
+          "device_type_name": "EXTENDED_COLOR_LIGHT",
+          "device_version": 1,
+          "in_clusters": {
+            "0x0000": {
+              "name": "0x0000",
+              "attribute_source": "discovered",
+              "attributes": {
+                "zcl_version": {
+                  "id": "0x0000",
+                  "type": "uint8",
+                  "value": 8
+                },
+                "app_version": {
+                  "id": "0x0001",
+                  "type": "uint8",
+                  "value": 25
+                },
+                "stack_version": {
+                  "id": "0x0002",
+                  "type": "uint8",
+                  "value": 54
+                },
+                "hw_version": {
+                  "id": "0x0003",
+                  "type": "uint8",
+                  "value": 1
+                },
+                "manufacturer": {
+                  "id": "0x0004",
+                  "type": "string",
+                  "value": "innr"
+                },
+                "model": {
+                  "id": "0x0005",
+                  "type": "string",
+                  "value": "RB 282 C"
+                },
+                "date_code": {
+                  "id": "0x0006",
+                  "type": "string",
+                  "value": "20250323"
+                },
+                "power_source": {
+                  "id": "0x0007",
+                  "type": "enum8",
+                  "value": 1,
+                  "meaning": "Mains_single_phase"
+                },
+                "generic_device_class": {
+                  "id": "0x0008",
+                  "type": "enum8",
+                  "value": 0,
+                  "meaning": "Lighting"
+                },
+                "generic_device_type": {
+                  "id": "0x0009",
+                  "type": "enum8",
+                  "value": 5,
+                  "meaning": "LED_bulb"
+                },
+                "product_code": {
+                  "id": "0x000A",
+                  "type": "octstr",
+                  "value": "6d64773473716862"
+                },
+                "product_url": {
+                  "id": "0x000B",
+                  "type": "string",
+                  "value": "www.innr.com"
+                },
+                "sw_build_id": {
+                  "id": "0x4000",
+                  "type": "string",
+                  "value": "1.9.33"
+                },
+                "0xFFC0": {
+                  "id": "0xFFC0",
+                  "type": "string",
+                  "value": "_TZ3218_mdw\u00061.9.33S0505B"
+                },
+                "0xFFDE": {
+                  "id": "0xFFDE",
+                  "type": "uint8",
+                  "value": 13
+                },
+                "0xFFE0": {
+                  "id": "0xFFE0",
+                  "type": "array",
+                  "raw": "e0ff0048",
+                  "note": "could not be decoded, raw reply bytes"
+                },
+                "0xFFE1": {
+                  "id": "0xFFE1",
+                  "type": "array",
+                  "raw": "e1ff0048",
+                  "note": "could not be decoded, raw reply bytes"
+                },
+                "0xFFE2": {
+                  "id": "0xFFE2",
+                  "type": "uint8",
+                  "value": 64
+                },
+                "0xFFE3": {
+                  "id": "0xFFE3",
+                  "type": "string",
+                  "value": ""
+                },
+                "cluster_revision": {
+                  "id": "0xFFFD",
+                  "type": "uint16",
+                  "value": 3
+                },
+                "reporting_status": {
+                  "id": "0xFFFE",
+                  "type": "enum8",
+                  "value": 0,
+                  "meaning": "Pending"
+                }
+              }
+            },
+            "0x0003": {
+              "name": "0x0003",
+              "attribute_source": "discovered",
+              "attributes": {
+                "identify_time": {
+                  "id": "0x0000",
+                  "type": "uint16",
+                  "value": 0
+                },
+                "cluster_revision": {
+                  "id": "0xFFFD",
+                  "type": "uint16",
+                  "value": 2
+                }
+              }
+            },
+            "0x0004": {
+              "name": "0x0004",
+              "attribute_source": "discovered",
+              "attributes": {
+                "name_support": {
+                  "id": "0x0000",
+                  "type": "map8",
+                  "value": 0,
+                  "meaning": []
+                },
+                "cluster_revision": {
+                  "id": "0xFFFD",
+                  "type": "uint16",
+                  "value": 3
+                }
+              }
+            },
+            "0x0005": {
+              "name": "0x0005",
+              "attribute_source": "discovered",
+              "attributes": {
+                "count": {
+                  "id": "0x0000",
+                  "type": "uint8",
+                  "value": 1
+                },
+                "current_scene": {
+                  "id": "0x0001",
+                  "type": "uint8",
+                  "value": 1
+                },
+                "current_group": {
+                  "id": "0x0002",
+                  "type": "uint16",
+                  "value": 255
+                },
+                "scene_valid": {
+                  "id": "0x0003",
+                  "type": "bool_",
+                  "value": 1,
+                  "meaning": "true"
+                },
+                "name_support": {
+                  "id": "0x0004",
+                  "type": "map8",
+                  "value": 0,
+                  "meaning": []
+                },
+                "cluster_revision": {
+                  "id": "0xFFFD",
+                  "type": "uint16",
+                  "value": 3
+                }
+              }
+            },
+            "0x0006": {
+              "name": "On/Off",
+              "attribute_source": "discovered",
+              "attributes": {
+                "on_off": {
+                  "id": "0x0000",
+                  "type": "bool_",
+                  "value": 0,
+                  "meaning": "false"
+                },
+                "global_scene_control": {
+                  "id": "0x4000",
+                  "type": "bool_",
+                  "value": 0,
+                  "meaning": "false"
+                },
+                "on_time": {
+                  "id": "0x4001",
+                  "type": "uint16",
+                  "value": 0
+                },
+                "off_wait_time": {
+                  "id": "0x4002",
+                  "type": "uint16",
+                  "value": 0
+                },
+                "start_up_on_off": {
+                  "id": "0x4003",
+                  "type": "enum8",
+                  "value": 1,
+                  "meaning": "On"
+                },
+                "cluster_revision": {
+                  "id": "0xFFFD",
+                  "type": "uint16",
+                  "value": 2
+                }
+              }
+            },
+            "0x0008": {
+              "name": "Level control",
+              "attribute_source": "discovered",
+              "attributes": {
+                "current_level": {
+                  "id": "0x0000",
+                  "type": "uint8",
+                  "value": 41
+                },
+                "remaining_time": {
+                  "id": "0x0001",
+                  "type": "uint16",
+                  "value": 0
+                },
+                "options": {
+                  "id": "0x000F",
+                  "type": "map8",
+                  "value": 0,
+                  "meaning": []
+                },
+                "on_off_transition_time": {
+                  "id": "0x0010",
+                  "type": "uint16",
+                  "value": 0
+                },
+                "on_level": {
+                  "id": "0x0011",
+                  "type": "uint8",
+                  "value": 255
+                },
+                "on_transition_time": {
+                  "id": "0x0012",
+                  "type": "uint16",
+                  "value": 65535
+                },
+                "off_transition_time": {
+                  "id": "0x0013",
+                  "type": "uint16",
+                  "value": 65535
+                },
+                "start_up_current_level": {
+                  "id": "0x4000",
+                  "type": "uint8",
+                  "value": 255
+                },
+                "cluster_revision": {
+                  "id": "0xFFFD",
+                  "type": "uint16",
+                  "value": 3
+                }
+              }
+            },
+            "0x0300": {
+              "name": "Color Control",
+              "attribute_source": "discovered",
+              "attributes": {
+                "current_hue": {
+                  "id": "0x0000",
+                  "type": "uint8",
+                  "value": 22
+                },
+                "current_saturation": {
+                  "id": "0x0001",
+                  "type": "uint8",
+                  "value": 184
+                },
+                "remaining_time": {
+                  "id": "0x0002",
+                  "type": "uint16",
+                  "value": 0
+                },
+                "current_x": {
+                  "id": "0x0003",
+                  "type": "uint16",
+                  "value": 33122
+                },
+                "current_y": {
+                  "id": "0x0004",
+                  "type": "uint16",
+                  "value": 27210
+                },
+                "color_temperature": {
+                  "id": "0x0007",
+                  "type": "uint16",
+                  "value": 454
+                },
+                "color_mode": {
+                  "id": "0x0008",
+                  "type": "enum8",
+                  "value": 2,
+                  "meaning": "Color_temperature"
+                },
+                "options": {
+                  "id": "0x000F",
+                  "type": "map8",
+                  "value": 0,
+                  "meaning": []
+                },
+                "num_primaries": {
+                  "id": "0x0010",
+                  "type": "uint8",
+                  "value": 3
+                },
+                "primary1_x": {
+                  "id": "0x0011",
+                  "type": "uint16",
+                  "value": 45796
+                },
+                "primary1_y": {
+                  "id": "0x0012",
+                  "type": "uint16",
+                  "value": 19660
+                },
+                "primary1_intensity": {
+                  "id": "0x0013",
+                  "type": "uint8",
+                  "value": 106
+                },
+                "primary2_x": {
+                  "id": "0x0015",
+                  "type": "uint16",
+                  "value": 9351
+                },
+                "primary2_y": {
+                  "id": "0x0016",
+                  "type": "uint16",
+                  "value": 46406
+                },
+                "primary2_intensity": {
+                  "id": "0x0017",
+                  "type": "uint8",
+                  "value": 254
+                },
+                "primary3_x": {
+                  "id": "0x0019",
+                  "type": "uint16",
+                  "value": 10315
+                },
+                "primary3_y": {
+                  "id": "0x001A",
+                  "type": "uint16",
+                  "value": 1520
+                },
+                "primary3_intensity": {
+                  "id": "0x001B",
+                  "type": "uint8",
+                  "value": 32
+                },
+                "enhanced_current_hue": {
+                  "id": "0x4000",
+                  "type": "uint16",
+                  "value": 5874
+                },
+                "enhanced_color_mode": {
+                  "id": "0x4001",
+                  "type": "enum8",
+                  "value": 2,
+                  "meaning": "Color_temperature"
+                },
+                "color_loop_active": {
+                  "id": "0x4002",
+                  "type": "uint8",
+                  "value": 0
+                },
+                "color_loop_direction": {
+                  "id": "0x4003",
+                  "type": "uint8",
+                  "value": 0
+                },
+                "color_loop_time": {
+                  "id": "0x4004",
+                  "type": "uint16",
+                  "value": 25
+                },
+                "color_loop_start_enhanced_hue": {
+                  "id": "0x4005",
+                  "type": "uint16",
+                  "value": 8960
+                },
+                "color_loop_stored_enhanced_hue": {
+                  "id": "0x4006",
+                  "type": "uint16",
+                  "value": 0
+                },
+                "color_capabilities": {
+                  "id": "0x400A",
+                  "type": "map16",
+                  "value": 31,
+                  "meaning": [
+                    "Hue_and_saturation",
+                    "Enhanced_hue",
+                    "Color_loop",
+                    "XY_attributes",
+                    "Color_temperature"
+                  ]
+                },
+                "color_temp_physical_min": {
+                  "id": "0x400B",
+                  "type": "uint16",
+                  "value": 153
+                },
+                "color_temp_physical_max": {
+                  "id": "0x400C",
+                  "type": "uint16",
+                  "value": 556
+                },
+                "couple_color_temp_to_level_min": {
+                  "id": "0x400D",
+                  "type": "uint16",
+                  "value": 285
+                },
+                "start_up_color_temperature": {
+                  "id": "0x4010",
+                  "type": "uint16",
+                  "value": 65535
+                },
+                "cluster_revision": {
+                  "id": "0xFFFD",
+                  "type": "uint16",
+                  "value": 3
+                }
+              }
+            },
+            "0x1000": {
+              "name": "0x1000",
+              "attribute_source": "zigpy definitions"
+            }
+          },
+          "out_clusters": {
+            "0x000A": "0x000A",
+            "0x0019": "0x0019"
+          },
+          "groups": {
+            "member_of": [
+              "0x00FF",
+              "0x0001",
+              "0x0004"
+            ],
+            "free_slots": 29
+          }
+        },
+        "242": {
+          "profile": "0xA1E0",
+          "profile_name": "Green Power",
+          "device_type": "0x0061",
+          "device_type_name": null,
+          "device_version": 0,
+          "in_clusters": {},
+          "out_clusters": {
+            "0x0021": "Green Power"
+          }
+        }
+      },
+      "sw_build_id": "1.9.33",
+      "date_code": "20250323",
+      "power_source": "Mains_single_phase",
+      "groups": [
+        "0x0001",
+        "0x0004",
+        "0x00FF"
+      ],
+      "is_light": true
+    },
+    {
+      "nwk": "0x751B",
+      "ieee": "a4:c1:38:23:55:34:e5:4a",
+      "role": "Router",
+      "manufacturer": "innr",
+      "model": "RB 282 C",
+      "capabilities": [
+        "brightness",
+        "color",
+        "color_temperature",
+        "on_off"
+      ],
+      "links": [
+        {
+          "seen_by": "0x0000",
+          "relationship": "Sibling",
+          "lqi": 181,
+          "depth": 15,
+          "rx_on_when_idle": "On",
+          "permit_joining": "Unknown"
+        },
+        {
+          "seen_by": "0x4F53",
+          "relationship": "Sibling",
+          "lqi": 62,
+          "depth": 1,
+          "rx_on_when_idle": "On",
+          "permit_joining": "Unknown"
+        },
+        {
+          "seen_by": "0xC799",
+          "relationship": "Parent",
+          "lqi": 108,
+          "depth": 1,
+          "rx_on_when_idle": "On",
+          "permit_joining": "Unknown"
+        },
+        {
+          "seen_by": "0xCD16",
+          "relationship": "Sibling",
+          "lqi": 96,
+          "depth": 1,
+          "rx_on_when_idle": "On",
+          "permit_joining": "Unknown"
+        }
+      ],
+      "errors": [],
+      "node_descriptor": {
+        "logical_type": "Router",
+        "complex_descriptor_available": 0,
+        "user_descriptor_available": 0,
+        "reserved": 0,
+        "aps_flags": 0,
+        "frequency_band": [
+          "Freq2400MHz"
+        ],
+        "mac_capability_flags": [
+          "FullFunctionDevice",
+          "MainsPowered",
+          "RxOnWhenIdle",
+          "AllocateAddress"
+        ],
+        "manufacturer_code": 4454,
+        "maximum_buffer_size": 74,
+        "maximum_incoming_transfer_size": 80,
+        "server_mask": 11264,
+        "maximum_outgoing_transfer_size": 80,
+        "descriptor_capability_field": []
+      },
+      "power_descriptor": {
+        "current_power_mode": "RxOnSyncedWithNodeDesc",
+        "available_power_sources": [
+          "MainsPower"
+        ],
+        "current_power_source": [
+          "MainsPower"
+        ],
+        "current_power_source_level": "Percent100"
+      },
+      "endpoints": {
+        "1": {
+          "profile": "0x0104",
+          "profile_name": "Home Automation",
+          "device_type": "0x010D",
+          "device_type_name": "EXTENDED_COLOR_LIGHT",
+          "device_version": 1,
+          "in_clusters": {
+            "0x0000": {
+              "name": "0x0000",
+              "attribute_source": "discovered",
+              "attributes": {
+                "zcl_version": {
+                  "id": "0x0000",
+                  "type": "uint8",
+                  "value": 8
+                },
+                "app_version": {
+                  "id": "0x0001",
+                  "type": "uint8",
+                  "value": 25
+                },
+                "stack_version": {
+                  "id": "0x0002",
+                  "type": "uint8",
+                  "value": 54
+                },
+                "hw_version": {
+                  "id": "0x0003",
+                  "type": "uint8",
+                  "value": 1
+                },
+                "manufacturer": {
+                  "id": "0x0004",
+                  "type": "string",
+                  "value": "innr"
+                },
+                "model": {
+                  "id": "0x0005",
+                  "type": "string",
+                  "value": "RB 282 C"
+                },
+                "date_code": {
+                  "id": "0x0006",
+                  "type": "string",
+                  "value": "20250323"
+                },
+                "power_source": {
+                  "id": "0x0007",
+                  "type": "enum8",
+                  "value": 1,
+                  "meaning": "Mains_single_phase"
+                },
+                "generic_device_class": {
+                  "id": "0x0008",
+                  "type": "enum8",
+                  "value": 0,
+                  "meaning": "Lighting"
+                },
+                "generic_device_type": {
+                  "id": "0x0009",
+                  "type": "enum8",
+                  "value": 5,
+                  "meaning": "LED_bulb"
+                },
+                "product_code": {
+                  "id": "0x000A",
+                  "type": "octstr",
+                  "value": "6d64773473716862"
+                },
+                "product_url": {
+                  "id": "0x000B",
+                  "type": "string",
+                  "value": "www.innr.com"
+                },
+                "sw_build_id": {
+                  "id": "0x4000",
+                  "type": "string",
+                  "value": "1.9.33"
+                },
+                "0xFFC0": {
+                  "id": "0xFFC0",
+                  "type": "string",
+                  "value": "_TZ3218_mdw\u00061.9.33S0505B"
+                },
+                "0xFFDE": {
+                  "id": "0xFFDE",
+                  "type": "uint8",
+                  "value": 13
+                },
+                "0xFFE0": {
+                  "id": "0xFFE0",
+                  "type": "array",
+                  "raw": "e0ff0048",
+                  "note": "could not be decoded, raw reply bytes"
+                },
+                "0xFFE1": {
+                  "id": "0xFFE1",
+                  "type": "array",
+                  "raw": "e1ff0048",
+                  "note": "could not be decoded, raw reply bytes"
+                },
+                "0xFFE2": {
+                  "id": "0xFFE2",
+                  "type": "uint8",
+                  "value": 64
+                },
+                "0xFFE3": {
+                  "id": "0xFFE3",
+                  "type": "string",
+                  "value": ""
+                },
+                "cluster_revision": {
+                  "id": "0xFFFD",
+                  "type": "uint16",
+                  "value": 3
+                },
+                "reporting_status": {
+                  "id": "0xFFFE",
+                  "type": "enum8",
+                  "value": 0,
+                  "meaning": "Pending"
+                }
+              }
+            },
+            "0x0003": {
+              "name": "0x0003",
+              "attribute_source": "discovered",
+              "attributes": {
+                "identify_time": {
+                  "id": "0x0000",
+                  "type": "uint16",
+                  "value": 0
+                },
+                "cluster_revision": {
+                  "id": "0xFFFD",
+                  "type": "uint16",
+                  "value": 2
+                }
+              }
+            },
+            "0x0004": {
+              "name": "0x0004",
+              "attribute_source": "discovered",
+              "attributes": {
+                "name_support": {
+                  "id": "0x0000",
+                  "type": "map8",
+                  "value": 0,
+                  "meaning": []
+                },
+                "cluster_revision": {
+                  "id": "0xFFFD",
+                  "type": "uint16",
+                  "value": 3
+                }
+              }
+            },
+            "0x0005": {
+              "name": "0x0005",
+              "attribute_source": "discovered",
+              "attributes": {
+                "count": {
+                  "id": "0x0000",
+                  "type": "uint8",
+                  "value": 1
+                },
+                "current_scene": {
+                  "id": "0x0001",
+                  "type": "uint8",
+                  "value": 1
+                },
+                "current_group": {
+                  "id": "0x0002",
+                  "type": "uint16",
+                  "value": 255
+                },
+                "scene_valid": {
+                  "id": "0x0003",
+                  "type": "bool_",
+                  "value": 1,
+                  "meaning": "true"
+                },
+                "name_support": {
+                  "id": "0x0004",
+                  "type": "map8",
+                  "value": 0,
+                  "meaning": []
+                },
+                "cluster_revision": {
+                  "id": "0xFFFD",
+                  "type": "uint16",
+                  "value": 3
+                }
+              }
+            },
+            "0x0006": {
+              "name": "On/Off",
+              "attribute_source": "discovered",
+              "attributes": {
+                "on_off": {
+                  "id": "0x0000",
+                  "type": "bool_",
+                  "value": 0,
+                  "meaning": "false"
+                },
+                "global_scene_control": {
+                  "id": "0x4000",
+                  "type": "bool_",
+                  "value": 0,
+                  "meaning": "false"
+                },
+                "on_time": {
+                  "id": "0x4001",
+                  "type": "uint16",
+                  "value": 0
+                },
+                "off_wait_time": {
+                  "id": "0x4002",
+                  "type": "uint16",
+                  "value": 0
+                },
+                "start_up_on_off": {
+                  "id": "0x4003",
+                  "type": "enum8",
+                  "value": 1,
+                  "meaning": "On"
+                },
+                "cluster_revision": {
+                  "id": "0xFFFD",
+                  "type": "uint16",
+                  "value": 2
+                }
+              }
+            },
+            "0x0008": {
+              "name": "Level control",
+              "attribute_source": "discovered",
+              "attributes": {
+                "current_level": {
+                  "id": "0x0000",
+                  "type": "uint8",
+                  "value": 186
+                },
+                "remaining_time": {
+                  "id": "0x0001",
+                  "type": "uint16",
+                  "value": 0
+                },
+                "options": {
+                  "id": "0x000F",
+                  "type": "map8",
+                  "value": 0,
+                  "meaning": []
+                },
+                "on_off_transition_time": {
+                  "id": "0x0010",
+                  "type": "uint16",
+                  "value": 0
+                },
+                "on_level": {
+                  "id": "0x0011",
+                  "type": "uint8",
+                  "value": 255
+                },
+                "on_transition_time": {
+                  "id": "0x0012",
+                  "type": "uint16",
+                  "value": 65535
+                },
+                "off_transition_time": {
+                  "id": "0x0013",
+                  "type": "uint16",
+                  "value": 65535
+                },
+                "start_up_current_level": {
+                  "id": "0x4000",
+                  "type": "uint8",
+                  "value": 255
+                },
+                "cluster_revision": {
+                  "id": "0xFFFD",
+                  "type": "uint16",
+                  "value": 3
+                }
+              }
+            },
+            "0x0300": {
+              "name": "Color Control",
+              "attribute_source": "discovered",
+              "attributes": {
+                "current_hue": {
+                  "id": "0x0000",
+                  "type": "uint8",
+                  "value": 25
+                },
+                "current_saturation": {
+                  "id": "0x0001",
+                  "type": "uint8",
+                  "value": 139
+                },
+                "remaining_time": {
+                  "id": "0x0002",
+                  "type": "uint16",
+                  "value": 0
+                },
+                "current_x": {
+                  "id": "0x0003",
+                  "type": "uint16",
+                  "value": 30129
+                },
+                "current_y": {
+                  "id": "0x0004",
+                  "type": "uint16",
+                  "value": 26906
+                },
+                "color_temperature": {
+                  "id": "0x0007",
+                  "type": "uint16",
+                  "value": 370
+                },
+                "color_mode": {
+                  "id": "0x0008",
+                  "type": "enum8",
+                  "value": 2,
+                  "meaning": "Color_temperature"
+                },
+                "options": {
+                  "id": "0x000F",
+                  "type": "map8",
+                  "value": 0,
+                  "meaning": []
+                },
+                "num_primaries": {
+                  "id": "0x0010",
+                  "type": "uint8",
+                  "value": 3
+                },
+                "primary1_x": {
+                  "id": "0x0011",
+                  "type": "uint16",
+                  "value": 45796
+                },
+                "primary1_y": {
+                  "id": "0x0012",
+                  "type": "uint16",
+                  "value": 19660
+                },
+                "primary1_intensity": {
+                  "id": "0x0013",
+                  "type": "uint8",
+                  "value": 106
+                },
+                "primary2_x": {
+                  "id": "0x0015",
+                  "type": "uint16",
+                  "value": 9351
+                },
+                "primary2_y": {
+                  "id": "0x0016",
+                  "type": "uint16",
+                  "value": 46406
+                },
+                "primary2_intensity": {
+                  "id": "0x0017",
+                  "type": "uint8",
+                  "value": 254
+                },
+                "primary3_x": {
+                  "id": "0x0019",
+                  "type": "uint16",
+                  "value": 10315
+                },
+                "primary3_y": {
+                  "id": "0x001A",
+                  "type": "uint16",
+                  "value": 1520
+                },
+                "primary3_intensity": {
+                  "id": "0x001B",
+                  "type": "uint8",
+                  "value": 32
+                },
+                "enhanced_current_hue": {
+                  "id": "0x4000",
+                  "type": "uint16",
+                  "value": 6618
+                },
+                "enhanced_color_mode": {
+                  "id": "0x4001",
+                  "type": "enum8",
+                  "value": 2,
+                  "meaning": "Color_temperature"
+                },
+                "color_loop_active": {
+                  "id": "0x4002",
+                  "type": "uint8",
+                  "value": 0
+                },
+                "color_loop_direction": {
+                  "id": "0x4003",
+                  "type": "uint8",
+                  "value": 0
+                },
+                "color_loop_time": {
+                  "id": "0x4004",
+                  "type": "uint16",
+                  "value": 25
+                },
+                "color_loop_start_enhanced_hue": {
+                  "id": "0x4005",
+                  "type": "uint16",
+                  "value": 8960
+                },
+                "color_loop_stored_enhanced_hue": {
+                  "id": "0x4006",
+                  "type": "uint16",
+                  "value": 0
+                },
+                "color_capabilities": {
+                  "id": "0x400A",
+                  "type": "map16",
+                  "value": 31,
+                  "meaning": [
+                    "Hue_and_saturation",
+                    "Enhanced_hue",
+                    "Color_loop",
+                    "XY_attributes",
+                    "Color_temperature"
+                  ]
+                },
+                "color_temp_physical_min": {
+                  "id": "0x400B",
+                  "type": "uint16",
+                  "value": 153
+                },
+                "color_temp_physical_max": {
+                  "id": "0x400C",
+                  "type": "uint16",
+                  "value": 556
+                },
+                "couple_color_temp_to_level_min": {
+                  "id": "0x400D",
+                  "type": "uint16",
+                  "value": 285
+                },
+                "start_up_color_temperature": {
+                  "id": "0x4010",
+                  "type": "uint16",
+                  "value": 65535
+                },
+                "cluster_revision": {
+                  "id": "0xFFFD",
+                  "type": "uint16",
+                  "value": 3
+                }
+              }
+            },
+            "0x1000": {
+              "name": "0x1000",
+              "attribute_source": "zigpy definitions"
+            }
+          },
+          "out_clusters": {
+            "0x000A": "0x000A",
+            "0x0019": "0x0019"
+          },
+          "groups": {
+            "member_of": [
+              "0x00FF",
+              "0x0001",
+              "0x0003"
+            ],
+            "free_slots": 29
+          }
+        },
+        "242": {
+          "profile": "0xA1E0",
+          "profile_name": "Green Power",
+          "device_type": "0x0061",
+          "device_type_name": null,
+          "device_version": 0,
+          "in_clusters": {},
+          "out_clusters": {
+            "0x0021": "Green Power"
+          }
+        }
+      },
+      "sw_build_id": "1.9.33",
+      "date_code": "20250323",
+      "power_source": "Mains_single_phase",
+      "groups": [
+        "0x0001",
+        "0x0003",
+        "0x00FF"
+      ],
+      "is_light": true
+    },
+    {
+      "nwk": "0xBA18",
+      "ieee": "a4:c1:38:cd:49:24:4d:b0",
+      "role": "Router",
+      "manufacturer": null,
+      "model": null,
+      "capabilities": [],
+      "links": [
+        {
+          "seen_by": "0x4F53",
+          "relationship": "Sibling",
+          "lqi": 0,
+          "depth": 0,
+          "rx_on_when_idle": "On",
+          "permit_joining": "Unknown"
+        },
+        {
+          "seen_by": "0x751B",
+          "relationship": "Sibling",
+          "lqi": 0,
+          "depth": 0,
+          "rx_on_when_idle": "On",
+          "permit_joining": "Unknown"
+        },
+        {
+          "seen_by": "0xC799",
+          "relationship": "Sibling",
+          "lqi": 0,
+          "depth": 0,
+          "rx_on_when_idle": "On",
+          "permit_joining": "Unknown"
+        },
+        {
+          "seen_by": "0xCD16",
+          "relationship": "Sibling",
+          "lqi": 0,
+          "depth": 0,
+          "rx_on_when_idle": "On",
+          "permit_joining": "Unknown"
+        }
+      ],
+      "errors": [
+        "neighbour table: no answer (TimeoutError)",
+        "node descriptor: TimeoutError",
+        "power descriptor: TimeoutError",
+        "endpoints: TimeoutError",
+        "no endpoint list - a sleeping battery device (remote/sensor) or switched off?"
+      ]
+    },
+    {
+      "nwk": "0xC799",
+      "ieee": "a4:c1:38:2a:5b:95:b7:80",
+      "role": "Router",
+      "manufacturer": "innr",
+      "model": "RB 287 C",
+      "capabilities": [
+        "brightness",
+        "color",
+        "color_temperature",
+        "on_off"
+      ],
+      "links": [
+        {
+          "seen_by": "0x0000",
+          "relationship": "Sibling",
+          "lqi": 160,
+          "depth": 15,
+          "rx_on_when_idle": "On",
+          "permit_joining": "Unknown"
+        },
+        {
+          "seen_by": "0x4F53",
+          "relationship": "Sibling",
+          "lqi": 60,
+          "depth": 0,
+          "rx_on_when_idle": "On",
+          "permit_joining": "Unknown"
+        },
+        {
+          "seen_by": "0x751B",
+          "relationship": "Sibling",
+          "lqi": 108,
+          "depth": 2,
+          "rx_on_when_idle": "On",
+          "permit_joining": "Unknown"
+        },
+        {
+          "seen_by": "0xCD16",
+          "relationship": "Sibling",
+          "lqi": 77,
+          "depth": 2,
+          "rx_on_when_idle": "On",
+          "permit_joining": "Unknown"
+        }
+      ],
+      "errors": [],
+      "node_descriptor": {
+        "logical_type": "Router",
+        "complex_descriptor_available": 0,
+        "user_descriptor_available": 0,
+        "reserved": 0,
+        "aps_flags": 0,
+        "frequency_band": [
+          "Freq2400MHz"
+        ],
+        "mac_capability_flags": [
+          "FullFunctionDevice",
+          "MainsPowered",
+          "RxOnWhenIdle",
+          "AllocateAddress"
+        ],
+        "manufacturer_code": 4454,
+        "maximum_buffer_size": 74,
+        "maximum_incoming_transfer_size": 80,
+        "server_mask": 11264,
+        "maximum_outgoing_transfer_size": 80,
+        "descriptor_capability_field": []
+      },
+      "power_descriptor": {
+        "current_power_mode": "RxOnSyncedWithNodeDesc",
+        "available_power_sources": [
+          "MainsPower"
+        ],
+        "current_power_source": [
+          "MainsPower"
+        ],
+        "current_power_source_level": "Percent100"
+      },
+      "endpoints": {
+        "1": {
+          "profile": "0x0104",
+          "profile_name": "Home Automation",
+          "device_type": "0x010D",
+          "device_type_name": "EXTENDED_COLOR_LIGHT",
+          "device_version": 1,
+          "in_clusters": {
+            "0x0000": {
+              "name": "0x0000",
+              "attribute_source": "discovered",
+              "attributes": {
+                "zcl_version": {
+                  "id": "0x0000",
+                  "type": "uint8",
+                  "value": 8
+                },
+                "app_version": {
+                  "id": "0x0001",
+                  "type": "uint8",
+                  "value": 25
+                },
+                "stack_version": {
+                  "id": "0x0002",
+                  "type": "uint8",
+                  "value": 54
+                },
+                "hw_version": {
+                  "id": "0x0003",
+                  "type": "uint8",
+                  "value": 1
+                },
+                "manufacturer": {
+                  "id": "0x0004",
+                  "type": "string",
+                  "value": "innr"
+                },
+                "model": {
+                  "id": "0x0005",
+                  "type": "string",
+                  "value": "RB 287 C"
+                },
+                "date_code": {
+                  "id": "0x0006",
+                  "type": "string",
+                  "value": "20250323"
+                },
+                "power_source": {
+                  "id": "0x0007",
+                  "type": "enum8",
+                  "value": 1,
+                  "meaning": "Mains_single_phase"
+                },
+                "generic_device_class": {
+                  "id": "0x0008",
+                  "type": "enum8",
+                  "value": 0,
+                  "meaning": "Lighting"
+                },
+                "generic_device_type": {
+                  "id": "0x0009",
+                  "type": "enum8",
+                  "value": 5,
+                  "meaning": "LED_bulb"
+                },
+                "product_code": {
+                  "id": "0x000A",
+                  "type": "octstr",
+                  "value": "6f6e3839306d6a71"
+                },
+                "product_url": {
+                  "id": "0x000B",
+                  "type": "string",
+                  "value": "www.innr.com"
+                },
+                "sw_build_id": {
+                  "id": "0x4000",
+                  "type": "string",
+                  "value": "1.9.33"
+                },
+                "0xFFC0": {
+                  "id": "0xFFC0",
+                  "type": "string",
+                  "value": "_TZ3218_on8\u00061.9.33S0505B"
+                },
+                "0xFFDE": {
+                  "id": "0xFFDE",
+                  "type": "uint8",
+                  "value": 13
+                },
+                "0xFFE0": {
+                  "id": "0xFFE0",
+                  "type": "array",
+                  "raw": "e0ff0048",
+                  "note": "could not be decoded, raw reply bytes"
+                },
+                "0xFFE1": {
+                  "id": "0xFFE1",
+                  "type": "array",
+                  "raw": "e1ff0048",
+                  "note": "could not be decoded, raw reply bytes"
+                },
+                "0xFFE2": {
+                  "id": "0xFFE2",
+                  "type": "uint8",
+                  "value": 64
+                },
+                "0xFFE3": {
+                  "id": "0xFFE3",
+                  "type": "string",
+                  "value": ""
+                },
+                "cluster_revision": {
+                  "id": "0xFFFD",
+                  "type": "uint16",
+                  "value": 3
+                },
+                "reporting_status": {
+                  "id": "0xFFFE",
+                  "type": "enum8",
+                  "value": 0,
+                  "meaning": "Pending"
+                }
+              }
+            },
+            "0x0003": {
+              "name": "0x0003",
+              "attribute_source": "discovered",
+              "attributes": {
+                "identify_time": {
+                  "id": "0x0000",
+                  "type": "uint16",
+                  "value": 0
+                },
+                "cluster_revision": {
+                  "id": "0xFFFD",
+                  "type": "uint16",
+                  "value": 2
+                }
+              }
+            },
+            "0x0004": {
+              "name": "0x0004",
+              "attribute_source": "discovered",
+              "attributes": {
+                "name_support": {
+                  "id": "0x0000",
+                  "type": "map8",
+                  "value": 0,
+                  "meaning": []
+                },
+                "cluster_revision": {
+                  "id": "0xFFFD",
+                  "type": "uint16",
+                  "value": 3
+                }
+              }
+            },
+            "0x0005": {
+              "name": "0x0005",
+              "attribute_source": "discovered",
+              "attributes": {
+                "count": {
+                  "id": "0x0000",
+                  "type": "uint8",
+                  "value": 0
+                },
+                "current_scene": {
+                  "id": "0x0001",
+                  "type": "uint8",
+                  "value": 0
+                },
+                "current_group": {
+                  "id": "0x0002",
+                  "type": "uint16",
+                  "value": 0
+                },
+                "scene_valid": {
+                  "id": "0x0003",
+                  "type": "bool_",
+                  "value": 0,
+                  "meaning": "false"
+                },
+                "name_support": {
+                  "id": "0x0004",
+                  "type": "map8",
+                  "value": 0,
+                  "meaning": []
+                },
+                "cluster_revision": {
+                  "id": "0xFFFD",
+                  "type": "uint16",
+                  "value": 3
+                }
+              }
+            },
+            "0x0006": {
+              "name": "On/Off",
+              "attribute_source": "discovered",
+              "attributes": {
+                "on_off": {
+                  "id": "0x0000",
+                  "type": "bool_",
+                  "value": 0,
+                  "meaning": "false"
+                },
+                "global_scene_control": {
+                  "id": "0x4000",
+                  "type": "bool_",
+                  "value": 0,
+                  "meaning": "false"
+                },
+                "on_time": {
+                  "id": "0x4001",
+                  "type": "uint16",
+                  "value": 0
+                },
+                "off_wait_time": {
+                  "id": "0x4002",
+                  "type": "uint16",
+                  "value": 0
+                },
+                "start_up_on_off": {
+                  "id": "0x4003",
+                  "type": "enum8",
+                  "value": 1,
+                  "meaning": "On"
+                },
+                "cluster_revision": {
+                  "id": "0xFFFD",
+                  "type": "uint16",
+                  "value": 2
+                }
+              }
+            },
+            "0x0008": {
+              "name": "Level control",
+              "attribute_source": "discovered",
+              "attributes": {
+                "current_level": {
+                  "id": "0x0000",
+                  "type": "uint8",
+                  "value": 186
+                },
+                "remaining_time": {
+                  "id": "0x0001",
+                  "type": "uint16",
+                  "value": 0
+                },
+                "options": {
+                  "id": "0x000F",
+                  "type": "map8",
+                  "value": 0,
+                  "meaning": []
+                },
+                "on_off_transition_time": {
+                  "id": "0x0010",
+                  "type": "uint16",
+                  "value": 0
+                },
+                "on_level": {
+                  "id": "0x0011",
+                  "type": "uint8",
+                  "value": 255
+                },
+                "on_transition_time": {
+                  "id": "0x0012",
+                  "type": "uint16",
+                  "value": 65535
+                },
+                "off_transition_time": {
+                  "id": "0x0013",
+                  "type": "uint16",
+                  "value": 65535
+                },
+                "start_up_current_level": {
+                  "id": "0x4000",
+                  "type": "uint8",
+                  "value": 255
+                },
+                "cluster_revision": {
+                  "id": "0xFFFD",
+                  "type": "uint16",
+                  "value": 3
+                }
+              }
+            },
+            "0x0300": {
+              "name": "Color Control",
+              "attribute_source": "discovered",
+              "attributes": {
+                "current_hue": {
+                  "id": "0x0000",
+                  "type": "uint8",
+                  "value": 25
+                },
+                "current_saturation": {
+                  "id": "0x0001",
+                  "type": "uint8",
+                  "value": 139
+                },
+                "remaining_time": {
+                  "id": "0x0002",
+                  "type": "uint16",
+                  "value": 0
+                },
+                "current_x": {
+                  "id": "0x0003",
+                  "type": "uint16",
+                  "value": 30129
+                },
+                "current_y": {
+                  "id": "0x0004",
+                  "type": "uint16",
+                  "value": 26906
+                },
+                "color_temperature": {
+                  "id": "0x0007",
+                  "type": "uint16",
+                  "value": 370
+                },
+                "color_mode": {
+                  "id": "0x0008",
+                  "type": "enum8",
+                  "value": 2,
+                  "meaning": "Color_temperature"
+                },
+                "options": {
+                  "id": "0x000F",
+                  "type": "map8",
+                  "value": 0,
+                  "meaning": []
+                },
+                "num_primaries": {
+                  "id": "0x0010",
+                  "type": "uint8",
+                  "value": 3
+                },
+                "primary1_x": {
+                  "id": "0x0011",
+                  "type": "uint16",
+                  "value": 45822
+                },
+                "primary1_y": {
+                  "id": "0x0012",
+                  "type": "uint16",
+                  "value": 19641
+                },
+                "primary1_intensity": {
+                  "id": "0x0013",
+                  "type": "uint8",
+                  "value": 106
+                },
+                "primary2_x": {
+                  "id": "0x0015",
+                  "type": "uint16",
+                  "value": 9260
+                },
+                "primary2_y": {
+                  "id": "0x0016",
+                  "type": "uint16",
+                  "value": 46412
+                },
+                "primary2_intensity": {
+                  "id": "0x0017",
+                  "type": "uint8",
+                  "value": 254
+                },
+                "primary3_x": {
+                  "id": "0x0019",
+                  "type": "uint16",
+                  "value": 10335
+                },
+                "primary3_y": {
+                  "id": "0x001A",
+                  "type": "uint16",
+                  "value": 1585
+                },
+                "primary3_intensity": {
+                  "id": "0x001B",
+                  "type": "uint8",
+                  "value": 33
+                },
+                "enhanced_current_hue": {
+                  "id": "0x4000",
+                  "type": "uint16",
+                  "value": 6618
+                },
+                "enhanced_color_mode": {
+                  "id": "0x4001",
+                  "type": "enum8",
+                  "value": 2,
+                  "meaning": "Color_temperature"
+                },
+                "color_loop_active": {
+                  "id": "0x4002",
+                  "type": "uint8",
+                  "value": 0
+                },
+                "color_loop_direction": {
+                  "id": "0x4003",
+                  "type": "uint8",
+                  "value": 0
+                },
+                "color_loop_time": {
+                  "id": "0x4004",
+                  "type": "uint16",
+                  "value": 25
+                },
+                "color_loop_start_enhanced_hue": {
+                  "id": "0x4005",
+                  "type": "uint16",
+                  "value": 8960
+                },
+                "color_loop_stored_enhanced_hue": {
+                  "id": "0x4006",
+                  "type": "uint16",
+                  "value": 0
+                },
+                "color_capabilities": {
+                  "id": "0x400A",
+                  "type": "map16",
+                  "value": 31,
+                  "meaning": [
+                    "Hue_and_saturation",
+                    "Enhanced_hue",
+                    "Color_loop",
+                    "XY_attributes",
+                    "Color_temperature"
+                  ]
+                },
+                "color_temp_physical_min": {
+                  "id": "0x400B",
+                  "type": "uint16",
+                  "value": 153
+                },
+                "color_temp_physical_max": {
+                  "id": "0x400C",
+                  "type": "uint16",
+                  "value": 556
+                },
+                "couple_color_temp_to_level_min": {
+                  "id": "0x400D",
+                  "type": "uint16",
+                  "value": 285
+                },
+                "start_up_color_temperature": {
+                  "id": "0x4010",
+                  "type": "uint16",
+                  "value": 65535
+                },
+                "cluster_revision": {
+                  "id": "0xFFFD",
+                  "type": "uint16",
+                  "value": 3
+                }
+              }
+            },
+            "0x1000": {
+              "name": "0x1000",
+              "attribute_source": "zigpy definitions"
+            }
+          },
+          "out_clusters": {
+            "0x000A": "0x000A",
+            "0x0019": "0x0019"
+          },
+          "groups": {
+            "member_of": [
+              "0x00FF",
+              "0x0001",
+              "0x0003"
+            ],
+            "free_slots": 29
+          }
+        },
+        "242": {
+          "profile": "0xA1E0",
+          "profile_name": "Green Power",
+          "device_type": "0x0061",
+          "device_type_name": null,
+          "device_version": 0,
+          "in_clusters": {},
+          "out_clusters": {
+            "0x0021": "Green Power"
+          }
+        }
+      },
+      "sw_build_id": "1.9.33",
+      "date_code": "20250323",
+      "power_source": "Mains_single_phase",
+      "groups": [
+        "0x0001",
+        "0x0003",
+        "0x00FF"
+      ],
+      "is_light": true
+    },
+    {
+      "nwk": "0xCD16",
+      "ieee": "a4:c1:38:48:43:d3:0f:b9",
+      "role": "Router",
+      "manufacturer": "innr",
+      "model": "RB 287 C",
+      "capabilities": [
+        "brightness",
+        "color",
+        "color_temperature",
+        "on_off"
+      ],
+      "links": [
+        {
+          "seen_by": "0x0000",
+          "relationship": "Sibling",
+          "lqi": 122,
+          "depth": 15,
+          "rx_on_when_idle": "On",
+          "permit_joining": "Unknown"
+        },
+        {
+          "seen_by": "0x4F53",
+          "relationship": "Sibling",
+          "lqi": 61,
+          "depth": 1,
+          "rx_on_when_idle": "On",
+          "permit_joining": "Unknown"
+        },
+        {
+          "seen_by": "0x751B",
+          "relationship": "Sibling",
+          "lqi": 97,
+          "depth": 1,
+          "rx_on_when_idle": "On",
+          "permit_joining": "Unknown"
+        },
+        {
+          "seen_by": "0xC799",
+          "relationship": "Sibling",
+          "lqi": 80,
+          "depth": 0,
+          "rx_on_when_idle": "On",
+          "permit_joining": "Unknown"
+        }
+      ],
+      "errors": [],
+      "node_descriptor": {
+        "logical_type": "Router",
+        "complex_descriptor_available": 0,
+        "user_descriptor_available": 0,
+        "reserved": 0,
+        "aps_flags": 0,
+        "frequency_band": [
+          "Freq2400MHz"
+        ],
+        "mac_capability_flags": [
+          "FullFunctionDevice",
+          "MainsPowered",
+          "RxOnWhenIdle",
+          "AllocateAddress"
+        ],
+        "manufacturer_code": 4454,
+        "maximum_buffer_size": 74,
+        "maximum_incoming_transfer_size": 80,
+        "server_mask": 11264,
+        "maximum_outgoing_transfer_size": 80,
+        "descriptor_capability_field": []
+      },
+      "power_descriptor": {
+        "current_power_mode": "RxOnSyncedWithNodeDesc",
+        "available_power_sources": [
+          "MainsPower"
+        ],
+        "current_power_source": [
+          "MainsPower"
+        ],
+        "current_power_source_level": "Percent100"
+      },
+      "endpoints": {
+        "1": {
+          "profile": "0x0104",
+          "profile_name": "Home Automation",
+          "device_type": "0x010D",
+          "device_type_name": "EXTENDED_COLOR_LIGHT",
+          "device_version": 1,
+          "in_clusters": {
+            "0x0000": {
+              "name": "0x0000",
+              "attribute_source": "discovered",
+              "attributes": {
+                "zcl_version": {
+                  "id": "0x0000",
+                  "type": "uint8",
+                  "value": 8
+                },
+                "app_version": {
+                  "id": "0x0001",
+                  "type": "uint8",
+                  "value": 25
+                },
+                "stack_version": {
+                  "id": "0x0002",
+                  "type": "uint8",
+                  "value": 54
+                },
+                "hw_version": {
+                  "id": "0x0003",
+                  "type": "uint8",
+                  "value": 1
+                },
+                "manufacturer": {
+                  "id": "0x0004",
+                  "type": "string",
+                  "value": "innr"
+                },
+                "model": {
+                  "id": "0x0005",
+                  "type": "string",
+                  "value": "RB 287 C"
+                },
+                "date_code": {
+                  "id": "0x0006",
+                  "type": "string",
+                  "value": "20250323"
+                },
+                "power_source": {
+                  "id": "0x0007",
+                  "type": "enum8",
+                  "value": 1,
+                  "meaning": "Mains_single_phase"
+                },
+                "generic_device_class": {
+                  "id": "0x0008",
+                  "type": "enum8",
+                  "value": 0,
+                  "meaning": "Lighting"
+                },
+                "generic_device_type": {
+                  "id": "0x0009",
+                  "type": "enum8",
+                  "value": 5,
+                  "meaning": "LED_bulb"
+                },
+                "product_code": {
+                  "id": "0x000A",
+                  "type": "octstr",
+                  "value": "6f6e3839306d6a71"
+                },
+                "product_url": {
+                  "id": "0x000B",
+                  "type": "string",
+                  "value": "www.innr.com"
+                },
+                "sw_build_id": {
+                  "id": "0x4000",
+                  "type": "string",
+                  "value": "1.9.33"
+                },
+                "0xFFC0": {
+                  "id": "0xFFC0",
+                  "type": "string",
+                  "value": "_TZ3218_on8\u00061.9.33S0505B"
+                },
+                "0xFFDE": {
+                  "id": "0xFFDE",
+                  "type": "uint8",
+                  "value": 13
+                },
+                "0xFFE0": {
+                  "id": "0xFFE0",
+                  "type": "array",
+                  "raw": "e0ff0048",
+                  "note": "could not be decoded, raw reply bytes"
+                },
+                "0xFFE1": {
+                  "id": "0xFFE1",
+                  "type": "array",
+                  "raw": "e1ff0048",
+                  "note": "could not be decoded, raw reply bytes"
+                },
+                "0xFFE2": {
+                  "id": "0xFFE2",
+                  "type": "uint8",
+                  "value": 64
+                },
+                "0xFFE3": {
+                  "id": "0xFFE3",
+                  "type": "string",
+                  "value": ""
+                },
+                "cluster_revision": {
+                  "id": "0xFFFD",
+                  "type": "uint16",
+                  "value": 3
+                },
+                "reporting_status": {
+                  "id": "0xFFFE",
+                  "type": "enum8",
+                  "value": 0,
+                  "meaning": "Pending"
+                }
+              }
+            },
+            "0x0003": {
+              "name": "0x0003",
+              "attribute_source": "discovered",
+              "attributes": {
+                "identify_time": {
+                  "id": "0x0000",
+                  "type": "uint16",
+                  "value": 0
+                },
+                "cluster_revision": {
+                  "id": "0xFFFD",
+                  "type": "uint16",
+                  "value": 2
+                }
+              }
+            },
+            "0x0004": {
+              "name": "0x0004",
+              "attribute_source": "discovered",
+              "attributes": {
+                "name_support": {
+                  "id": "0x0000",
+                  "type": "map8",
+                  "value": 0,
+                  "meaning": []
+                },
+                "cluster_revision": {
+                  "id": "0xFFFD",
+                  "type": "uint16",
+                  "value": 3
+                }
+              }
+            },
+            "0x0005": {
+              "name": "0x0005",
+              "attribute_source": "discovered",
+              "attributes": {
+                "count": {
+                  "id": "0x0000",
+                  "type": "uint8",
+                  "value": 0
+                },
+                "current_scene": {
+                  "id": "0x0001",
+                  "type": "uint8",
+                  "value": 0
+                },
+                "current_group": {
+                  "id": "0x0002",
+                  "type": "uint16",
+                  "value": 0
+                },
+                "scene_valid": {
+                  "id": "0x0003",
+                  "type": "bool_",
+                  "value": 0,
+                  "meaning": "false"
+                },
+                "name_support": {
+                  "id": "0x0004",
+                  "type": "map8",
+                  "value": 0,
+                  "meaning": []
+                },
+                "cluster_revision": {
+                  "id": "0xFFFD",
+                  "type": "uint16",
+                  "value": 3
+                }
+              }
+            },
+            "0x0006": {
+              "name": "On/Off",
+              "attribute_source": "discovered",
+              "attributes": {
+                "on_off": {
+                  "id": "0x0000",
+                  "type": "bool_",
+                  "value": 0,
+                  "meaning": "false"
+                },
+                "global_scene_control": {
+                  "id": "0x4000",
+                  "type": "bool_",
+                  "value": 0,
+                  "meaning": "false"
+                },
+                "on_time": {
+                  "id": "0x4001",
+                  "type": "uint16",
+                  "value": 0
+                },
+                "off_wait_time": {
+                  "id": "0x4002",
+                  "type": "uint16",
+                  "value": 0
+                },
+                "start_up_on_off": {
+                  "id": "0x4003",
+                  "type": "enum8",
+                  "value": 1,
+                  "meaning": "On"
+                },
+                "cluster_revision": {
+                  "id": "0xFFFD",
+                  "type": "uint16",
+                  "value": 2
+                }
+              }
+            },
+            "0x0008": {
+              "name": "Level control",
+              "attribute_source": "discovered",
+              "attributes": {
+                "current_level": {
+                  "id": "0x0000",
+                  "type": "uint8",
+                  "value": 186
+                },
+                "remaining_time": {
+                  "id": "0x0001",
+                  "type": "uint16",
+                  "value": 0
+                },
+                "options": {
+                  "id": "0x000F",
+                  "type": "map8",
+                  "value": 0,
+                  "meaning": []
+                },
+                "on_off_transition_time": {
+                  "id": "0x0010",
+                  "type": "uint16",
+                  "value": 0
+                },
+                "on_level": {
+                  "id": "0x0011",
+                  "type": "uint8",
+                  "value": 255
+                },
+                "on_transition_time": {
+                  "id": "0x0012",
+                  "type": "uint16",
+                  "value": 65535
+                },
+                "off_transition_time": {
+                  "id": "0x0013",
+                  "type": "uint16",
+                  "value": 65535
+                },
+                "start_up_current_level": {
+                  "id": "0x4000",
+                  "type": "uint8",
+                  "value": 255
+                },
+                "cluster_revision": {
+                  "id": "0xFFFD",
+                  "type": "uint16",
+                  "value": 3
+                }
+              }
+            },
+            "0x0300": {
+              "name": "Color Control",
+              "attribute_source": "discovered",
+              "attributes": {
+                "current_hue": {
+                  "id": "0x0000",
+                  "type": "uint8",
+                  "value": 25
+                },
+                "current_saturation": {
+                  "id": "0x0001",
+                  "type": "uint8",
+                  "value": 139
+                },
+                "remaining_time": {
+                  "id": "0x0002",
+                  "type": "uint16",
+                  "value": 0
+                },
+                "current_x": {
+                  "id": "0x0003",
+                  "type": "uint16",
+                  "value": 30129
+                },
+                "current_y": {
+                  "id": "0x0004",
+                  "type": "uint16",
+                  "value": 26906
+                },
+                "color_temperature": {
+                  "id": "0x0007",
+                  "type": "uint16",
+                  "value": 370
+                },
+                "color_mode": {
+                  "id": "0x0008",
+                  "type": "enum8",
+                  "value": 2,
+                  "meaning": "Color_temperature"
+                },
+                "options": {
+                  "id": "0x000F",
+                  "type": "map8",
+                  "value": 0,
+                  "meaning": []
+                },
+                "num_primaries": {
+                  "id": "0x0010",
+                  "type": "uint8",
+                  "value": 3
+                },
+                "primary1_x": {
+                  "id": "0x0011",
+                  "type": "uint16",
+                  "value": 45822
+                },
+                "primary1_y": {
+                  "id": "0x0012",
+                  "type": "uint16",
+                  "value": 19641
+                },
+                "primary1_intensity": {
+                  "id": "0x0013",
+                  "type": "uint8",
+                  "value": 106
+                },
+                "primary2_x": {
+                  "id": "0x0015",
+                  "type": "uint16",
+                  "value": 9260
+                },
+                "primary2_y": {
+                  "id": "0x0016",
+                  "type": "uint16",
+                  "value": 46412
+                },
+                "primary2_intensity": {
+                  "id": "0x0017",
+                  "type": "uint8",
+                  "value": 254
+                },
+                "primary3_x": {
+                  "id": "0x0019",
+                  "type": "uint16",
+                  "value": 10335
+                },
+                "primary3_y": {
+                  "id": "0x001A",
+                  "type": "uint16",
+                  "value": 1585
+                },
+                "primary3_intensity": {
+                  "id": "0x001B",
+                  "type": "uint8",
+                  "value": 33
+                },
+                "enhanced_current_hue": {
+                  "id": "0x4000",
+                  "type": "uint16",
+                  "value": 6618
+                },
+                "enhanced_color_mode": {
+                  "id": "0x4001",
+                  "type": "enum8",
+                  "value": 2,
+                  "meaning": "Color_temperature"
+                },
+                "color_loop_active": {
+                  "id": "0x4002",
+                  "type": "uint8",
+                  "value": 0
+                },
+                "color_loop_direction": {
+                  "id": "0x4003",
+                  "type": "uint8",
+                  "value": 0
+                },
+                "color_loop_time": {
+                  "id": "0x4004",
+                  "type": "uint16",
+                  "value": 25
+                },
+                "color_loop_start_enhanced_hue": {
+                  "id": "0x4005",
+                  "type": "uint16",
+                  "value": 8960
+                },
+                "color_loop_stored_enhanced_hue": {
+                  "id": "0x4006",
+                  "type": "uint16",
+                  "value": 0
+                },
+                "color_capabilities": {
+                  "id": "0x400A",
+                  "type": "map16",
+                  "value": 31,
+                  "meaning": [
+                    "Hue_and_saturation",
+                    "Enhanced_hue",
+                    "Color_loop",
+                    "XY_attributes",
+                    "Color_temperature"
+                  ]
+                },
+                "color_temp_physical_min": {
+                  "id": "0x400B",
+                  "type": "uint16",
+                  "value": 153
+                },
+                "color_temp_physical_max": {
+                  "id": "0x400C",
+                  "type": "uint16",
+                  "value": 556
+                },
+                "couple_color_temp_to_level_min": {
+                  "id": "0x400D",
+                  "type": "uint16",
+                  "value": 285
+                },
+                "start_up_color_temperature": {
+                  "id": "0x4010",
+                  "type": "uint16",
+                  "value": 65535
+                },
+                "cluster_revision": {
+                  "id": "0xFFFD",
+                  "type": "uint16",
+                  "value": 3
+                }
+              }
+            },
+            "0x1000": {
+              "name": "0x1000",
+              "attribute_source": "zigpy definitions"
+            }
+          },
+          "out_clusters": {
+            "0x000A": "0x000A",
+            "0x0019": "0x0019"
+          },
+          "groups": {
+            "member_of": [
+              "0x00FF",
+              "0x0001",
+              "0x0003"
+            ],
+            "free_slots": 29
+          }
+        },
+        "242": {
+          "profile": "0xA1E0",
+          "profile_name": "Green Power",
+          "device_type": "0x0061",
+          "device_type_name": null,
+          "device_version": 0,
+          "in_clusters": {},
+          "out_clusters": {
+            "0x0021": "Green Power"
+          }
+        }
+      },
+      "sw_build_id": "1.9.33",
+      "date_code": "20250323",
+      "power_source": "Mains_single_phase",
+      "groups": [
+        "0x0001",
+        "0x0003",
+        "0x00FF"
+      ],
+      "is_light": true
+    }
+  ]
+}

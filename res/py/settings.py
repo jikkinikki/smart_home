@@ -5,6 +5,11 @@
 TTS_ENGINE = "drama-3"
 TTS_AUDIO_FORMAT = "mp3"   # mp3, wav, opus, pcm
 
+# ---------- Zigbee remote (USB dongle joined to the Innr bridge) ----------
+
+ZIGBEE_PORT = "COM4"
+ZIGBEE_BAUDRATE = 115200
+
 # ---------- OpenRouter LLM ----------
 
 OPENROUTER_MODEL = "openai/gpt-4o-mini"
