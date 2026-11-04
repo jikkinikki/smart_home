@@ -2,6 +2,7 @@ class Device:
     def __init__(self):
         self._is_ready = False
         self._device_name = ""
+        self.id = None
 
     def is_ready(self) -> bool:
         return self._is_ready
@@ -11,3 +12,4 @@ class Device:
 
     def load_device(self, jsonData: dict):
         self._device_name = jsonData["device_name"]
+        self.id = jsonData.get("dev_id")

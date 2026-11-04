@@ -6,16 +6,16 @@ import threading
 from pathlib import Path
 
 import devices.TuyaLamp as TuyaLamp
+import devices.InnrLamp as InnrLamp
 import devices.Device as Device
 
+# type -> source -> function that creates an (unloaded) device
 device_loader_map = {
 
     "lamp": {
 
-        "tuya": {
-
-            TuyaLamp.TuyaLamp
-        }
+        "tuya": lambda: TuyaLamp.TuyaLamp(True),
+        "zigbee": InnrLamp.InnrLamp,
     }
 }
 
@@ -37,7 +37,7 @@ class DeviceHandler:
 
     # Starts and runs seperate thread
     def load_devices(self, debug_info = False):
-        with open("res/json/devices.json", "r") as f:
+        with open(DEVICES_FILE, "r", encoding="utf-8") as f:
             data = json.load(f)
 
             self.devices_loading = 0
@@ -49,17 +49,31 @@ class DeviceHandler:
                 if debug_info:
                     print(device)
 
-                if device["device_name"] != "all_devices":
-                    temp_device = Device.Device()
-                    temp_device._device_name = device["device_name"]
-                    self._allDevices.append(temp_device)
-                    # self._allDevices.append({"loading": device["device_name"]})
+                if device["device_name"] == "all_devices":
+                    continue
 
-                    threads.append(threading.Thread(target=self.load_device, args=(i, device, debug_info)))
-                    self.devices_loading += 1
-                    i += 1
+                label = device["device_name"] or device.get("dev_id")
+
+                if device.get("custom_data", {}).get("disabled"):
+                    print("disabled, not loading:", label)
+                    continue
+
+                if device_loader_map.get(device.get("type"), {}).get(device.get("source")) is None:
+                    print("no loader for", device.get("type"), device.get("source"), "- skipping", label)
+                    continue
+
+                # Placeholder until the real device has loaded in its thread
+                temp_device = Device.Device()
+                temp_device._device_name = device["device_name"]
+                temp_device.id = device.get("dev_id")
+                self._allDevices.append(temp_device)
+
+                threads.append(threading.Thread(target=self.load_device, args=(i, device, debug_info)))
+                self.devices_loading += 1
+                i += 1
 
             self.start_time = time.time()
+            self._load_threads = threads
 
             for thread in threads:
                 thread.start()
@@ -218,33 +232,34 @@ class DeviceHandler:
             return int(ep), data.get("in_clusters", {})
         return None, {}
 
+    def wait_until_loaded(self, timeout = 60):
+        """Block until every device thread has finished loading (or failed)."""
+        end = time.time() + timeout
+        for thread in getattr(self, "_load_threads", []):
+            thread.join(max(0, end - time.time()))
+
     def load_device(self, device_index, device_data, debug_info = False):
-
-        device = ""
-
-        # if device_data["source"] == "tuya":
-            # if device_data["type"] == "lamp":
-                # device = TuyaLamp.TuyaLamp(True)
 
         type = device_data["type"]
         source = device_data["source"]
+        label = device_data["device_name"] or device_data.get("dev_id")
 
         try:
-            device_loader_map[type][source]
-
+            create_device = device_loader_map[type][source]
+            device = create_device()
             device.load_device(device_data)
-            
-            self.devices_loading -= 1
-            print("waiting for devices: ", self.devices_loading, "time waited: ", time.time() - self.start_time)
-            
+
             with self.devices_lock:
                 self._allDevices[device_index] = device
-            
+                self.devices_loading -= 1
+                print("waiting for devices: ", self.devices_loading, "time waited: ", time.time() - self.start_time)
+
             self.printDevicesStatus("all")
 
-        except:
-            print("missing loader for", type, source)
-            self.devices_loading -= 1
+        except Exception as e:
+            print("failed to load", label, f"({type} {source}):", f"{e.__class__.__name__}: {e}")
+            with self.devices_lock:
+                self.devices_loading -= 1
         
         # return device
    
@@ -315,7 +330,7 @@ class DeviceHandler:
         for device in devices:
 
             if hasattr(device, "status"):
-                print(device.device_name, device.status())
+                print(device.get_device_name() or device.id, device.status())
             else:
                 print(device)
 
@@ -324,5 +339,6 @@ class DeviceHandler:
 
 if(__name__ == "__main__"):
     deviceHandler = DeviceHandler()
+    deviceHandler.wait_until_loaded()  # devices load in threads; don't exit before they're done
     deviceHandler.printDevicesInfo("all")
     
