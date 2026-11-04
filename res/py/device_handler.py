@@ -3,6 +3,7 @@ import tinytuya
 import time
 
 import threading
+from pathlib import Path
 
 import devices.TuyaLamp as TuyaLamp
 import devices.Device as Device
@@ -18,11 +19,16 @@ device_loader_map = {
     }
 }
 
+JSON_FOLDER = Path(__file__).resolve().parents[1] / "json"
+DEVICES_FILE = JSON_FOLDER / "devices.json"
+ZIGBEE_DEVICES_FILE = JSON_FOLDER / "zigbee_devices.json"  # written by: python zigbee_remote.py devices
+
 class DeviceHandler:
     def __init__(self):
         self._allDevices = []
         self.devices_lock = threading.Lock()
         self.patch_devices()
+        self.patch_zigbee_devices()
         self.load_devices(False)
 
     def clone_dict(self, dict):
@@ -123,6 +129,94 @@ class DeviceHandler:
 
         if debug_info:
             print("")
+
+    def patch_zigbee_devices(self, debug_info = False):
+        """
+        Patch every device in zigbee_devices.json into devices.json.
+
+        Devices are matched on their IEEE address (dev_id), which never changes. A device
+        already in devices.json keeps its device_name; a new device is added with an empty
+        device_name for you to fill in. A device that didn't answer during the last read
+        only gets its address updated, so known info isn't wiped.
+        """
+        if not ZIGBEE_DEVICES_FILE.exists():
+            if debug_info:
+                print("No zigbee_devices.json, skipping zigbee patch")
+            return
+
+        zigbee_data = json.loads(ZIGBEE_DEVICES_FILE.read_text(encoding="utf-8"))
+        devices = json.loads(DEVICES_FILE.read_text(encoding="utf-8"))
+
+        for zb in zigbee_data.get("devices", []):
+            ieee = zb.get("ieee")
+            if not ieee:
+                continue
+
+            entry = next((d for d in devices if d.get("dev_id") == ieee), None)
+            if entry is None:
+                entry = {
+                    "device_name": "",
+                    "type": "unknown",
+                    "source": "zigbee",
+                    "address": None,
+                    "dev_id": ieee,
+                    "version": None,
+                    "custom_data": {"disabled": False},
+                    "zigbee": {},
+                }
+                devices.append(entry)
+                if debug_info:
+                    print("added", ieee)
+            elif debug_info:
+                print("updated", entry["device_name"] or ieee)
+
+            reachable = "endpoints" in zb
+            info = entry.setdefault("zigbee", {})
+            entry["address"] = zb["nwk"]  # short network address, can change after a rejoin
+            info.update({"nwk": zb["nwk"], "ieee": ieee, "role": zb.get("role"), "reachable": reachable})
+
+            if not reachable:
+                continue
+
+            if zb.get("is_light"):
+                entry["type"] = "lamp"
+            elif zb.get("role") == "Coordinator":
+                entry["type"] = "bridge"
+
+            if zb.get("sw_build_id"):
+                entry["version"] = zb["sw_build_id"]
+
+            endpoint, clusters = self._zigbee_main_endpoint(zb)
+            color = clusters.get("0x0300", {}).get("attributes", {})
+            temp_min = color.get("color_temp_physical_min", {}).get("value")
+            temp_max = color.get("color_temp_physical_max", {}).get("value")
+
+            info.update({
+                "endpoint": endpoint,
+                "manufacturer": zb.get("manufacturer"),
+                "model": zb.get("model"),
+                "sw_build_id": zb.get("sw_build_id"),
+                "date_code": zb.get("date_code"),
+                "power_source": zb.get("power_source"),
+                "capabilities": zb.get("capabilities", []),
+                "groups": zb.get("groups", []),
+                "in_clusters": sorted(clusters),
+                "color_temp_mireds": [temp_min, temp_max] if temp_min and temp_max else None,
+                "last_read": zigbee_data.get("read_at"),
+            })
+
+        DEVICES_FILE.write_text(json.dumps(devices, indent=2, ensure_ascii=False), encoding="utf-8")
+
+    @staticmethod
+    def _zigbee_main_endpoint(zb):
+        """(endpoint number, its input clusters): the one with On/Off, else the first one."""
+        endpoints = zb.get("endpoints", {})
+        for ep, data in endpoints.items():
+            if "0x0006" in data.get("in_clusters", {}):
+                return int(ep), data["in_clusters"]
+        for ep, data in endpoints.items():
+            return int(ep), data.get("in_clusters", {})
+        return None, {}
 
     def load_device(self, device_index, device_data, debug_info = False):
 

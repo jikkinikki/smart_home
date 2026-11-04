@@ -16,16 +16,23 @@ From code:
 
     async with ZigbeeRemote() as remote:
         data = await remote.read_devices()
+
+From normal (non-async) code, e.g. devices/InnrLamp.py, use the one shared connection:
+
+    zigbee = SharedZigbeeRemote.get()
+    zigbee.run(zigbee.remote.lamp_on(0x4F53, 1))
 """
 
 from __future__ import annotations
 
 import argparse
 import asyncio
+import atexit
 import enum
 import itertools
 import json
 import os
+import threading
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -109,6 +116,44 @@ class Radio:
             return await asyncio.wait_for(fut, timeout)
         finally:
             self._waiters.pop(key, None)
+
+    async def find_nwk(self, ieee: str, timeout=3) -> int | None:
+        """Ask the whole network 'who has this IEEE address?' -> its current short address."""
+        cmd = zdo_t.ZDOCmd.NWK_addr_req
+        _, req_types = zdo_t.CLUSTERS[cmd]
+        _, rsp_types = zdo_t.CLUSTERS[zdo_t.ZDOCmd.NWK_addr_rsp]
+        tsn = self.next_tsn()
+        data = bytes([tsn]) + zt.serialize(
+            [zt.EUI64.convert(ieee), zdo_t.AddrRequestType.Single, 0], req_types
+        )
+        key = ("zdo", None, zdo_t.ZDOCmd.NWK_addr_rsp, tsn)
+        fut = asyncio.get_running_loop().create_future()
+        self._waiters[key] = fut
+        try:
+            await self.ezsp.send_broadcast(
+                address=zt.BroadcastAddress.RX_ON_WHEN_IDLE,
+                aps_frame=make_aps(0x0000, cmd, src_ep=0, dst_ep=0, unicast=False),
+                radius=0,
+                message_tag=tsn,
+                aps_sequence=tsn,
+                data=data,
+            )
+            message = await asyncio.wait_for(fut, timeout)
+        except asyncio.TimeoutError:
+            return None
+        finally:
+            self._waiters.pop(key, None)
+        values, _ = zt.deserialize(message[1:], rsp_types)
+        status, _, nwk = values[:3]
+        return int(nwk) if status == zdo_t.Status.SUCCESS else None
+
+    async def send_cluster_command(self, nwk, ep, cluster, command_id, payload=b""):
+        """Fire-and-forget cluster command (no reply asked for). Returns the send status."""
+        tsn = self.next_tsn()
+        data = bytes([0x11, tsn, command_id]) + payload  # cluster-specific, no default response
+        aps = make_aps(HA_PROFILE, cluster, src_ep=1, dst_ep=ep, unicast=True)
+        status, _ = await self.ezsp.send_unicast(nwk=t.NWK(nwk), aps_frame=aps, message_tag=tsn, data=data)
+        return status
 
     async def get_ieee(self, nwk: int) -> str:
         """Ask a device for its permanent IEEE address."""
@@ -759,6 +804,145 @@ class ZigbeeRemote:
 
         info["capabilities"] = sorted(set(capabilities))
         info["is_light"] = "on_off" in info["capabilities"]
+
+
+    # ---------- lamp commands ----------
+    # Fire-and-forget: each returns the dongle's send status (t.sl_Status.OK when sent).
+    # Brightness/colour commands use "execute if off", so they also apply to a lamp that's off.
+
+    async def lamp_on(self, nwk, ep=1):
+        return await self.radio.send_cluster_command(nwk, ep, ONOFF_CLUSTER, 0x01)
+
+    async def lamp_off(self, nwk, ep=1):
+        return await self.radio.send_cluster_command(nwk, ep, ONOFF_CLUSTER, 0x00)
+
+    async def lamp_toggle(self, nwk, ep=1):
+        return await self.radio.send_cluster_command(nwk, ep, ONOFF_CLUSTER, 0x02)
+
+    async def lamp_level(self, nwk, ep, level, transition=4):
+        """level 0-254, transition in tenths of a second."""
+        payload = zt.uint8_t(level).serialize() + zt.uint16_t(transition).serialize() + EXECUTE_IF_OFF
+        return await self.radio.send_cluster_command(nwk, ep, LEVEL_CLUSTER, 0x00, payload)
+
+    async def lamp_color_temp(self, nwk, ep, mireds, transition=4):
+        payload = zt.uint16_t(mireds).serialize() + zt.uint16_t(transition).serialize() + EXECUTE_IF_OFF
+        return await self.radio.send_cluster_command(nwk, ep, COLOR_CLUSTER, 0x0A, payload)
+
+    async def lamp_xy(self, nwk, ep, x, y, transition=4):
+        """x, y: CIE 1931 colour coordinates, 0.0-1.0."""
+        payload = (zt.uint16_t(to_zcl_xy(x)).serialize() + zt.uint16_t(to_zcl_xy(y)).serialize()
+                   + zt.uint16_t(transition).serialize() + EXECUTE_IF_OFF)
+        return await self.radio.send_cluster_command(nwk, ep, COLOR_CLUSTER, 0x07, payload)
+
+    async def lamp_state(self, nwk, ep=1) -> dict:
+        """Current on/off, level and colour of a lamp."""
+        def value(records, attr_id):
+            record = (records or {}).get(attr_id)
+            if record is None or isinstance(record, bytes) or record.status != zcl_f.Status.SUCCESS:
+                return None
+            return record.value.value
+
+        onoff = await self.radio.read_attribute_records(nwk, ep, ONOFF_CLUSTER, [0x0000])
+        level = await self.radio.read_attribute_records(nwk, ep, LEVEL_CLUSTER, [0x0000])
+        color = await self.radio.read_attribute_records(nwk, ep, COLOR_CLUSTER, [0x0003, 0x0004, 0x0007, 0x0008])
+
+        x, y, mode = value(color, 0x0003), value(color, 0x0004), value(color, 0x0008)
+        on = value(onoff, 0x0000)
+        return {
+            "on": None if on is None else bool(on),
+            "level": value(level, 0x0000),
+            "color_temp_mireds": value(color, 0x0007),
+            "color_xy": [round(x / 65536, 4), round(y / 65536, 4)] if x is not None and y is not None else None,
+            "color_mode": {0: "hue_saturation", 1: "xy", 2: "color_temperature"}.get(mode, mode),
+        }
+
+
+EXECUTE_IF_OFF = bytes([0x01, 0x01])  # ZCL options mask + override
+
+
+def to_zcl_xy(value: float) -> int:
+    return max(0, min(65279, round(value * 65536)))
+
+
+def rgb_to_xy(r: int, g: int, b: int) -> tuple[float, float]:
+    """sRGB (0-255) -> CIE 1931 xy, which is how Zigbee lamps take colours."""
+    def linear(c):
+        c /= 255
+        return ((c + 0.055) / 1.055) ** 2.4 if c > 0.04045 else c / 12.92
+
+    r, g, b = linear(r), linear(g), linear(b)
+    X = r * 0.4124 + g * 0.3576 + b * 0.1805
+    Y = r * 0.2126 + g * 0.7152 + b * 0.0722
+    Z = r * 0.0193 + g * 0.1192 + b * 0.9505
+    total = X + Y + Z
+    if total == 0:
+        return 0.3127, 0.3290  # black: fall back to the white point
+    return X / total, Y / total
+
+
+# ---------------------------------------------------------------------------
+# One shared connection for normal (non-async) code, e.g. the device classes
+# ---------------------------------------------------------------------------
+
+class SharedZigbeeRemote:
+    """
+    The dongle can only be opened once, so every Zigbee device shares this connection.
+    It runs its own asyncio loop in a background thread; run() hands it coroutines.
+
+        zigbee = SharedZigbeeRemote.get()
+        zigbee.run(zigbee.remote.lamp_on(0x4F53, 1))
+    """
+
+    _instance = None
+    _lock = threading.Lock()
+
+    @classmethod
+    def get(cls, port: str | None = None) -> "SharedZigbeeRemote":
+        with cls._lock:
+            if cls._instance is None:
+                cls._instance = cls(port)
+            return cls._instance
+
+    def __init__(self, port: str | None = None):
+        self.loop = asyncio.new_event_loop()
+        threading.Thread(target=self.loop.run_forever, name="zigbee-remote", daemon=True).start()
+        self.remote = ZigbeeRemote(port)
+        try:
+            self.run(self._connect(), timeout=60)
+        except Exception:
+            self.loop.call_soon_threadsafe(self.loop.stop)
+            raise
+        # The serial port's reader thread keeps Python alive at exit, and Python waits for
+        # threads *before* normal atexit hooks run. This hook runs before that wait.
+        register = getattr(threading, "_register_atexit", atexit.register)
+        register(self.close)
+
+    async def _connect(self):
+        await self.remote.connect()
+        if not await self.remote.is_remote():
+            await self.remote.disconnect()
+            raise RuntimeError("Zigbee dongle isn't joined to the bridge. Run: python zigbee_remote.py join")
+
+    def run(self, coro, wait: bool = True, timeout: float = 15):
+        """Run a coroutine on the Zigbee loop. wait=False returns at once (errors are printed)."""
+        future = asyncio.run_coroutine_threadsafe(coro, self.loop)
+        if wait:
+            return future.result(timeout)
+        future.add_done_callback(_print_failure)
+        return future
+
+    def close(self):
+        try:
+            self.run(self.remote.disconnect(), timeout=5)
+        except Exception:
+            pass
+        self.loop.call_soon_threadsafe(self.loop.stop)
+
+
+def _print_failure(future):
+    if not future.cancelled() and future.exception() is not None:
+        exc = future.exception()
+        print(f"Zigbee command failed: {exc.__class__.__name__}: {exc}")
 
 
 def save_json(data, path):
