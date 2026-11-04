@@ -35,14 +35,20 @@ class InnrLamp(Device.Device, Lamp.Lamp):
         self.zigbee.run(coro, wait=not nowait)
 
     def turn_on(self, nowait: bool = False):
+        super().turn_on(nowait=nowait)
+
         self._send(self.zigbee.remote.lamp_on(self.nwk, self.endpoint), nowait)
         self._isOn = True
 
     def turn_off(self, nowait: bool = False):
+        super().turn_off(nowait=nowait)
+
         self._send(self.zigbee.remote.lamp_off(self.nwk, self.endpoint), nowait)
         self._isOn = False
 
     def toggle(self, nowait: bool = False):
+        super().toggle(nowait=nowait)
+
         self._send(self.zigbee.remote.lamp_toggle(self.nwk, self.endpoint), nowait)
         self._isOn = not self._isOn
 

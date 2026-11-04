@@ -28,9 +28,13 @@ class TuyaLamp(Device.Device, Lamp.Lamp):
         self._is_ready = True
 
     def turn_on(self, nowait: bool = False):
+        super().turn_on(nowait=nowait)
+
         self.tuyaDevice.turn_on(nowait=nowait)
 
     def turn_off(self, nowait: bool = False):
+        super().turn_off(nowait=nowait)
+
         self.tuyaDevice.turn_off(nowait=nowait)
 
     def set_brightness(self, brightness: int, nowait: bool = False):
