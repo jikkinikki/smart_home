@@ -27,7 +27,10 @@ class Indoor_Sun():
         self.temperature_range = [0, 70]   # percent of the lamp's colour-temperature range:
                                            # 0% = warmest, 100% = coolest
 
-        self.update_interval = 30          # seconds between updates
+        self.fall_off_slowness = 0.5       # after the peak: 0 = S-curve (dims steadily),
+                                           # 1 = sine (stays bright long, drops at the end)
+
+        self.update_interval = 15          # seconds between updates
         self.command_gap = 2               # seconds between brightness and temperature
                                            # (Tuya lamps can error when both are sent at once)
 
@@ -138,9 +141,9 @@ class Indoor_Sun():
     def get_sun_height(self, now):
         """
         0.0 at sunrise -> 1.0 at the peak -> 0.0 at sunset, or None at night.
-        Rising and setting each follow a smooth S-curve (half a cosine wave): gentle near
-        sunrise/sunset and near the peak, steady change in between. They can have different
-        lengths (e.g. a short morning and a long evening). Works across midnight too.
+        Rising follows a smooth S-curve (half a cosine wave). Setting is a mix of that S-curve
+        and a quarter sine (fall_off_slowness), so the evening stays bright a bit longer.
+        Rise and fall can have different lengths. Works across midnight too.
         """
 
         day_length = (self.sunset - self.sunrise) % 86400
@@ -152,10 +155,13 @@ class Indoor_Sun():
 
         if since_sunrise <= rise_length:
             progress = since_sunrise / rise_length
-        else:
-            progress = (day_length - since_sunrise) / (day_length - rise_length)
+            return (1 - math.cos(progress * math.pi)) / 2
 
-        return (1 - math.cos(progress * math.pi)) / 2
+        progress = (day_length - since_sunrise) / (day_length - rise_length)
+        s_curve = (1 - math.cos(progress * math.pi)) / 2
+        sine = math.sin(progress * math.pi / 2)
+
+        return s_curve + (sine - s_curve) * self.fall_off_slowness
 
     @staticmethod
     def value_in_range(value_range, perc):
