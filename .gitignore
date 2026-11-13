@@ -18,3 +18,15 @@ decrypt.json
 /res/change_que/*
 !/res/change_que/.gitkeep
 /backend/py/keys.py
+
+# --- secrets: never commit these ---
+keys.py
+secrets.py
+.env
+.env.*
+!.env.example
+devices restore.json
+
+# python bytecode (can contain copies of secrets)
+__pycache__/
+*.pyc
