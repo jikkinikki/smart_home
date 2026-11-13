@@ -102,7 +102,7 @@ class InnrController:
         return actions[action]["func"](lamps, value, nowait=nowait)
 
     def get_actions(self) -> dict:
-        """{name: {desc, func}}. que_reader uses the same names (brightness, temp, color, switch_power)."""
+        """{name: {desc, func}}."""
         return {
             "on": {"desc": "turn on", "func": lambda lamps, value=None, nowait=False: self.turn_on(lamps, nowait=nowait)},
             "off": {"desc": "turn off", "func": lambda lamps, value=None, nowait=False: self.turn_off(lamps, nowait=nowait)},

@@ -14,9 +14,6 @@ devices.json
 decrypt.json
 /res/py/keys.py
 
-# web UI command queue (temporary files)
-/res/change_que/*
-!/res/change_que/.gitkeep
 /backend/py/config/keys.py
 
 # --- secrets: never commit these ---

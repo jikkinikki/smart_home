@@ -3,8 +3,6 @@ from contextlib import asynccontextmanager
 
 import control.device_commands as dc
 import control.device_handler as dh
-import automation.que_reader as qr
-import automation.Lamp_cycle as lc
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -25,17 +23,9 @@ async def lifespan(app: FastAPI):
 
     device_commands.set_device_selector("all")
 
-    que_reader = qr.Que_reader(
-        device_commands,
-        device_handler
-    )
-
     # Share instances with API routers
     app.state.device_handler = device_handler
     app.state.device_commands = device_commands
-
-    # Start background tasks
-    multithread(que_reader.read_que)
 
     yield
 
