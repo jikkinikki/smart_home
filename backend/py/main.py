@@ -7,6 +7,7 @@ import control.device_handler as dh
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from api import devices
+from utils.startup_reporter import StartupReporter
 
 
 def multithread(func):
@@ -26,6 +27,8 @@ async def lifespan(app: FastAPI):
     # Share instances with API routers
     app.state.device_handler = device_handler
     app.state.device_commands = device_commands
+
+    StartupReporter(device_handler).start()
 
     yield
 
