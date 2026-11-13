@@ -1,5 +1,13 @@
 {
+  "scripts": {
+    "dev": "concurrently --kill-others --names backend,frontend --prefix-colors blue,green \"npm:dev:backend\" \"npm:dev:frontend\"",
+    "dev:backend": "venv\\Scripts\\python -m uvicorn main:app --app-dir backend/py --reload --reload-dir backend/py --port 8000",
+    "dev:frontend": "npm --prefix frontend run dev"
+  },
   "dependencies": {
     "@vitejs/plugin-basic-ssl": "^1.1.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.5"
   }
 }
