@@ -17,7 +17,7 @@ decrypt.json
 # web UI command queue (temporary files)
 /res/change_que/*
 !/res/change_que/.gitkeep
-/backend/py/keys.py
+/backend/py/config/keys.py
 
 # --- secrets: never commit these ---
 keys.py

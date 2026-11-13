@@ -5,6 +5,8 @@ import time
 import threading
 from pathlib import Path
 
+from config.paths import JSON_DIR
+
 import devices.TuyaLamp as TuyaLamp
 import devices.InnrLamp as InnrLamp
 import devices.Device as Device
@@ -19,9 +21,9 @@ device_loader_map = {
     }
 }
 
-JSON_FOLDER = Path(__file__).resolve().parents[1] / "json"
+JSON_FOLDER = JSON_DIR
 DEVICES_FILE = JSON_FOLDER / "devices.json"
-ZIGBEE_DEVICES_FILE = JSON_FOLDER / "zigbee_devices.json"  # written by: python zigbee_remote.py devices
+ZIGBEE_DEVICES_FILE = JSON_FOLDER / "zigbee_devices.json"  # written by: python -m zigbee.zigbee_remote devices
 
 class DeviceHandler:
     def __init__(self):

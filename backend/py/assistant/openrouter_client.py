@@ -5,8 +5,7 @@ from typing import Any, Dict, Optional
 
 import requests
 
-import keys
-import settings
+from config import keys, settings
 
 
 class OpenRouterClient:
@@ -17,7 +16,7 @@ class OpenRouterClient:
 
     def _headers(self) -> Dict[str, str]:
         if not self.api_key:
-            raise ValueError("No OpenRouter API key. Set openrouter_api_key in res/py/keys.py or the OPENROUTER_API_KEY env var.")
+            raise ValueError("No OpenRouter API key. Set openrouter_api_key in config/keys.py or the OPENROUTER_API_KEY env var.")
 
         return {
             "Authorization": f"Bearer {self.api_key}",

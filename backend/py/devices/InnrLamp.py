@@ -1,6 +1,6 @@
 import devices.Device as Device
 import devices.Lamp as Lamp
-from zigbee_remote import SharedZigbeeRemote, rgb_to_xy
+from zigbee.zigbee_remote import SharedZigbeeRemote, rgb_to_xy
 
 class InnrLamp(Device.Device, Lamp.Lamp):
     def __init__(self):

@@ -1,6 +1,6 @@
 import threading
 import time
-from device_handler import DeviceHandler
+from control.device_handler import DeviceHandler
 
 class DeviceCommands:
 

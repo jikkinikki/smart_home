@@ -3,7 +3,7 @@ import time
 import playsound
 import speech_recognition as sr
 from gtts import gTTS
-import device_commands as dc
+import control.device_commands as dc
 
 
 class Assistant:

@@ -3,7 +3,7 @@ Controls the Innr (Zigbee) lamps listed in devices.json.
 
 Use the shared instance, not a new InnrController:
 
-    from innr_controller import innr_controller
+    from zigbee.innr_controller import innr_controller
 
     innr_controller.turn_on("desk")                        # by device_name
     innr_controller.turn_off(["0x4F53", "0x751B"])         # a list of short addresses
@@ -22,9 +22,10 @@ import json
 import threading
 from pathlib import Path
 
+from config.paths import JSON_DIR
 from devices.InnrLamp import InnrLamp
 
-DEVICES_FILE = Path(__file__).resolve().parents[1] / "json" / "devices.json"
+DEVICES_FILE = JSON_DIR / "devices.json"
 
 
 class InnrController:

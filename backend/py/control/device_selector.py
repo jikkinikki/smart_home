@@ -1,4 +1,4 @@
-from device_handler import DeviceHandler
+from control.device_handler import DeviceHandler
 
 class DeviceSelector:
 

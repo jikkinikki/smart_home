@@ -1,6 +1,6 @@
 import time
-import device_handler as dh
-import device_commands as dc
+import control.device_handler as dh
+import control.device_commands as dc
 import math
 
 class Lamp_cycle:

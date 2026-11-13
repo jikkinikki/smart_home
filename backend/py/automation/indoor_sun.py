@@ -184,9 +184,9 @@ class Indoor_Sun():
         return hours * 3600 + minutes * 60
 
 if (__name__ == "__main__"):
-    # Run from the project root: python res/py/indoor_sun.py
-    import device_commands as dc
-    import device_handler as dh
+    # Run from backend/py: python -m automation.indoor_sun
+    import control.device_commands as dc
+    import control.device_handler as dh
 
     device_handler = dh.DeviceHandler()
     device_handler.wait_until_loaded()  # devices load in background threads

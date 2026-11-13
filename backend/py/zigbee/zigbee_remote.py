@@ -4,11 +4,11 @@ would) and reads every device on it into a JSON file.
 
 Needs: pip install bellows zigpy
 
-    python zigbee_remote.py scan             # list nearby Zigbee networks (harmless)
-    python zigbee_remote.py join             # leave the dongle's current network, join the bridge
-    python zigbee_remote.py join --no-tclk   # retry without requesting a unique TC link key
-    python zigbee_remote.py status           # which network the dongle is on
-    python zigbee_remote.py devices          # read all devices on the bridge -> res/json/zigbee_devices.json
+    python -m zigbee.zigbee_remote scan             # list nearby Zigbee networks (harmless)
+    python -m zigbee.zigbee_remote join             # leave the dongle's current network, join the bridge
+    python -m zigbee.zigbee_remote join --no-tclk   # retry without requesting a unique TC link key
+    python -m zigbee.zigbee_remote status           # which network the dongle is on
+    python -m zigbee.zigbee_remote devices          # read all devices on the bridge -> backend/json/zigbee_devices.json
 
     Options: --port COM4 (default settings.ZIGBEE_PORT), --out <file> (devices only)
 
@@ -44,11 +44,12 @@ import zigpy.zcl.foundation as zcl_f
 import zigpy.zdo.types as zdo_t
 from bellows.zigbee.application import ControllerApplication
 
-import settings
+from config import settings
+from config.paths import JSON_DIR
 
 DEFAULT_PORT = getattr(settings, "ZIGBEE_PORT", "COM4")
 DEFAULT_BAUDRATE = getattr(settings, "ZIGBEE_BAUDRATE", 115200)
-DEFAULT_DEVICES_FILE = Path(__file__).resolve().parents[1] / "json" / "zigbee_devices.json"
+DEFAULT_DEVICES_FILE = JSON_DIR / "zigbee_devices.json"
 
 ALL_CHANNELS = list(range(11, 27))
 HA_PROFILE = 0x0104
@@ -560,7 +561,7 @@ class ZigbeeRemote:
         if result != t.sl_Status.NETWORK_UP:
             self.log(f"Join failed: {result!r}")
             if request_tclk:
-                self.log("Try again with: python zigbee_remote.py join --no-tclk")
+                self.log("Try again with: python -m zigbee.zigbee_remote join --no-tclk")
             return False
 
         self.log(f"Joined: {await self.network_info()}")
@@ -921,7 +922,7 @@ class SharedZigbeeRemote:
         await self.remote.connect()
         if not await self.remote.is_remote():
             await self.remote.disconnect()
-            raise RuntimeError("Zigbee dongle isn't joined to the bridge. Run: python zigbee_remote.py join")
+            raise RuntimeError("Zigbee dongle isn't joined to the bridge. Run: python -m zigbee.zigbee_remote join")
 
     def run(self, coro, wait: bool = True, timeout: float = 15):
         """Run a coroutine on the Zigbee loop. wait=False returns at once (errors are printed)."""

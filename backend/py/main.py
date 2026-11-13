@@ -1,14 +1,14 @@
 import threading
 from contextlib import asynccontextmanager
 
-import device_commands as dc
-import device_handler as dh
-import que_reader as qr
-import Lamp_cycle as lc
+import control.device_commands as dc
+import control.device_handler as dh
+import automation.que_reader as qr
+import automation.Lamp_cycle as lc
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import devices
+from api import devices
 
 
 def multithread(func):

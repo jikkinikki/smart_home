@@ -11,7 +11,7 @@ class Speaker:
     @staticmethod
     def _build_default_tts():
         try:
-            from fish_tts import FishTTS
+            from assistant.fish_tts import FishTTS
 
             return FishTTS()
         except Exception:

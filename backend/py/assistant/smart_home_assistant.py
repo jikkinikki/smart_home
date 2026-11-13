@@ -3,10 +3,10 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Callable, Iterable, List, Optional
 
-from openrouter_client import OpenRouterClient
-from person import Person
-from speaker import Speaker
-from speaker_manager import SpeakerManager
+from assistant.openrouter_client import OpenRouterClient
+from assistant.person import Person
+from assistant.speaker import Speaker
+from assistant.speaker_manager import SpeakerManager
 
 
 @dataclass

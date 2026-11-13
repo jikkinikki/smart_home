@@ -18,7 +18,7 @@ import warnings
 
 import requests
 
-import settings
+from config import settings
 
 API_BASE = "https://api.fish.audio"
 
@@ -28,7 +28,7 @@ MOOD_TAG = re.compile(r"\[([^\[\]]+)\]")
 
 def _load_api_key():
     try:
-        import keys  # res/py/keys.py (gitignored), see keys.example.py
+        from config import keys  # config/keys.py (gitignored), see keys.example.py
         if getattr(keys, "fish_api_key", None):
             return keys.fish_api_key
     except ImportError:
@@ -40,7 +40,7 @@ class FishTTS:
     def __init__(self, api_key=None):
         self.api_key = api_key or _load_api_key()
         if not self.api_key:
-            raise ValueError("No Fish Audio API key. Set fish_api_key in res/py/keys.py or the FISH_API_KEY env var.")
+            raise ValueError("No Fish Audio API key. Set fish_api_key in config/keys.py or the FISH_API_KEY env var.")
 
         self.engine = settings.TTS_ENGINE
         self.audio_format = settings.TTS_AUDIO_FORMAT

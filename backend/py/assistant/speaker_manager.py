@@ -5,12 +5,13 @@ import random
 from pathlib import Path
 from typing import Iterable, List, Optional
 
-from person import Person
+from assistant.person import Person
+from config.paths import JSON_DIR
 
 
 class SpeakerManager:
     def __init__(self, people_file: Optional[str] = None, people: Optional[Iterable[Person]] = None):
-        default_file = Path(__file__).resolve().parents[1] / "json" / "people.json"
+        default_file = JSON_DIR / "people.json"
         self.people_file = Path(people_file) if people_file else default_file
         self.people = list(people) if people is not None else self.load_people()
 
@@ -30,7 +31,7 @@ class SpeakerManager:
 
     def select_random(self, rng: Optional[random.Random] = None) -> Person:
         if not self.people:
-            raise ValueError("No people are configured. Add entries to res/json/people.json.")
+            raise ValueError("No people are configured. Add entries to backend/json/people.json.")
 
         chooser = rng or random.Random()
         return chooser.choice(self.people)
