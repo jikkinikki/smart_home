@@ -20,6 +20,31 @@ async function loadDevices() {
     }
 }
 
+function getIsSelected(deviceId: string) {
+
+    return selectedDevices.value.some(device => device.id == deviceId);
+}
+
+function toggleSelectedDevice(deviceId: string) {
+
+    const isSelected = getIsSelected(deviceId);
+
+    if (isSelected) {
+
+        selectedDevices.value = selectedDevices.value.filter(device => device.id != deviceId);
+    }
+    else {
+
+        const device = devices.value.find(device => device.id == deviceId);
+
+        if (device) {
+
+            selectedDevices.value.push(device);
+        }
+    }
+
+}
+
 function toggleIsOn(isOn: boolean) {
 
     const toggleable = selectedDevices.value.filter(canToggle);
@@ -60,7 +85,8 @@ onMounted(loadDevices);
         <h2 @click="loadDevices">Devices</h2>
         <div class="devices">
 
-            <button_device v-for="device in devices" icon="placeholder" :lamp-name="device.name"></button_device>
+            <button_device :class="{ deviceSelected: getIsSelected(device.id)}" v-for="device in devices" @click="toggleSelectedDevice(device.id)"
+                icon="placeholder" :lamp-name="device.name"></button_device>
 
         </div>
         <br>
@@ -111,4 +137,10 @@ h2 {
     margin-top: 200px;
 
 }
+
+.deviceSelected{
+
+    border: 1px solid white;
+}
+
 </style>
