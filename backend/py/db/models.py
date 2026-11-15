@@ -1,4 +1,4 @@
-from sqlmodel import Field, Relationship, SQLModel
+from sqlmodel import JSON, Column, Field, Relationship, SQLModel
 
 
 class Room(SQLModel, table=True):
@@ -20,6 +20,9 @@ class Device(SQLModel, table=True):
     version: str | None = None
 
     disabled: bool = False
+
+    # Source specific data, e.g. zigbee endpoint/capabilities. Set by the importers.
+    extra: dict = Field(default_factory=dict, sa_column=Column(JSON, nullable=False))
 
     room_id: int | None = Field(default=None, foreign_key="room.id")
     room: Room | None = Relationship(back_populates="devices")
