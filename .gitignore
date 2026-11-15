@@ -27,3 +27,7 @@ devices restore.json
 # python bytecode (can contain copies of secrets)
 __pycache__/
 *.pyc
+
+# local database (contains device keys)
+/backend/data/
+*.db

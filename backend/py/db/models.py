@@ -1,0 +1,25 @@
+from sqlmodel import Field, Relationship, SQLModel
+
+
+class Room(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    name: str = Field(unique=True)
+
+    devices: list["Device"] = Relationship(back_populates="room")
+
+
+class Device(SQLModel, table=True):
+    # Same id as "dev_id" in devices.json (tuya id / zigbee ieee address)
+    id: str = Field(primary_key=True)
+    name: str
+    type: str                       # "lamp", "bridge", ...
+    source: str | None = None       # "tuya", "zigbee", ...
+
+    address: str | None = None
+    local_key: str | None = None    # tuya only - secret, keep the .db file out of git
+    version: str | None = None
+
+    disabled: bool = False
+
+    room_id: int | None = Field(default=None, foreign_key="room.id")
+    room: Room | None = Relationship(back_populates="devices")
