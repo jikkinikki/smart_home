@@ -55,6 +55,18 @@ export function useDevices() {
         updateDevices(toggleable.map(device => ({ id: device.id, isOn })));
     }
 
+    function setHue(hue: number) {
+
+        const hasHue = selectedDevices.value.filter(device => hasCapability(device, "temperature"));
+
+        for (const device of hasHue) {
+
+            device.temperature = hue;
+        }
+
+        updateDevices(hasHue.map(device => ({ id: device.id, temperature: hue })));
+    }
+
     function setBrightness(brightness: number) {
 
         const dimmable = selectedDevices.value.filter(device => hasCapability(device, "brightness"));
@@ -80,5 +92,6 @@ export function useDevices() {
         toggleSelectedDevice,
         toggleIsOn,
         setBrightness,
+        setHue
     };
 }

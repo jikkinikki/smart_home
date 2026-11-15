@@ -29,7 +29,7 @@ function updateSlider() {
             <p>{{ amount }}%</p>
         </div>
 
-        <input @input="updateSlider" v-model.number="amount" type="range" name="" id="" min="0" max="100">
+        <input @input="updateSlider" v-model.number="amount" type="range" name="" id="" min="1" max="100">
 
     </div>
 

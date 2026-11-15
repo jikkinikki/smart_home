@@ -1,5 +1,6 @@
 // const BASE_URL = import.meta.env.VITE_API_URL;
-const BASE_URL = "http://localhost:8000/";
+// Relative URL: goes through the Vite proxy (see vite.config.ts), so it works from any device
+const BASE_URL = "/api/";
 
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 

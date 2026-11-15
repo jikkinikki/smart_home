@@ -7,6 +7,7 @@ const inRGBMode = ref(false);
 const emits = defineEmits<{
 
     brightness: [value: number]
+    hue: [value: number]
 }>();
 
 
@@ -31,7 +32,7 @@ const emits = defineEmits<{
         </div>
 
         <LabeledSlider v-if="inRGBMode" class="brightness-slider" label="Color"></LabeledSlider>
-        <LabeledSlider v-else class="brightness-slider" label="temperature"></LabeledSlider>
+        <LabeledSlider v-else @change="(hue) => emits('hue', hue)" class="brightness-slider" label="temperature"></LabeledSlider>
 
     </div>
 

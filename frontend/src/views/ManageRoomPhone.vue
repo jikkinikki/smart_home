@@ -5,7 +5,7 @@ import { onMounted } from 'vue';
 import OnOffBtn from '@/components/OnOffBtn.vue';
 import { useDevices } from '@/composables/useDevices';
 
-const { devices, loadDevices, getIsSelected, toggleSelectedDevice, toggleIsOn, setBrightness } = useDevices();
+const { devices, loadDevices, getIsSelected, toggleSelectedDevice, toggleIsOn, setBrightness, setHue } = useDevices();
 
 onMounted(loadDevices);
 
@@ -13,42 +13,57 @@ onMounted(loadDevices);
 
 <template>
 
-    <div>
+    <div class="wrapper">
 
-        <h2 @click="loadDevices">Devices</h2>
-        <div class="devices">
+        <div class="container">
 
-            <button_device :class="{ deviceSelected: getIsSelected(device.id)}" v-for="device in devices" @click="toggleSelectedDevice(device.id)"
-                icon="placeholder" :lamp-name="device.name"></button_device>
+            <h2 @click="loadDevices">Devices</h2>
+            <div class="devices">
 
-        </div>
-        <br>
-    </div>
+                <button_device :class="{ deviceSelected: getIsSelected(device.id) }" v-for="device in devices"
+                    @click="toggleSelectedDevice(device.id)" icon="placeholder" :lamp-name="device.name">
+                </button_device>
 
-    <div>
-
-        <h2>Adjust</h2>
-        <div>
-            <LampAdjust @brightness="setBrightness"></LampAdjust>
-
+            </div>
+            <br>
         </div>
 
+        <div class="container">
+
+            <h2>Adjust</h2>
+            <div>
+                <LampAdjust @brightness="setBrightness" @hue="setHue"></LampAdjust>
+
+            </div>
+
+        </div>
+
+        <div class="toggle-active-area container">
+
+            <OnOffBtn @isOn="toggleIsOn"></OnOffBtn>
+
+        </div>
+
     </div>
 
-    <div class="toggle-active-area">
-
-        <OnOffBtn @isOn="toggleIsOn"></OnOffBtn>
-
-    </div>
 
 </template>
 
 <style scoped lang="scss">
-div {
+@media (min-width: 600px) {
+    
+    .wrapper{
 
-    margin-left: 10%;
-
-    max-width: 600px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .container {
+        
+        width: 600px;
+        margin-left: -5%;
+    }
 }
 
 h2 {
@@ -60,6 +75,20 @@ h2 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 5px;
+
+    div {
+
+        // background-color: black;
+        // box-sizing: border-box;
+        border: 1px solid var(--button-col);
+        overflow: hidden;
+    }
+
+    .deviceSelected {
+
+        // background-color: var(--button-col);
+        border: 1px solid rgb(75, 75, 75);
+    }
 }
 
 .toggle-active-area {
@@ -70,10 +99,4 @@ h2 {
     margin-top: 200px;
 
 }
-
-.deviceSelected{
-
-    border: 1px solid white;
-}
-
 </style>

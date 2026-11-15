@@ -55,7 +55,7 @@
 
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 6px;
 
     .icon {
 
@@ -66,7 +66,7 @@
 
         img{
 
-            --width: 70%;
+            --width: 60%;
 
             margin: calc((100% - var(--width)) / 2);
             width: var(--width);
@@ -76,6 +76,7 @@
 
     .lamp-name {
 
+        margin: 10px 0px;
         display: inline;
     }
 }
