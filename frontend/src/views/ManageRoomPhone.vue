@@ -80,14 +80,14 @@ h2 {
 
         // background-color: black;
         // box-sizing: border-box;
-        border: 1px solid var(--button-col);
+        border: 2px solid var(--button-col);
         overflow: hidden;
     }
 
     .deviceSelected {
 
         // background-color: var(--button-col);
-        border: 1px solid rgb(75, 75, 75);
+        border: 2px solid rgb(195, 195, 195);
     }
 }
 
