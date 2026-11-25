@@ -1,23 +1,67 @@
 <script setup lang="ts">
+import { onMounted } from 'vue';
+import { useDbDevices } from '@/composables/useDbDevices';
+import DeviceEdit from '@/components/DeviceEdit.vue';
+
+const { devices, error, loadDevices } = useDbDevices();
+
+onMounted(loadDevices);
 
 </script>
 
 <template>
-    
-    <h2>Manage devices</h2>
 
-    <div class="devices">
+    <div class="wrapper">
 
-    </div>
+        <div class="container">
 
-    <div class="add-device">
+            <h2 @click="loadDevices">Manage devices</h2>
 
+            <p v-if="error">Could not load devices: {{ error }}</p>
+
+            <div class="devices">
+
+                <DeviceEdit v-for="device in devices" :key="device.id" :device="device"></DeviceEdit>
+
+            </div>
+
+        </div>
+
+        <div class="add-device container">
+
+
+        </div>
 
     </div>
 
 
 </template>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
+
+// Same max width layout as ManageRoomPhone
+@media (min-width: 600px) {
+
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .container {
+        width: 600px;
+        margin-left: -5%;
+    }
+}
+
+h2 {
+    text-transform: uppercase;
+}
+
+.devices {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 5px;
+}
 
 </style>

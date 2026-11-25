@@ -6,7 +6,7 @@ import control.device_handler as dh
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from api import devices
+from api import db_devices, devices
 from utils.startup_reporter import StartupReporter
 
 
@@ -46,3 +46,4 @@ app.add_middleware(
 )
 
 app.include_router(devices.router, prefix="/api")
+app.include_router(db_devices.router, prefix="/api")
