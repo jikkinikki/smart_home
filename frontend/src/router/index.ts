@@ -9,7 +9,7 @@ const router = createRouter({
       component: () => import('@/views/ComponentPlayground.vue'),
     },
     {
-      path: '/manageRoom',
+      path: '/',
       component: () => import('@/views/ManageRoom.vue'),
     },
     {

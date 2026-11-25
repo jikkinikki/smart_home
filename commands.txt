@@ -1,1 +1,3 @@
 "Y`n" * 3 | python -m tinytuya wizard
+
+npm run dev

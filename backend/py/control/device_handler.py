@@ -6,6 +6,7 @@ import threading
 from pathlib import Path
 
 from config.paths import JSON_DIR
+from db.device_reader import DeviceReader
 
 import devices.TuyaLamp as TuyaLamp
 import devices.InnrLamp as InnrLamp
@@ -31,61 +32,96 @@ class DeviceHandler:
         self.devices_lock = threading.Lock()
         self.patch_devices()
         self.patch_zigbee_devices()
-        self.load_devices(False)
+        self.load_devices_from_db(False)
 
     def clone_dict(self, dict):
         return dict.copy()
         # return json.loads(json.dumps(dict, default=lambda o: o.__dict__))
 
-    # Starts and runs seperate thread
+    # Loads devices from devices.json
     def load_devices(self, debug_info = False):
         with open(DEVICES_FILE, "r", encoding="utf-8") as f:
             data = json.load(f)
 
-            self.devices_loading = 0
-            threads = []
+        self._start_loading_devices(data, debug_info)
 
-            i = 0
+    # Loads devices from the database
+    def load_devices_from_db(self, debug_info = False):
+        data = [self._db_row_to_device_data(row) for row in DeviceReader().get_all_devices()]
 
-            for device in data:
-                if debug_info:
-                    print(device)
+        if debug_info:
+            print("devices in db:", len(data))
 
-                if device["device_name"] == "all_devices":
-                    continue
+        self._start_loading_devices(data, debug_info)
 
-                label = device["device_name"] or device.get("dev_id")
+    @staticmethod
+    def _db_row_to_device_data(row):
+        """Turn a db Device row into the same dict shape as an entry in devices.json,
+        since that's what the device classes' load_device() expects."""
+        data = {
+            "device_name": row.name,
+            "dev_id": row.id,
+            "type": row.type,
+            "source": row.source,
+            "address": row.address,
+            "local_key": row.local_key,
+            "version": row.version,
+            "custom_data": {"disabled": row.disabled},
+        }
 
-                if device.get("custom_data", {}).get("disabled"):
-                    print("disabled, not loading:", label)
-                    continue
+        # The importers store the source specific data in "extra", which in
+        # devices.json lives under the source's name (e.g. "zigbee")
+        if row.source:
+            data[row.source] = row.extra or {}
 
-                if device_loader_map.get(device.get("type"), {}).get(device.get("source")) is None:
-                    print("no loader for", device.get("type"), device.get("source"), "- skipping", label)
-                    continue
+        return data
 
-                # Placeholder until the real device has loaded in its thread
-                temp_device = Device.Device()
-                temp_device._device_name = device["device_name"]
-                temp_device.id = device.get("dev_id")
-                temp_device.type = device.get("type")
-                self._allDevices.append(temp_device)
+    # Starts a seperate thread per device
+    def _start_loading_devices(self, data, debug_info = False):
+        self.devices_loading = 0
+        threads = []
 
-                threads.append(threading.Thread(target=self.load_device, args=(i, device, debug_info)))
-                self.devices_loading += 1
-                i += 1
+        i = 0
 
-            self.start_time = time.time()
-            self._load_threads = threads
+        for device in data:
+            if debug_info:
+                print(device)
 
-            for thread in threads:
-                thread.start()
+            if device["device_name"] == "all_devices":
+                continue
 
-            # for thread in threads:
-                # thread.join()
+            label = device["device_name"] or device.get("dev_id")
 
-            print("")
-            print("Devices loaded:")
+            if device.get("custom_data", {}).get("disabled"):
+                print("disabled, not loading:", label)
+                continue
+
+            if device_loader_map.get(device.get("type"), {}).get(device.get("source")) is None:
+                print("no loader for", device.get("type"), device.get("source"), "- skipping", label)
+                continue
+
+            # Placeholder until the real device has loaded in its thread
+            temp_device = Device.Device()
+            temp_device._device_name = device["device_name"]
+            temp_device.id = device.get("dev_id")
+            temp_device.type = device.get("type")
+            self._allDevices.append(temp_device)
+
+            threads.append(threading.Thread(target=self.load_device, args=(i, device, debug_info)))
+            self.devices_loading += 1
+            i += 1
+
+        self.start_time = time.time()
+        self._load_threads = threads
+
+        for thread in threads:
+            thread.start()
+
+        # for thread in threads:
+            # thread.join()
+
+        print("")
+        print("Devices loaded:")
 
     def patch_devices(self, debug_info = False):
         new_json_data = {}
