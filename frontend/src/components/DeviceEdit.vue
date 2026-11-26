@@ -17,7 +17,7 @@ const isOpen = ref(false);
 const newName = ref(props.device.name);
 const newHidden = ref(props.device.hidden);
 
-function save(){
+function save() {
 
     emit("save", props.device.id, { name: newName.value, hidden: newHidden.value });
     isOpen.value = false;
@@ -42,7 +42,7 @@ function cancel() {
             <p>{{ device.address }}</p>
             <p class="id">{{ device.id }}</p>
             <p v-if="device.disabled">disabled</p>
-            <p v-if="device.hidden">hidden</p>
+            <p>hidden: {{ device.hidden }}</p>
 
             <div class="buttons">
                 <button @click="isOpen = true">Edit</button>
@@ -52,7 +52,7 @@ function cancel() {
 
         <div v-else>
 
-            <input v-model="newName">
+            <input class="name-inp" v-model="newName">
             <p>{{ device.type }} · {{ device.source }}</p>
             <p>{{ device.address }}</p>
             <p class="id">{{ device.id }}</p>
@@ -79,6 +79,12 @@ function cancel() {
     border: 2px solid var(--button-col);
     padding: 8px;
     overflow: hidden;
+
+    h3, .name-inp{
+
+        height: 30px;
+        box-sizing: border-box;
+    }
 
     h3,
     p {
