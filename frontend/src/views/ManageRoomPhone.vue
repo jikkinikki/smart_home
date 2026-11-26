@@ -5,7 +5,12 @@ import { onMounted } from 'vue';
 import OnOffBtn from '@/components/OnOffBtn.vue';
 import { useDevices } from '@/composables/useDevices';
 
-const { devices, loadDevices, getIsSelected, toggleSelectedDevice, toggleIsOn, setBrightness, setHue } = useDevices();
+const props = defineProps<{
+
+    roomId?: number  // leave out for all rooms
+}>();
+
+const { devices, loadDevices, getIsSelected, toggleSelectedDevice, toggleIsOn, setBrightness, setHue } = useDevices(props.roomId);
 
 onMounted(loadDevices);
 

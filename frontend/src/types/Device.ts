@@ -7,6 +7,7 @@ export interface Device {
     name: string,
     type: string,
     capabilities: Capability[],
+    room_id?: number | null,  // null = not in a room (see GET /rooms)
 
     isOn?: boolean,
     brightness?: number,

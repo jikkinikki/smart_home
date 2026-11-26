@@ -2,13 +2,18 @@ import { getDevices, setDevicesValues, type DeviceUpdate } from '@/api/DeviceApi
 import { ref } from 'vue';
 import { canToggle, hasCapability, type Device } from '@/types/Device';
 
-export function useDevices() {
+// roomId = only load the devices in that room. Leave it out to load all devices.
+export function useDevices(roomId?: number) {
 
     const devices = ref<Device[]>([]);
     const selectedDevices = ref<Device[]>([]);
 
     async function loadDevices() {
-        devices.value = await getDevices();
+        const allDevices = await getDevices();
+
+        devices.value = roomId === undefined
+            ? allDevices
+            : allDevices.filter(device => device.room_id == roomId);
 
         selectedDevices.value.length = 0;
 

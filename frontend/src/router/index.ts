@@ -5,11 +5,12 @@ const router = createRouter({
   routes: [
 
     {
-      path: '/playground',
-      component: () => import('@/views/ComponentPlayground.vue'),
+      path: '/',
+      component: () => import('@/views/Rooms.vue'),
     },
     {
-      path: '/',
+      path: '/room/:id',
+      name: "roomId",
       component: () => import('@/views/ManageRoom.vue'),
     },
     {
