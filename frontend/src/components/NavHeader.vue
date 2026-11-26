@@ -14,6 +14,7 @@ import homeIcon from '@/assets/icons/room-home.svg'
 
         <nav class="nav-links">
             <RouterLink to="/manageDevices">Manage devices</RouterLink>
+            <RouterLink to="/manageRooms">Manage rooms</RouterLink>
         </nav>
 
     </header>

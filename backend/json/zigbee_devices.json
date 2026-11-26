@@ -1,5 +1,5 @@
 {
-  "read_at": "2026-11-26T14:05:54+00:00",
+  "read_at": "2026-11-26T18:32:11+00:00",
   "network": {
     "role": "ROUTER",
     "pan_id": "0xCB5D",
@@ -23,7 +23,7 @@
         {
           "seen_by": "0x4F53",
           "relationship": "Parent",
-          "lqi": 103,
+          "lqi": 96,
           "depth": 0,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
@@ -31,7 +31,7 @@
         {
           "seen_by": "0x751B",
           "relationship": "Parent",
-          "lqi": 96,
+          "lqi": 87,
           "depth": 0,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
@@ -39,7 +39,7 @@
         {
           "seen_by": "0x85A6",
           "relationship": "Sibling",
-          "lqi": 102,
+          "lqi": 105,
           "depth": 0,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
@@ -47,7 +47,7 @@
         {
           "seen_by": "0xBA18",
           "relationship": "Sibling",
-          "lqi": 72,
+          "lqi": 71,
           "depth": 0,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
@@ -55,7 +55,7 @@
         {
           "seen_by": "0xC799",
           "relationship": "Sibling",
-          "lqi": 97,
+          "lqi": 98,
           "depth": 0,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
@@ -63,7 +63,7 @@
         {
           "seen_by": "0xCD16",
           "relationship": "Parent",
-          "lqi": 104,
+          "lqi": 103,
           "depth": 0,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
@@ -219,7 +219,7 @@
                 "time": {
                   "id": "0x0000",
                   "type": "UTC",
-                  "value": 849020706
+                  "value": 849036700
                 },
                 "time_status": {
                   "id": "0x0001",
@@ -230,12 +230,12 @@
                 "standard_time": {
                   "id": "0x0006",
                   "type": "uint32",
-                  "value": 849018116
+                  "value": 849036119
                 },
                 "local_time": {
                   "id": "0x0007",
                   "type": "uint32",
-                  "value": 849018116
+                  "value": 849036119
                 },
                 "cluster_revision": {
                   "id": "0xFFFD",
@@ -304,7 +304,7 @@
         {
           "seen_by": "0x0000",
           "relationship": "Sibling",
-          "lqi": 177,
+          "lqi": 168,
           "depth": 15,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
@@ -312,7 +312,7 @@
         {
           "seen_by": "0x751B",
           "relationship": "Sibling",
-          "lqi": 63,
+          "lqi": 69,
           "depth": 1,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
@@ -320,7 +320,7 @@
         {
           "seen_by": "0x85A6",
           "relationship": "Sibling",
-          "lqi": 55,
+          "lqi": 58,
           "depth": 0,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
@@ -337,6 +337,14 @@
           "seen_by": "0xC799",
           "relationship": "Sibling",
           "lqi": 69,
+          "depth": 0,
+          "rx_on_when_idle": "On",
+          "permit_joining": "Unknown"
+        },
+        {
+          "seen_by": "0xCD16",
+          "relationship": "Sibling",
+          "lqi": 66,
           "depth": 0,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
@@ -617,7 +625,7 @@
                 "current_level": {
                   "id": "0x0000",
                   "type": "uint8",
-                  "value": 94
+                  "value": 147
                 },
                 "remaining_time": {
                   "id": "0x0001",
@@ -669,12 +677,12 @@
                 "current_hue": {
                   "id": "0x0000",
                   "type": "uint8",
-                  "value": 25
+                  "value": 24
                 },
                 "current_saturation": {
                   "id": "0x0001",
                   "type": "uint8",
-                  "value": 148
+                  "value": 167
                 },
                 "remaining_time": {
                   "id": "0x0002",
@@ -684,17 +692,17 @@
                 "current_x": {
                   "id": "0x0003",
                   "type": "uint16",
-                  "value": 30644
+                  "value": 31803
                 },
                 "current_y": {
                   "id": "0x0004",
                   "type": "uint16",
-                  "value": 27000
+                  "value": 27171
                 },
                 "color_temperature": {
                   "id": "0x0007",
                   "type": "uint16",
-                  "value": 383
+                  "value": 415
                 },
                 "color_mode": {
                   "id": "0x0008",
@@ -761,7 +769,7 @@
                 "enhanced_current_hue": {
                   "id": "0x4000",
                   "type": "uint16",
-                  "value": 6489
+                  "value": 6224
                 },
                 "enhanced_color_mode": {
                   "id": "0x4001",
@@ -889,7 +897,7 @@
         {
           "seen_by": "0x0000",
           "relationship": "Sibling",
-          "lqi": 159,
+          "lqi": 154,
           "depth": 15,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
@@ -897,7 +905,7 @@
         {
           "seen_by": "0x4F53",
           "relationship": "Sibling",
-          "lqi": 64,
+          "lqi": 72,
           "depth": 0,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
@@ -905,7 +913,7 @@
         {
           "seen_by": "0x85A6",
           "relationship": "Sibling",
-          "lqi": 84,
+          "lqi": 88,
           "depth": 0,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
@@ -913,7 +921,7 @@
         {
           "seen_by": "0xBA18",
           "relationship": "Sibling",
-          "lqi": 48,
+          "lqi": 42,
           "depth": 0,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
@@ -921,7 +929,7 @@
         {
           "seen_by": "0xC799",
           "relationship": "Parent",
-          "lqi": 102,
+          "lqi": 103,
           "depth": 1,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
@@ -929,7 +937,7 @@
         {
           "seen_by": "0xCD16",
           "relationship": "Sibling",
-          "lqi": 112,
+          "lqi": 111,
           "depth": 0,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
@@ -1490,7 +1498,7 @@
         {
           "seen_by": "0x4F53",
           "relationship": "Sibling",
-          "lqi": 56,
+          "lqi": 63,
           "depth": 0,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
@@ -1498,7 +1506,7 @@
         {
           "seen_by": "0x751B",
           "relationship": "Sibling",
-          "lqi": 81,
+          "lqi": 90,
           "depth": 0,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
@@ -1506,7 +1514,7 @@
         {
           "seen_by": "0xBA18",
           "relationship": "Sibling",
-          "lqi": 61,
+          "lqi": 64,
           "depth": 0,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
@@ -1514,15 +1522,21 @@
         {
           "seen_by": "0xC799",
           "relationship": "Sibling",
-          "lqi": 109,
+          "lqi": 112,
+          "depth": 0,
+          "rx_on_when_idle": "On",
+          "permit_joining": "Unknown"
+        },
+        {
+          "seen_by": "0xCD16",
+          "relationship": "Sibling",
+          "lqi": 84,
           "depth": 0,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
         }
       ],
-      "errors": [
-        "ep 1 0x0000 attribute discovery: TimeoutError"
-      ],
+      "errors": [],
       "node_descriptor": {
         "logical_type": "Router",
         "complex_descriptor_available": 0,
@@ -1565,7 +1579,7 @@
           "in_clusters": {
             "0x0000": {
               "name": "0x0000",
-              "attribute_source": "zigpy definitions",
+              "attribute_source": "discovered",
               "attributes": {
                 "zcl_version": {
                   "id": "0x0000",
@@ -1634,6 +1648,49 @@
                   "id": "0x4000",
                   "type": "string",
                   "value": "1.9.33"
+                },
+                "0xFFC0": {
+                  "id": "0xFFC0",
+                  "type": "string",
+                  "value": "_TZ3218_on8\u00061.9.33S0505B"
+                },
+                "0xFFDE": {
+                  "id": "0xFFDE",
+                  "type": "uint8",
+                  "value": 13
+                },
+                "0xFFE0": {
+                  "id": "0xFFE0",
+                  "type": "array",
+                  "raw": "e0ff0048",
+                  "note": "could not be decoded, raw reply bytes"
+                },
+                "0xFFE1": {
+                  "id": "0xFFE1",
+                  "type": "array",
+                  "raw": "e1ff0048",
+                  "note": "could not be decoded, raw reply bytes"
+                },
+                "0xFFE2": {
+                  "id": "0xFFE2",
+                  "type": "uint8",
+                  "value": 64
+                },
+                "0xFFE3": {
+                  "id": "0xFFE3",
+                  "type": "string",
+                  "value": ""
+                },
+                "cluster_revision": {
+                  "id": "0xFFFD",
+                  "type": "uint16",
+                  "value": 3
+                },
+                "reporting_status": {
+                  "id": "0xFFFE",
+                  "type": "enum8",
+                  "value": 0,
+                  "meaning": "Pending"
                 }
               }
             },
@@ -2034,7 +2091,7 @@
         {
           "seen_by": "0x4F53",
           "relationship": "Sibling",
-          "lqi": 88,
+          "lqi": 90,
           "depth": 0,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
@@ -2042,7 +2099,7 @@
         {
           "seen_by": "0x751B",
           "relationship": "Sibling",
-          "lqi": 51,
+          "lqi": 42,
           "depth": 2,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
@@ -2050,7 +2107,7 @@
         {
           "seen_by": "0x85A6",
           "relationship": "Sibling",
-          "lqi": 68,
+          "lqi": 65,
           "depth": 0,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
@@ -2058,7 +2115,15 @@
         {
           "seen_by": "0xC799",
           "relationship": "Sibling",
-          "lqi": 50,
+          "lqi": 54,
+          "depth": 0,
+          "rx_on_when_idle": "On",
+          "permit_joining": "Unknown"
+        },
+        {
+          "seen_by": "0xCD16",
+          "relationship": "Sibling",
+          "lqi": 46,
           "depth": 0,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
@@ -2611,7 +2676,7 @@
         {
           "seen_by": "0x0000",
           "relationship": "Sibling",
-          "lqi": 172,
+          "lqi": 167,
           "depth": 15,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
@@ -2619,7 +2684,7 @@
         {
           "seen_by": "0x4F53",
           "relationship": "Sibling",
-          "lqi": 75,
+          "lqi": 72,
           "depth": 0,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
@@ -2627,7 +2692,7 @@
         {
           "seen_by": "0x751B",
           "relationship": "Sibling",
-          "lqi": 105,
+          "lqi": 106,
           "depth": 2,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
@@ -2635,7 +2700,7 @@
         {
           "seen_by": "0x85A6",
           "relationship": "Sibling",
-          "lqi": 111,
+          "lqi": 116,
           "depth": 0,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
@@ -2643,7 +2708,15 @@
         {
           "seen_by": "0xBA18",
           "relationship": "Sibling",
-          "lqi": 46,
+          "lqi": 51,
+          "depth": 0,
+          "rx_on_when_idle": "On",
+          "permit_joining": "Unknown"
+        },
+        {
+          "seen_by": "0xCD16",
+          "relationship": "Sibling",
+          "lqi": 90,
           "depth": 0,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
@@ -3196,7 +3269,7 @@
         {
           "seen_by": "0x0000",
           "relationship": "Sibling",
-          "lqi": 176,
+          "lqi": 184,
           "depth": 15,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
@@ -3204,7 +3277,7 @@
         {
           "seen_by": "0x4F53",
           "relationship": "Sibling",
-          "lqi": 64,
+          "lqi": 65,
           "depth": 0,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
@@ -3212,7 +3285,7 @@
         {
           "seen_by": "0x751B",
           "relationship": "Sibling",
-          "lqi": 111,
+          "lqi": 116,
           "depth": 1,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
@@ -3220,7 +3293,7 @@
         {
           "seen_by": "0x85A6",
           "relationship": "Parent",
-          "lqi": 89,
+          "lqi": 87,
           "depth": 1,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
@@ -3228,7 +3301,7 @@
         {
           "seen_by": "0xBA18",
           "relationship": "Sibling",
-          "lqi": 42,
+          "lqi": 49,
           "depth": 0,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
@@ -3236,15 +3309,13 @@
         {
           "seen_by": "0xC799",
           "relationship": "Sibling",
-          "lqi": 92,
+          "lqi": 90,
           "depth": 0,
           "rx_on_when_idle": "On",
           "permit_joining": "Unknown"
         }
       ],
-      "errors": [
-        "neighbour table: no answer (TimeoutError)"
-      ],
+      "errors": [],
       "node_descriptor": {
         "logical_type": "Router",
         "complex_descriptor_available": 0,

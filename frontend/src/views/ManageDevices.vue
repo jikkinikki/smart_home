@@ -1,12 +1,39 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { computed, onMounted } from 'vue';
 import { useDbDevices } from '@/composables/useDbDevices';
+import { useRooms } from '@/composables/useRooms';
 import DeviceEdit from '@/components/DeviceEdit.vue';
 import DeviceRefetch from '@/components/DeviceRefetch.vue';
+import type { DbDevice } from '@/types/DbDevice';
 
 const { devices, error, loadDevices, updateDevice } = useDbDevices();
+const { loadRooms, getRoomById } = useRooms();
 
-onMounted(loadDevices);
+function roomName(device: DbDevice) {
+
+    return device.room_id == null ? undefined : getRoomById(device.room_id)?.name;
+}
+
+// Sorted by room name (devices without a room last), then by device name
+const sortedDevices = computed(() => [...devices.value].sort((a, b) => {
+
+    const roomA = roomName(a);
+    const roomB = roomName(b);
+
+    if (roomA != roomB) {
+        if (roomA == undefined) return 1;
+        if (roomB == undefined) return -1;
+        return roomA.localeCompare(roomB);
+    }
+
+    return a.name.localeCompare(b.name);
+}));
+
+onMounted(() => {
+
+    loadDevices();
+    loadRooms();
+});
 
 </script>
 
@@ -22,7 +49,7 @@ onMounted(loadDevices);
 
             <div class="devices">
 
-                <DeviceEdit v-for="device in devices" :key="device.id" :device="device" @save="updateDevice"></DeviceEdit>
+                <DeviceEdit v-for="device in sortedDevices" :key="device.id" :device="device" @save="updateDevice"></DeviceEdit>
 
             </div>
 

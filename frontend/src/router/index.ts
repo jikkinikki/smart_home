@@ -15,6 +15,10 @@ const router = createRouter({
     {
       path: '/manageDevices',
       component: () => import('@/views/ManageDevices.vue'),
+    },
+    {
+      path: '/manageRooms',
+      component: () => import('@/views/ManageRooms.vue'),
     }
   ],
 })

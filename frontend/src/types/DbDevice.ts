@@ -14,5 +14,5 @@ export interface DbDevice {
     hidden: boolean,      // still loaded, just not shown in device control
     vertical: Vertical | null,  // null = not set
     extra: Record<string, unknown>,
-    room_id: number | null
+    room_id: number | null  // null = not in a room (see GET /rooms)
 }

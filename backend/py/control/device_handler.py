@@ -69,6 +69,7 @@ class DeviceHandler:
             "version": row.version,
             "custom_data": {"disabled": row.disabled},
             "hidden": row.hidden,
+            "room_id": row.room_id,
         }
 
         # The importers store the source specific data in "extra", which in
@@ -339,6 +340,17 @@ class DeviceHandler:
             return False
 
         device.hidden = hidden
+        return True
+
+    def set_device_room(self, id, room_id):
+        """Move the loaded device to another room (None = no room), without a restart.
+        Returns False if the device isn't loaded (e.g. disabled)."""
+        device = self.getDeviceById(id)
+
+        if device == "null":
+            return False
+
+        device.room_id = room_id
         return True
 
     def restart_devices(self):

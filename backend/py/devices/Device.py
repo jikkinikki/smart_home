@@ -6,6 +6,7 @@ class Device:
         self.id = None
         self.type = None
         self.hidden = False  # not shown in device control
+        self.room_id = None  # the room it's in (room.id in the database)
 
     def is_ready(self) -> bool:
         return self._is_ready
@@ -21,6 +22,7 @@ class Device:
         self.id = jsonData.get("dev_id")
         self.type = jsonData.get("type")
         self.hidden = jsonData.get("hidden", False)
+        self.room_id = jsonData.get("room_id")
 
     def close(self):
         """Close the connection to the device. Override if the device keeps one open."""
