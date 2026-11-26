@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "predev": "powershell -NoProfile -Command \"Get-NetTCPConnection -LocalPort 8000 -State Listen -EA SilentlyContinue | ForEach-Object { taskkill /PID $_.OwningProcess /T /F }\"",
+    "predev": "powershell -NoProfile -Command \"Get-NetTCPConnection -LocalPort 8000 -State Listen -EA SilentlyContinue | ForEach-Object { taskkill /PID $_.OwningProcess /T /F }; exit 0\"",
     "dev": "concurrently --kill-others --names backend,frontend --prefix-colors blue,green \"npm:dev:backend\" \"npm:dev:frontend\"",
     "dev:backend": "venv\\Scripts\\python -m uvicorn main:app --app-dir backend/py --reload --reload-dir backend/py --port 8000",
     "dev:frontend": "npm --prefix frontend run dev"
