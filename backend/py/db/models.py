@@ -20,6 +20,7 @@ class Device(SQLModel, table=True):
     version: str | None = None
 
     disabled: bool = False
+    hidden: bool = False            # still loaded, just not shown in device control
 
     # Source specific data, e.g. zigbee endpoint/capabilities. Set by the importers.
     extra: dict = Field(default_factory=dict, sa_column=Column(JSON, nullable=False))

@@ -18,6 +18,7 @@ class DbDeviceOut(BaseModel):
     address: str | None
     version: str | None
     disabled: bool
+    hidden: bool
     extra: dict
     room_id: int | None
 
@@ -25,6 +26,7 @@ class DbDeviceOut(BaseModel):
 class DbDeviceUpdate(BaseModel):
     # Only the fields that can be edited. Fields left out are not changed.
     name: str | None = None
+    hidden: bool | None = None
 
 
 @router.get("", response_model=list[DbDeviceOut])
@@ -55,5 +57,8 @@ def update_db_device(device_id: str, changes: DbDeviceUpdate, request: Request,
 
     if "name" in values:
         handler.rename_device(device_id, values["name"])
+
+    if "hidden" in values:
+        handler.set_device_hidden(device_id, values["hidden"])
 
     return device

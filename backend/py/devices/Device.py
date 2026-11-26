@@ -5,6 +5,7 @@ class Device:
         self._device_name = ""
         self.id = None
         self.type = None
+        self.hidden = False  # not shown in device control
 
     def is_ready(self) -> bool:
         return self._is_ready
@@ -19,6 +20,7 @@ class Device:
         self._device_name = jsonData["device_name"]
         self.id = jsonData.get("dev_id")
         self.type = jsonData.get("type")
+        self.hidden = jsonData.get("hidden", False)
 
     def set_allow_auto_updates(self, allow: bool):
         self.allow_auto_updates = allow

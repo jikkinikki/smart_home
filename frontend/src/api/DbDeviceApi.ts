@@ -7,7 +7,7 @@ export function getDbDevices(): Promise<DbDevice[]> {
 }
 
 // The fields that can be edited. Fields left out are not changed.
-export type DbDeviceUpdate = Partial<Pick<DbDevice, "name">>;
+export type DbDeviceUpdate = Partial<Pick<DbDevice, "name" | "hidden">>;
 
 // Saves the changes in the database (and on the loaded device). Returns the saved device.
 export function updateDbDevice(deviceId: string, changes: DbDeviceUpdate): Promise<DbDevice> {

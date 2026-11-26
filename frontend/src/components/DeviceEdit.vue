@@ -15,16 +15,18 @@ const emit = defineEmits<{
 const isOpen = ref(false);
 
 const newName = ref(props.device.name);
+const newHidden = ref(props.device.hidden);
 
 function save(){
 
-    emit("save", props.device.id, { name: newName.value });
+    emit("save", props.device.id, { name: newName.value, hidden: newHidden.value });
     isOpen.value = false;
 }
 
 function cancel() {
 
     newName.value = props.device.name;
+    newHidden.value = props.device.hidden;
     isOpen.value = false;
 }
 
@@ -40,6 +42,7 @@ function cancel() {
             <p>{{ device.address }}</p>
             <p class="id">{{ device.id }}</p>
             <p v-if="device.disabled">disabled</p>
+            <p v-if="device.hidden">hidden</p>
 
             <div class="buttons">
                 <button @click="isOpen = true">Edit</button>
@@ -54,6 +57,11 @@ function cancel() {
             <p>{{ device.address }}</p>
             <p class="id">{{ device.id }}</p>
             <p v-if="device.disabled">disabled</p>
+
+            <label>
+                <input type="checkbox" v-model="newHidden">
+                hidden
+            </label>
 
             <div class="buttons">
                 <button @click="save">Save</button>
@@ -75,6 +83,10 @@ function cancel() {
     h3,
     p {
         margin: 0;
+    }
+
+    label {
+        display: block;
     }
 
     .id {

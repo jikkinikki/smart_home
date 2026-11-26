@@ -17,7 +17,8 @@ def _get_capabilities(device) -> list[str]:
 def get_devices(request: Request):
     handler = request.app.state.device_handler
 
-    devices = handler.getAllDevices()
+    # Hidden devices are still loaded, they're just not shown in device control
+    devices = [device for device in handler.getAllDevices() if not device.hidden]
 
     return [
         {

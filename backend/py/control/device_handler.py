@@ -67,6 +67,7 @@ class DeviceHandler:
             "local_key": row.local_key,
             "version": row.version,
             "custom_data": {"disabled": row.disabled},
+            "hidden": row.hidden,
         }
 
         # The importers store the source specific data in "extra", which in
@@ -320,6 +321,17 @@ class DeviceHandler:
             return False
 
         device.set_device_name(name)
+        return True
+
+    def set_device_hidden(self, id, hidden):
+        """Hide/show the loaded device in device control, without a restart.
+        Returns False if the device isn't loaded (e.g. disabled)."""
+        device = self.getDeviceById(id)
+
+        if device == "null":
+            return False
+
+        device.hidden = hidden
         return True
 
     def getAllDevices(self):

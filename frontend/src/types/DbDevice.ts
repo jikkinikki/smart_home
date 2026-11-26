@@ -8,6 +8,7 @@ export interface DbDevice {
     address: string | null,
     version: string | null,
     disabled: boolean,
+    hidden: boolean,      // still loaded, just not shown in device control
     extra: Record<string, unknown>,
     room_id: number | null
 }
