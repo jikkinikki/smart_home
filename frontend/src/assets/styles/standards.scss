@@ -1,10 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap');
 
-
 :root {
 
     --button-col: rgb(35, 35, 35);
     font-family: 'Outfit', sans-serif;
+}
+
+body{
+
+    margin: 0px;
 }
 
 button{
@@ -31,7 +35,7 @@ h3 {
 }
 
 
-p {
+p, label {
 
     color: rgb(217, 217, 217);
 }

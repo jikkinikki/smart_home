@@ -1,15 +1,17 @@
-Device handling
-
-Press update name to send changes, should update both live and in database
-
-"fetch new changes" button, should parse to db and reconnect new or changed devices.
-
 ----------------
 
-Atempt device connections again every so often.
+Atempt device connections again every so often if it has failed.
 
-Device disconnector function
+---------------
 
-disconnect device when server is stopped.
+add header
+
+header with page nav
+
+---------------
+
+add rooms
+
+---------------
 
 ---------------
