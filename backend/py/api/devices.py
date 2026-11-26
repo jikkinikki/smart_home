@@ -27,6 +27,7 @@ def get_devices(request: Request):
             "type": device.type,
             "capabilities": _get_capabilities(device),
             "room_id": getattr(device, "room_id", None),
+            "vertical": getattr(device, "vertical", None),
         }
         for device in devices
     ]

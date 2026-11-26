@@ -6,16 +6,14 @@ Atempt device connections again every so often if it has failed.
 
 ---------------
 
-Rooms filter for the lamps, so first pick a room which then opens the devices for that room.
-
 ---------------
 
-assistant
+assistant page
 
-stream sound to backend
+be on this page when connection mic, stream sound to backend
 
 sound to command (maybe a more general command system, also allow picking devices)
 
 ---------------
 
-filters, like height for devices.
+filters, like height for devices. select, deselect all

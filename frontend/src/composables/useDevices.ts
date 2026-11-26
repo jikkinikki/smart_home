@@ -1,6 +1,7 @@
 import { getDevices, setDevicesValues, type DeviceUpdate } from '@/api/DeviceApi';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { canToggle, hasCapability, type Device } from '@/types/Device';
+import type { Vertical } from '@/types/DbDevice';
 
 // roomId = only load the devices in that room. Leave it out to load all devices.
 export function useDevices(roomId?: number) {
@@ -46,6 +47,22 @@ export function useDevices(roomId?: number) {
             }
         }
 
+    }
+
+    const isAllSelected = computed(() =>
+        devices.value.length > 0 && devices.value.every(device => getIsSelected(device.id))
+    );
+
+    // Deselects all if everything is selected, otherwise selects all
+    function toggleSelectAll() {
+
+        selectedDevices.value = isAllSelected.value ? [] : [...devices.value];
+    }
+
+    // Selects only the devices placed at that height
+    function selectByVertical(vertical: Vertical) {
+
+        selectedDevices.value = devices.value.filter(device => device.vertical == vertical);
     }
 
     function toggleIsOn(isOn: boolean) {
@@ -95,6 +112,9 @@ export function useDevices(roomId?: number) {
         loadDevices,
         getIsSelected,
         toggleSelectedDevice,
+        isAllSelected,
+        toggleSelectAll,
+        selectByVertical,
         toggleIsOn,
         setBrightness,
         setHue

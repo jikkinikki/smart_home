@@ -70,6 +70,7 @@ class DeviceHandler:
             "custom_data": {"disabled": row.disabled},
             "hidden": row.hidden,
             "room_id": row.room_id,
+            "vertical": row.vertical,
         }
 
         # The importers store the source specific data in "extra", which in
@@ -351,6 +352,17 @@ class DeviceHandler:
             return False
 
         device.room_id = room_id
+        return True
+
+    def set_device_vertical(self, id, vertical):
+        """Change how high up the loaded device is placed (None = not set), without a restart.
+        Returns False if the device isn't loaded (e.g. disabled)."""
+        device = self.getDeviceById(id)
+
+        if device == "null":
+            return False
+
+        device.vertical = vertical
         return True
 
     def restart_devices(self):

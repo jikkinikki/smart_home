@@ -1,3 +1,5 @@
+import type { Vertical } from "./DbDevice";
+
 // What a device can do. Names match the backend's PATCH /devices fields.
 export type Capability = "power" | "brightness" | "temperature" | "color";
 
@@ -8,6 +10,7 @@ export interface Device {
     type: string,
     capabilities: Capability[],
     room_id?: number | null,  // null = not in a room (see GET /rooms)
+    vertical?: Vertical | null,  // null = not set
 
     isOn?: boolean,
     brightness?: number,

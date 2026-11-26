@@ -76,4 +76,7 @@ def update_db_device(device_id: str, changes: DbDeviceUpdate, request: Request,
     if "room_id" in values:
         handler.set_device_room(device_id, values["room_id"])
 
+    if "vertical" in values:
+        handler.set_device_vertical(device_id, values["vertical"])
+
     return device
