@@ -311,6 +311,17 @@ class DeviceHandler:
                 
         return "null"
     
+    def rename_device(self, id, name):
+        """Rename the loaded device, so the new name shows without a restart.
+        Returns False if the device isn't loaded (e.g. disabled)."""
+        device = self.getDeviceById(id)
+
+        if device == "null":
+            return False
+
+        device.set_device_name(name)
+        return True
+
     def getAllDevices(self):
         devices = []
         all_devices = self.clone_dict(self._allDevices)

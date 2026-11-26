@@ -1,12 +1,32 @@
 <script setup lang="ts">
 import type { DbDevice } from '@/types/DbDevice';
+import type { DbDeviceUpdate } from '@/api/DbDeviceApi';
 import { ref } from 'vue';
 
-let isOpen = ref(false);
-
-defineProps<{
+const props = defineProps<{
     device: DbDevice
 }>();
+
+// The page does the saving, so the component doesn't talk to the API itself
+const emit = defineEmits<{
+    save: [deviceId: string, changes: DbDeviceUpdate]
+}>();
+
+const isOpen = ref(false);
+
+const newName = ref(props.device.name);
+
+function save(){
+
+    emit("save", props.device.id, { name: newName.value });
+    isOpen.value = false;
+}
+
+function cancel() {
+
+    newName.value = props.device.name;
+    isOpen.value = false;
+}
 
 </script>
 
@@ -14,25 +34,30 @@ defineProps<{
 
     <div class="device" :class="{ disabled: device.disabled }">
 
-        <div @click="isOpen = true" v-if="!isOpen">
+        <div v-if="!isOpen">
             <h3>{{ device.name || "(no name)" }}</h3>
             <p>{{ device.type }} · {{ device.source }}</p>
             <p>{{ device.address }}</p>
             <p class="id">{{ device.id }}</p>
             <p v-if="device.disabled">disabled</p>
+
+            <div class="buttons">
+                <button @click="isOpen = true">Edit</button>
+            </div>
+
         </div>
 
         <div v-else>
 
-            <input :value="device.name">
+            <input v-model="newName">
             <p>{{ device.type }} · {{ device.source }}</p>
             <p>{{ device.address }}</p>
             <p class="id">{{ device.id }}</p>
             <p v-if="device.disabled">disabled</p>
 
-            <div>
-                <button>Save</button>
-                <button @click="isOpen = false">Cancel</button>
+            <div class="buttons">
+                <button @click="save">Save</button>
+                <button @click="cancel">Cancel</button>
             </div>
         </div>
 
@@ -56,6 +81,18 @@ defineProps<{
         font-size: 0.8em;
         opacity: 0.6;
         word-break: break-all;
+    }
+
+    .buttons {
+
+        display: flex;
+        gap: 4px;
+
+        button {
+
+            flex: 1;
+        }
+
     }
 }
 </style>

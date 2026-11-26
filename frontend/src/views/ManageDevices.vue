@@ -3,7 +3,7 @@ import { onMounted } from 'vue';
 import { useDbDevices } from '@/composables/useDbDevices';
 import DeviceEdit from '@/components/DeviceEdit.vue';
 
-const { devices, error, loadDevices } = useDbDevices();
+const { devices, error, loadDevices, updateDevice } = useDbDevices();
 
 onMounted(loadDevices);
 
@@ -21,7 +21,7 @@ onMounted(loadDevices);
 
             <div class="devices">
 
-                <DeviceEdit v-for="device in devices" :key="device.id" :device="device"></DeviceEdit>
+                <DeviceEdit v-for="device in devices" :key="device.id" :device="device" @save="updateDevice"></DeviceEdit>
 
             </div>
 

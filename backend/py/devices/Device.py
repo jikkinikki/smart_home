@@ -12,6 +12,9 @@ class Device:
     def get_device_name(self) -> str:
         return self._device_name
 
+    def set_device_name(self, name: str):
+        self._device_name = name
+
     def load_device(self, jsonData: dict):
         self._device_name = jsonData["device_name"]
         self.id = jsonData.get("dev_id")
