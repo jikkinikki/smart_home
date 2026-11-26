@@ -2,6 +2,7 @@
 import { onMounted } from 'vue';
 import { useDbDevices } from '@/composables/useDbDevices';
 import DeviceEdit from '@/components/DeviceEdit.vue';
+import DeviceRefetch from '@/components/DeviceRefetch.vue';
 
 const { devices, error, loadDevices, updateDevice } = useDbDevices();
 
@@ -24,6 +25,14 @@ onMounted(loadDevices);
                 <DeviceEdit v-for="device in devices" :key="device.id" :device="device" @save="updateDevice"></DeviceEdit>
 
             </div>
+
+        </div>
+
+        <div class="container">
+
+            <h2>Refetch devices</h2>
+
+            <DeviceRefetch @applied="loadDevices"></DeviceRefetch>
 
         </div>
 

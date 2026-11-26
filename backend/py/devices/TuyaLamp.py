@@ -27,6 +27,13 @@ class TuyaLamp(Device.Device, Lamp.Lamp):
         self.tuyaDevice.set_socketPersistent(True)
         self._is_ready = True
 
+    def close(self):
+        super().close()
+
+        # The socket is kept open (persistent), so close it before connecting again
+        if hasattr(self, "tuyaDevice"):
+            self.tuyaDevice.close()
+
     def turn_on(self, nowait: bool = False):
         super().turn_on(nowait=nowait)
 

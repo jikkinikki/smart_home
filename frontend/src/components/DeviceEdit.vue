@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { DbDevice } from '@/types/DbDevice';
+import type { DbDevice, Vertical } from '@/types/DbDevice';
 import type { DbDeviceUpdate } from '@/api/DbDeviceApi';
 import { ref } from 'vue';
 
@@ -16,10 +16,11 @@ const isOpen = ref(false);
 
 const newName = ref(props.device.name);
 const newHidden = ref(props.device.hidden);
+const newVertical = ref<Vertical | null>(props.device.vertical);
 
 function save() {
 
-    emit("save", props.device.id, { name: newName.value, hidden: newHidden.value });
+    emit("save", props.device.id, { name: newName.value, hidden: newHidden.value, vertical: newVertical.value });
     isOpen.value = false;
 }
 
@@ -27,6 +28,7 @@ function cancel() {
 
     newName.value = props.device.name;
     newHidden.value = props.device.hidden;
+    newVertical.value = props.device.vertical;
     isOpen.value = false;
 }
 
@@ -43,6 +45,7 @@ function cancel() {
             <p class="id">{{ device.id }}</p>
             <p v-if="device.disabled">disabled</p>
             <p>hidden: {{ device.hidden }}</p>
+            <p>vertical: {{ device.vertical ?? "not set" }}</p>
 
             <div class="buttons">
                 <button @click="isOpen = true">Edit</button>
@@ -61,6 +64,16 @@ function cancel() {
             <label>
                 <input type="checkbox" v-model="newHidden">
                 hidden
+            </label>
+
+            <label>
+                vertical
+                <select v-model="newVertical">
+                    <option :value="null">not set</option>
+                    <option value="low">low</option>
+                    <option value="medium">medium</option>
+                    <option value="high">high</option>
+                </select>
             </label>
 
             <div class="buttons">

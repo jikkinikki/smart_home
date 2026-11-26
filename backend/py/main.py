@@ -6,7 +6,8 @@ import control.device_handler as dh
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from api import db_devices, devices
+from api import db_devices, device_refetch, devices
+from control.device_refetch import DeviceRefetch
 from utils.startup_reporter import StartupReporter
 
 
@@ -27,6 +28,7 @@ async def lifespan(app: FastAPI):
     # Share instances with API routers
     app.state.device_handler = device_handler
     app.state.device_commands = device_commands
+    app.state.device_refetch = DeviceRefetch(device_handler)
 
     StartupReporter(device_handler).start()
 
@@ -47,3 +49,4 @@ app.add_middleware(
 
 app.include_router(devices.router, prefix="/api")
 app.include_router(db_devices.router, prefix="/api")
+app.include_router(device_refetch.router, prefix="/api")

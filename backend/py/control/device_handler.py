@@ -30,6 +30,7 @@ class DeviceHandler:
     def __init__(self):
         self._allDevices = []
         self.devices_lock = threading.Lock()
+        self._generation = 0  # bumped by restart_devices, so old load threads know they're stale
         self.patch_devices()
         self.patch_zigbee_devices()
         self.load_devices_from_db(False)
@@ -108,7 +109,7 @@ class DeviceHandler:
             temp_device.type = device.get("type")
             self._allDevices.append(temp_device)
 
-            threads.append(threading.Thread(target=self.load_device, args=(i, device, debug_info)))
+            threads.append(threading.Thread(target=self.load_device, args=(i, device, debug_info, self._generation)))
             self.devices_loading += 1
             i += 1
 
@@ -278,7 +279,7 @@ class DeviceHandler:
         for thread in getattr(self, "_load_threads", []):
             thread.join(max(0, end - time.time()))
 
-    def load_device(self, device_index, device_data, debug_info = False):
+    def load_device(self, device_index, device_data, debug_info = False, generation = 0):
 
         type = device_data["type"]
         source = device_data["source"]
@@ -290,6 +291,11 @@ class DeviceHandler:
             device.load_device(device_data)
 
             with self.devices_lock:
+                # Devices were restarted while this one was loading, so it's not wanted anymore
+                if generation != self._generation:
+                    device.close()
+                    return
+
                 self._allDevices[device_index] = device
                 self.devices_loading -= 1
                 print("waiting for devices: ", self.devices_loading, "time waited: ", time.time() - self.start_time)
@@ -299,7 +305,8 @@ class DeviceHandler:
         except Exception as e:
             print("failed to load", label, f"({type} {source}):", f"{e.__class__.__name__}: {e}")
             with self.devices_lock:
-                self.devices_loading -= 1
+                if generation == self._generation:
+                    self.devices_loading -= 1
         
         # return device
    
@@ -333,6 +340,23 @@ class DeviceHandler:
 
         device.hidden = hidden
         return True
+
+    def restart_devices(self):
+        """Stop every device and load them all again from the database,
+        e.g. after the address/key of a device changed."""
+        with self.devices_lock:
+            old_devices = self._allDevices
+            self._allDevices = []
+            self._generation += 1
+
+        for device in old_devices:
+            try:
+                device.close()
+            except Exception as e:
+                print("failed to close", device.get_device_name() or device.id, f"{e.__class__.__name__}: {e}")
+
+        print("restarting devices")
+        self.load_devices_from_db()
 
     def getAllDevices(self):
         devices = []

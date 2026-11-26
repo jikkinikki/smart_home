@@ -21,6 +21,7 @@ class Device(SQLModel, table=True):
 
     disabled: bool = False
     hidden: bool = False            # still loaded, just not shown in device control
+    vertical: str | None = None     # how high up it's placed: "low", "medium", "high" (e.g. ceiling lamp)
 
     # Source specific data, e.g. zigbee endpoint/capabilities. Set by the importers.
     extra: dict = Field(default_factory=dict, sa_column=Column(JSON, nullable=False))

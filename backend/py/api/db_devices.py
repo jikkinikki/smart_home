@@ -1,4 +1,6 @@
 """Devices as they are saved in the database (not the loaded/connected ones in /devices)."""
+from typing import Literal
+
 from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel
 from sqlmodel import Session, select
@@ -7,6 +9,9 @@ from db.database import get_session
 from db.models import Device
 
 router = APIRouter(prefix="/db/devices", tags=["Database devices"])
+
+# How high up the device is placed, e.g. "high" for ceiling lamps
+Vertical = Literal["low", "medium", "high"]
 
 
 class DbDeviceOut(BaseModel):
@@ -19,6 +24,7 @@ class DbDeviceOut(BaseModel):
     version: str | None
     disabled: bool
     hidden: bool
+    vertical: Vertical | None
     extra: dict
     room_id: int | None
 
@@ -27,6 +33,7 @@ class DbDeviceUpdate(BaseModel):
     # Only the fields that can be edited. Fields left out are not changed.
     name: str | None = None
     hidden: bool | None = None
+    vertical: Vertical | None = None    # null clears it
 
 
 @router.get("", response_model=list[DbDeviceOut])

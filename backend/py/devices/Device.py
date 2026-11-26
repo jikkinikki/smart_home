@@ -22,5 +22,9 @@ class Device:
         self.type = jsonData.get("type")
         self.hidden = jsonData.get("hidden", False)
 
+    def close(self):
+        """Close the connection to the device. Override if the device keeps one open."""
+        self._is_ready = False
+
     def set_allow_auto_updates(self, allow: bool):
         self.allow_auto_updates = allow
