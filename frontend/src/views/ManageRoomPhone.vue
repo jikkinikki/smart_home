@@ -2,7 +2,7 @@
 import button_device from '@/components/button_device.vue';
 import LampAdjust from '@/components/LampAdjust.vue';
 import { computed, onMounted, ref } from 'vue';
-import { getTemperatureColor, type RGB } from '@/utils/lightColor';
+import { getTemperatureColor, toCssColor, type RGB } from '@/utils/lightColor';
 import FilterDropdown from '@/components/FilterDropdown.vue';
 import OnOffBtn from '@/components/OnOffBtn.vue';
 import { useDevices } from '@/composables/useDevices';
@@ -57,11 +57,7 @@ const lightColor = computed(() => {
     else
         rgb = color;
 
-    if (!rgb)
-        return undefined;
-
-    const [r, g, b] = rgb.map(Math.round);
-    return `rgb(${r}, ${g}, ${b})`;
+    return rgb ? toCssColor(rgb) : undefined;
 });
 
 onMounted(loadDevices);

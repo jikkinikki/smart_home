@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { computed, ref, watch, defineEmits } from 'vue';
 import LabeledSlider from './LabeledSlider.vue';
+import ColorPresets from './ColorPresets.vue';
 import type { LightMode } from '@/types/Device';
-import { getStopColor, getTemperatureColor, temperatureStops, type RGB } from '@/utils/lightColor';
+import { colorGradient, colorStops, getBrightnessGradient, getHueColor, getHuePosition, hexToRgb, temperatureGradient,
+    temperatureStops, type RGB } from '@/utils/lightColor';
 
 const inRGBMode = ref(false);
 
@@ -12,28 +14,6 @@ const emits = defineEmits<{
     hue: [value: number]
     color: [value: [number, number, number]]
 }>();
-
-// The color wheel unrolled: full-saturation hues, red -> yellow -> green -> cyan -> blue -> magenta -> red.
-// Also used for the color slider's track, so the track shows exactly the color we send.
-const colorStops: [number, RGB][] = [
-    [0, [255, 0, 0]],
-    [100 / 6, [255, 255, 0]],
-    [200 / 6, [0, 255, 0]],
-    [300 / 6, [0, 255, 255]],
-    [400 / 6, [0, 0, 255]],
-    [500 / 6, [255, 0, 255]],
-    [100, [255, 0, 0]]
-];
-
-// How bright the light looks at a brightness. Our eyes see dim light as brighter
-// than it is, so it rises fast at the start and slower at the end.
-const brightnessStops: [number, number][] = [
-    [0, 0.1],
-    [10, 0.35],
-    [25, 0.54],
-    [50, 0.735],
-    [100, 1]
-];
 
 // The values the selected devices have, shown on the sliders. undefined = unknown, the slider stays where it is.
 const props = defineProps<{
@@ -73,51 +53,13 @@ watch(() => props.deviceColor, value => {
         hue.value = getHuePosition(value);
 }, { immediate: true });
 
-// Where a color is on the color slider (0-100), the reverse of colorStops. Gray/white gives 0.
-function getHuePosition([r, g, b]: RGB): number {
-
-    const max = Math.max(r, g, b);
-    const range = max - Math.min(r, g, b);
-
-    if (range == 0)
-        return 0;
-
-    let hueDegrees;
-
-    if (max == r)
-        hueDegrees = 60 * (((g - b) / range + 6) % 6);
-    else if (max == g)
-        hueDegrees = 60 * ((b - r) / range + 2);
-    else
-        hueDegrees = 60 * ((r - g) / range + 4);
-
-    return Math.round(hueDegrees / 360 * 100);
-}
-
-function toCss(gradient: string[]) {
-
-    return `linear-gradient(90deg, ${gradient.join(", ")})`;
-}
-
-// The temperature's color, from dim to full brightness
-const brightnessGradient = computed(() => {
-
-    const color = getTemperatureColor(temperature.value);
-
-    return toCss(brightnessStops.map(([pos, amount]) => {
-
-        const [r, g, b] = color.map(value => Math.round(value * amount));
-        return `rgb(${r}, ${g}, ${b}) ${pos}%`;
-    }));
-});
-
-const temperatureGradient = toCss(temperatureStops.map(([pos, [r, g, b]]) => `rgb(${r}, ${g}, ${b}) ${pos}%`));
-const colorGradient = toCss(colorStops.map(([pos, [r, g, b]]) => `rgb(${r}, ${g}, ${b}) ${pos}%`));
+// Follows the temperature
+const brightnessGradient = computed(() => getBrightnessGradient(temperature.value));
 
 function onHueChange(value: number) {
 
     hue.value = value;
-    emits('color', getStopColor(colorStops, value).map(Math.round) as RGB);
+    emits('color', getHueColor(value));
 }
 
 function onTemperatureChange(value: number) {
@@ -126,22 +68,12 @@ function onTemperatureChange(value: number) {
     emits('hue', value);
 }
 
-// Quick picks above the sliders. Each dot is colored with the same
-// value it sends, so it looks like the slider at that spot. Starts at 1, the slider's min.
-function makePresets(stops: [number, RGB][], values: number[]) {
-
-    return values.map(value => {
-
-        const [r, g, b] = getStopColor(stops, value).map(Math.round);
-        return { value, color: `rgb(${r}, ${g}, ${b})` };
-    });
-}
-
-const temperaturePresets = makePresets(temperatureStops, [1, 25, 50, 75, 100]);
+// Where the quick picks above the sliders are. Starts at 1, the slider's min.
+const temperaturePresetValues = [1, 25, 50, 75, 100];
 
 // Red, yellow, green, cyan, blue: the main points of colorStops (rounded, the slider only does whole numbers).
 // The last dot is a color picker instead (see pickedColor).
-const colorPresets = makePresets(colorStops, [1, 17, 33, 50, 67]);
+const colorPresetValues = [1, 17, 33, 50, 67];
 
 // The color from the picker as "#rrggbb", null when the slider/presets are in use
 const pickedColor = ref<string | null>(null);
@@ -149,8 +81,7 @@ const pickedColor = ref<string | null>(null);
 function onColorPicked(hex: string) {
 
     pickedColor.value = hex;
-    const value = parseInt(hex.slice(1), 16);
-    emits('color', [(value >> 16) & 255, (value >> 8) & 255, value & 255]);
+    emits('color', hexToRgb(hex));
 }
 
 function onColorSliderChange(value: number) {
@@ -184,12 +115,8 @@ function onColorSliderChange(value: number) {
         <LabeledSlider v-if="inRGBMode" v-model="hue" @change="onColorSliderChange" class="color-slider"
             :style="{ '--track-gradient': colorGradient }" label="Color">
 
-            <div class="presets">
-
-                <button v-for="preset in colorPresets" :key="preset.value" class="preset"
-                    :class="{ presetSelected: !pickedColor && hue === preset.value }"
-                    :style="{ backgroundColor: preset.color }" :title="`${preset.value}%`"
-                    @click="onColorSliderChange(preset.value)"></button>
+            <ColorPresets :stops="colorStops" :values="colorPresetValues" :selectedValue="pickedColor ? null : hue"
+                @select="onColorSliderChange">
 
                 <!-- Rainbow until a color is picked, then shows that color. The invisible input on top opens the picker. -->
                 <label class="preset color-picker" :class="{ presetSelected: pickedColor }"
@@ -199,21 +126,16 @@ function onColorSliderChange(value: number) {
                         @input="onColorPicked(($event.target as HTMLInputElement).value)">
                 </label>
 
-            </div>
+            </ColorPresets>
 
         </LabeledSlider>
 
         <LabeledSlider v-else v-model="temperature" @change="onTemperatureChange" class="temperature-slider"
             :style="{ '--track-gradient': temperatureGradient }" label="temperature">
 
-            <div class="presets">
-
-                <button v-for="preset in temperaturePresets" :key="preset.value" class="preset"
-                    :class="{ presetSelected: temperature === preset.value }"
-                    :style="{ backgroundColor: preset.color }" :title="`${preset.value}%`"
-                    @click="onTemperatureChange(preset.value)"></button>
-
-            </div>
+            <ColorPresets :stops="temperatureStops" :values="temperaturePresetValues" :selectedValue="temperature"
+                @select="onTemperatureChange">
+            </ColorPresets>
 
         </LabeledSlider>
 
@@ -293,53 +215,28 @@ function onColorSliderChange(value: number) {
             // The Color slider also has this class but no gradient yet, so it uses the fallback.
             background: var(--track-gradient, linear-gradient(90deg, rgb(49, 48, 48), yellow));
         }
-
     }
 }
 
-.presets {
+.color-picker {
 
-    display: flex;
-    justify-content: space-evenly;
-    margin: 6px 0 10px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    background: conic-gradient(red, yellow, lime, cyan, blue, magenta, red);
 
-    .preset {
+    input {
 
-        width: 32px;
-        aspect-ratio: 1;
-        padding: 0;
-        border-radius: 1000px;
-        border: 1px solid var(--border-medium);
-        transition: .2s;
-    }
-
-    .presetSelected {
-
-        border-color: var(--border-bright);
-        transform: scale(1.15);
-    }
-
-    .color-picker {
-
-        position: relative;
-        overflow: hidden;
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
         cursor: pointer;
-        background: conic-gradient(red, yellow, lime, cyan, blue, magenta, red);
-
-        input {
-
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: pointer;
-        }
     }
 }
 
-.temperature-slider,
-.color-slider {
+.temperature-slider, .color-slider {
 
     :deep(input) {
 
@@ -348,9 +245,7 @@ function onColorSliderChange(value: number) {
             // Set from the script (temperatureGradient / colorGradient)
             background: var(--track-gradient);
         }
-
     }
 }
-
 
 </style>
