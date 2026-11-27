@@ -54,7 +54,7 @@ function onclick(){
 
     box-shadow: 0px 0px 5px 5px var(--shadow);
     padding: 10px;
-    border-radius: 15px;
+    border-radius: 10px;
 
     display: grid;
     grid-template-columns: auto 1fr auto;

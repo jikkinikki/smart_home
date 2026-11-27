@@ -34,12 +34,14 @@ watch(isOn, () => {
 @use '@/assets/styles/variables' as *;
 
 button {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     border-radius: 1000px;
     // aspect-ratio: 1;
 
     transition: .2s;
+
+    background-color: var(--surface-light);
 
     box-shadow: 0px 0px 5px 5px var(--shadow);
 

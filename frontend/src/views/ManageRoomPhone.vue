@@ -85,6 +85,12 @@ onMounted(loadDevices);
 
         <div class="toggle-active-area">
 
+            <div class="info">
+                <div class="color-div"></div>
+
+                <p>On 72%</p>
+            </div>
+
             <OnOffBtn @isOn="toggleIsOn"></OnOffBtn>
 
         </div>
@@ -95,7 +101,6 @@ onMounted(loadDevices);
 </template>
 
 <style scoped lang="scss">
-
 @use '@/assets/styles/variables' as *;
 
 h2 {
@@ -141,7 +146,6 @@ h2 {
 
     .select-btn {
 
-        // border-radius: 5px;
         background-color: rgba(0, 0, 0, 0);
 
         width: 100px;
@@ -151,9 +155,40 @@ h2 {
 .toggle-active-area {
 
     display: flex;
-    justify-content: space-evenly;
-    --width: 100px;
+    justify-content: space-between;
+    // --width: 100px;
 
+    background-color: var(--surface);
+
+    padding: 10px 10px;
+    border-radius: 10px;
+    box-sizing: border-box;
+
+    box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.137);
+
+    margin-bottom: 50px;
+
+    .info {
+
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+
+        .color-div {
+
+            width: 40px;
+            border-radius: 1000px;
+            aspect-ratio: 1;
+            background-color: orange;
+            box-shadow: 0px 0px 5px 5px rgba(205, 205, 28, 0.137);
+
+        }
+
+        p {
+            display: inline;
+        }
+    }
 
     @media (min-width: $phone-limit) {
 
@@ -162,7 +197,7 @@ h2 {
 
     @media (max-width: $phone-limit) {
 
-        margin-top: 20px;
+        margin-top: 10px;
 
         // position: fixed;
         // bottom: 10px;

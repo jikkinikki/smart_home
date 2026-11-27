@@ -38,6 +38,8 @@ function updateSlider() {
 
 
 <style scoped lang="scss">
+@use '@/assets/styles/variables' as *;
+
 .container {
 
     .slider-info {
@@ -46,7 +48,7 @@ function updateSlider() {
         justify-content: space-between
     }
 
-    p{
+    p {
 
         margin-top: 0;
         margin-bottom: 0.5em;
@@ -60,24 +62,40 @@ function updateSlider() {
         border-radius: 1000px;
 
         margin-top: 0.5em;
-        
+
         &::-webkit-slider-runnable-track {
-            
+
             height: 20px;
             border-radius: 1000px;
-            
+
         }
-        
+
         &::-webkit-slider-thumb {
             appearance: none;
             height: 30px;
             transform: translateY(-5px);
             aspect-ratio: 1;
-            
+
             border-radius: 1000px;
             background-color: var(--white);
             border: 3px solid var(--border-medium);
         }
+
+        // @media (max-width: $phone-limit) {
+
+        //     &::-webkit-slider-runnable-track {
+
+        //         height: 15px;
+
+        //     }
+
+        //     &::-webkit-slider-thumb {
+
+        //         height: 25px;
+        //         transform: translateY(-5px);
+
+        //     }
+        // }
     }
 }
 </style>
