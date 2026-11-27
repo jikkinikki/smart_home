@@ -30,10 +30,14 @@ watch(isOn, () => {
 
 
 <style scoped lang="scss">
+
+@use '@/assets/styles/variables' as *;
+
 button {
     width: 100px;
     height: 100px;
     border-radius: 1000px;
+    // aspect-ratio: 1;
 
     transition: .2s;
 
@@ -46,6 +50,13 @@ button {
         filter: brightness(0) invert(.7);
 
         height: 100%;
+    }
+
+    @media (max-width: $phone-limit) {
+
+        width: 60px;
+        height: 60px;
+        padding: 15px;
     }
 }
 

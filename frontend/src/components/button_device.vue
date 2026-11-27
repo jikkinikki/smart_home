@@ -51,13 +51,14 @@ function getDeviceIcon() {
 
         </div>
 
-        <p class="device-name">{{ device.name }}</p>
+        <p class="device-name">{{ device.name.replaceAll("_", " ") }}</p>
 
     </div>
 
 </template>
 
 <style scoped>
+
 .button-wrapper {
 
     min-width: 100px;
@@ -67,7 +68,7 @@ function getDeviceIcon() {
 
     background-color: var(--surface);
 
-    border-radius: 15px;
+    border-radius: 10px;
 
     display: flex;
     align-items: center;
@@ -78,7 +79,7 @@ function getDeviceIcon() {
         height: 100%;
         aspect-ratio: 1;
         background-color: var(--accent);
-        border-radius: 10000px;
+        border-radius: 1000px;
 
         img {
 
@@ -92,8 +93,10 @@ function getDeviceIcon() {
 
     .device-name {
 
-        margin: 10px 0px;
+        margin: 7px 0px;
         display: inline;
+
+        text-transform: capitalize;
     }
 }
 </style>

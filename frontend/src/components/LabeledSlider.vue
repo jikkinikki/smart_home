@@ -50,6 +50,7 @@ function updateSlider() {
 
         margin-top: 0;
         margin-bottom: 0.5em;
+        text-transform: capitalize;
     }
 
     input {

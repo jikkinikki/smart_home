@@ -95,8 +95,8 @@ onMounted(loadDevices);
 </template>
 
 <style scoped lang="scss">
-@use '@/assets/styles/variables' as *;
 
+@use '@/assets/styles/variables' as *;
 
 h2 {
 
@@ -119,7 +119,8 @@ h2 {
 
         // background-color: black;
         // box-sizing: border-box;
-        border: 2px solid var(--border-dark);
+        border: 2px solid color-mix(in srgb, var(--surface), white 2%);
+        box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.05);
         overflow: hidden;
     }
 
@@ -156,7 +157,6 @@ h2 {
 
     @media (min-width: $phone-limit) {
 
-
         margin-top: 200px;
     }
 
@@ -169,8 +169,6 @@ h2 {
         // left: calc(50% - var(--width) / 2);
         // z-index: 100;
     }
-
-
 
 }
 </style>
