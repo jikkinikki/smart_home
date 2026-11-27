@@ -1,3 +1,5 @@
+@use './variables' as *;
+
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&display=swap');
 
 :root {
@@ -5,8 +7,8 @@
     --black: rgb(8, 10, 18);
     --white: rgb(250, 236, 236);
 
-    --background: rgb(20, 21, 27);
-    --surface: rgb(31, 34, 47);
+    --background: rgb(24, 27, 38);
+    --surface: rgb(33, 37, 54);
     --surface-light: rgb(50, 54, 80);
     --surface-lighter: rgb(68, 74, 104);
 
@@ -28,7 +30,7 @@
     --border-medium: rgb(204, 177, 177);
     --border-dark: rgb(44, 48, 70);
 
-    --shadow: color-mix(in srgb, var(--black) 55%, transparent);
+    --shadow: color-mix(in srgb, var(--black) 15%, transparent);
 
     font-family: 'Outfit', sans-serif;
 }
@@ -74,4 +76,29 @@ p, label, span, button {
 body {
 
     background-color: var(--background);
+}
+
+@media (min-width: $phone-limit) {
+
+    .dynamic-wrapper {
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        > * {
+
+            width: $phone-limit;
+            margin-left: -5%;
+        }
+    }
+}
+
+
+@media (max-width: $phone-limit) {
+
+    .dynamic-wrapper {
+
+        margin: 0px 5px;
+    }
 }

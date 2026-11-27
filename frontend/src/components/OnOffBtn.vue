@@ -41,7 +41,7 @@ button {
 
     padding: 30px;
 
-    img{
+    img {
 
         filter: brightness(0) invert(.7);
 
@@ -54,7 +54,7 @@ button {
     background-color: var(--accent);
     color: var(--text-on-accent);
 
-    img{
+    img {
 
         filter: brightness(0);
     }

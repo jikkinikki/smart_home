@@ -47,9 +47,9 @@ onMounted(loadDevices);
 
 <template>
 
-    <div class="wrapper">
+    <div class="dynamic-wrapper">
 
-        <div class="container">
+        <div>
 
             <h2 @click="loadDevices">Devices</h2>
 
@@ -60,7 +60,7 @@ onMounted(loadDevices);
                 </FilterDropdown>
 
                 <button class="select-btn" @click="onToggleSelectAll">{{ isAllSelected ? "Deselect all" : "Select all"
-                    }}</button>
+                }}</button>
 
             </div>
 
@@ -74,7 +74,7 @@ onMounted(loadDevices);
             <br>
         </div>
 
-        <div class="container">
+        <div>
 
             <h2>Adjust</h2>
             <div>
@@ -84,7 +84,7 @@ onMounted(loadDevices);
 
         </div>
 
-        <div class="toggle-active-area container">
+        <div class="toggle-active-area">
 
             <OnOffBtn @isOn="toggleIsOn"></OnOffBtn>
 
@@ -96,21 +96,8 @@ onMounted(loadDevices);
 </template>
 
 <style scoped lang="scss">
-@media (min-width: 600px) {
+@use '@/assets/styles/variables' as *;
 
-    .wrapper {
-
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .container {
-
-        width: 600px;
-        margin-left: -5%;
-    }
-}
 
 h2 {
 
@@ -158,8 +145,27 @@ h2 {
 
     display: flex;
     justify-content: space-evenly;
+    --width: 100px;
 
-    margin-top: 200px;
+
+    @media (min-width: $phone-limit) {
+
+
+        margin-top: 200px;
+    }
+
+    @media (max-width: $phone-limit) {
+
+
+        margin-top: 50px;
+
+        // position: fixed;
+        // bottom: 10px;
+        // left: calc(50% - var(--width) / 2);
+        // z-index: 100;
+    }
+
+
 
 }
 </style>

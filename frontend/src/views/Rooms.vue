@@ -16,7 +16,7 @@ onMounted(() => {
 
 <template>
 
-    <div>
+    <div class="dynamic-wrapper">
 
         <h1>Home</h1>
 
@@ -44,8 +44,6 @@ onMounted(() => {
 
 <style lang="scss">
 .rooms {
-
-    padding: 20px;
 
     .room-all {
 

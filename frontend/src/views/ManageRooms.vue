@@ -86,9 +86,9 @@ onMounted(() => {
 
 <template>
 
-    <div class="wrapper">
+    <div class="dynamic-wrapper">
 
-        <div class="container">
+        <div>
 
             <h2>Rooms</h2>
 
@@ -113,7 +113,7 @@ onMounted(() => {
 
         </div>
 
-        <div class="container">
+        <div>
 
             <h2>Devices</h2>
 
@@ -152,21 +152,6 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
-
-// Same max width layout as ManageDevices
-@media (min-width: 600px) {
-
-    .wrapper {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .container {
-        width: 600px;
-        margin-left: -5%;
-    }
-}
 
 h2 {
     text-transform: uppercase;

@@ -39,9 +39,9 @@ onMounted(() => {
 
 <template>
 
-    <div class="wrapper">
+    <div class="dynamic-wrapper">
 
-        <div class="container">
+        <div>
 
             <h2 @click="loadDevices">Manage devices</h2>
 
@@ -55,7 +55,7 @@ onMounted(() => {
 
         </div>
 
-        <div class="container">
+        <div>
 
             <h2>Refetch devices</h2>
 
@@ -63,7 +63,7 @@ onMounted(() => {
 
         </div>
 
-        <div class="add-device container">
+        <div class="add-device">
 
 
         </div>
@@ -74,21 +74,6 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
-
-// Same max width layout as ManageRoomPhone
-@media (min-width: 600px) {
-
-    .wrapper {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .container {
-        width: 600px;
-        margin-left: -5%;
-    }
-}
 
 h2 {
     text-transform: uppercase;

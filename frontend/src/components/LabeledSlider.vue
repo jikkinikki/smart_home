@@ -47,6 +47,11 @@ function updateSlider() {
         justify-content: space-between
     }
 
+    p{
+
+        margin-top: 0.5em;
+    }
+
     input {
 
         width: 100%;
