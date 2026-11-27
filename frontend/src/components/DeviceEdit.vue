@@ -89,7 +89,7 @@ function cancel() {
 <style lang="scss" scoped>
 .device {
 
-    border: 2px solid var(--button-col);
+    border: 2px solid var(--border-dark);
     padding: 8px;
     overflow: hidden;
 

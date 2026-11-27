@@ -28,11 +28,11 @@ import homeIcon from '@/assets/icons/room-home.svg'
     align-items: center;
     justify-content: space-between;
     padding: 10px 16px;
-    background-color: var(--button-col);
+    background-color: var(--surface);
 }
 
 a {
-    color: rgb(217, 217, 217);
+    color: var(--text-body);
     text-decoration: none;
 }
 
@@ -53,7 +53,7 @@ a {
     gap: 16px;
 
     a.router-link-exact-active {
-        color: rgb(255, 255, 255);
+        color: var(--text-link-active);
         font-weight: 600;
     }
 }

@@ -1,8 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&display=swap');
 
 :root {
 
-    --button-col: rgb(35, 35, 35);
+    --black: rgb(8, 10, 18);
+    --white: rgb(250, 236, 236);
+
+    --background: rgb(20, 21, 27);
+    --surface: rgb(31, 34, 47);
+    --surface-light: rgb(50, 54, 80);
+    --surface-lighter: rgb(68, 74, 104);
+
+    --accent: orange;
+    --accent-faded: color-mix(in srgb, var(--accent) 15%, transparent);
+    --success: rgb(120, 200, 120);
+
+    --text-h1: rgba(255, 255, 255, 0.95);
+    --text-h2: rgba(255, 255, 255, 0.88);
+    --text-h3: rgba(255, 255, 255, 0.8);
+    --text-body: rgba(255, 255, 255, 0.68);
+    // --text-button: rgba(255, 255, 255, 0.85);
+    --text-link-active: rgba(255, 255, 255, 0.95);
+    --text-placeholder: rgba(255, 255, 255, 0.45);
+    --text-on-accent: rgb(10, 12, 20);
+    --text-error: rgb(240, 110, 110);
+
+    --border-bright: rgb(197, 175, 175);
+    --border-medium: rgb(204, 177, 177);
+    --border-dark: rgb(44, 48, 70);
+
+    --shadow: color-mix(in srgb, var(--black) 55%, transparent);
+
     font-family: 'Outfit', sans-serif;
 }
 
@@ -13,34 +40,38 @@ body{
 
 button{
 
-    background-color: var(--button-col);
+    background-color: var(--surface);
     border: none;
 
-    color: rgb(228, 228, 228);
+    // color: var(--text-button);
+    
 }
 
 h1 {
 
-    color: rgb(217, 217, 217);
+    color: var(--text-h1);
 }
 
 h2 {
 
-    color: rgb(217, 217, 217);
+    color: var(--text-h2);
+    font-weight: 400;
 }
 
 h3 {
-
-    color: rgb(197, 194, 194);
+    
+    color: var(--text-h3);
+    font-weight: 300;
 }
 
 
-p, label {
-
-    color: rgb(217, 217, 217);
+p, label, span, button {
+    
+    color: var(--text-body);
+    font-weight: 200;
 }
 
 body {
 
-    background-color: rgb(15, 15, 15);
+    background-color: var(--background);
 }

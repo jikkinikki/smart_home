@@ -208,7 +208,7 @@ function onColorSliderChange(value: number) {
     grid-template-columns: repeat(2, 1fr);
 
     height: 40px;
-    background-color: black;
+    background-color: var(--black);
     border-radius: 10px;
 
     position: relative;
@@ -226,7 +226,7 @@ function onColorSliderChange(value: number) {
     .mode-marker {
 
         --inset: 4px;
-        background-color: rgba(255, 255, 255, 0.281);
+        background-color: var(--surface-light);
         width: calc(50% - var(--inset) * 2);
         height: calc(100% - var(--inset) * 2);
 
@@ -248,20 +248,17 @@ function onColorSliderChange(value: number) {
 
         left: 50%;
     }
-
-
-    .selectedMode {
-
-        // background-color: gray !important;
-    }
 }
 
 .back-panel {
 
-    background-color: rgb(40, 39, 39);
+    background-color: var(--surface);
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 10px;
+
+    box-shadow: 0px 0px 5px 5px var(--shadow);
+
 }
 
 .brightness-slider {
@@ -290,13 +287,13 @@ function onColorSliderChange(value: number) {
         aspect-ratio: 1;
         padding: 0;
         border-radius: 1000px;
-        border: 1px solid gray;
+        border: 1px solid var(--border-medium);
         transition: .2s;
     }
 
     .presetSelected {
 
-        border-color: white;
+        border-color: var(--border-bright);
         transform: scale(1.15);
     }
 

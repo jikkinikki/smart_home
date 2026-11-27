@@ -67,8 +67,8 @@ function updateSlider() {
             aspect-ratio: 1;
             
             border-radius: 1000px;
-            background-color: white;
-            border: 3px solid gray;
+            background-color: var(--white);
+            border: 3px solid var(--border-medium);
         }
     }
 }

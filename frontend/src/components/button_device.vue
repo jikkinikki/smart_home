@@ -66,7 +66,7 @@ function getDeviceIcon() {
     padding: 10px;
     box-sizing: border-box;
 
-    background-color: var(--button-col);
+    background-color: var(--surface);
 
     border-radius: 15px;
 
@@ -78,7 +78,7 @@ function getDeviceIcon() {
 
         height: 100%;
         aspect-ratio: 1;
-        background-color: orange;
+        background-color: var(--accent);
         border-radius: 10000px;
 
         img {

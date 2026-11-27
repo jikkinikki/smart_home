@@ -109,7 +109,7 @@ onBeforeUnmount(() => document.removeEventListener("click", onDocumentClick));
 
         &.placeholder {
 
-            color: rgb(150, 150, 150);
+            color: var(--text-placeholder);
         }
 
         .arrow {
@@ -141,10 +141,10 @@ onBeforeUnmount(() => document.removeEventListener("click", onDocumentClick));
         padding: 4px;
         box-sizing: border-box;
 
-        background-color: var(--button-col);
-        border: 1px solid rgb(60, 60, 60);
+        background-color: var(--surface);
+        border: 1px solid var(--border-dark);
         border-radius: 10px;
-        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.6);
+        box-shadow: 0px 4px 12px var(--shadow);
 
         display: flex;
         flex-direction: column;
@@ -161,12 +161,12 @@ onBeforeUnmount(() => document.removeEventListener("click", onDocumentClick));
 
         &:hover {
 
-            background-color: rgb(55, 55, 55);
+            background-color: var(--surface-light);
         }
 
         &.picked {
 
-            background-color: rgb(70, 70, 70);
+            background-color: var(--surface-lighter);
         }
     }
 }

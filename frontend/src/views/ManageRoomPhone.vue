@@ -55,11 +55,12 @@ onMounted(loadDevices);
 
             <div class="select-options">
 
-                
+
                 <FilterDropdown v-model="activeFilter" :options="verticalFilters" @select="onFilterSelect">
                 </FilterDropdown>
 
-                <button class="select-btn" @click="onToggleSelectAll">{{ isAllSelected ? "Deselect all" : "Select all" }}</button>
+                <button class="select-btn" @click="onToggleSelectAll">{{ isAllSelected ? "Deselect all" : "Select all"
+                    }}</button>
 
             </div>
 
@@ -96,16 +97,16 @@ onMounted(loadDevices);
 
 <style scoped lang="scss">
 @media (min-width: 600px) {
-    
-    .wrapper{
+
+    .wrapper {
 
         display: flex;
         flex-direction: column;
         align-items: center;
     }
-    
+
     .container {
-        
+
         width: 600px;
         margin-left: -5%;
     }
@@ -125,14 +126,14 @@ h2 {
 
         // background-color: black;
         // box-sizing: border-box;
-        border: 2px solid var(--button-col);
+        border: 2px solid var(--border-dark);
         overflow: hidden;
     }
 
     .deviceSelected {
 
-        // background-color: var(--button-col);
-        border: 2px solid rgb(195, 195, 195);
+        // background-color: var(--surface);
+        border: 2px solid var(--border-bright);
     }
 }
 
@@ -144,7 +145,7 @@ h2 {
 
     flex-direction: row-reverse;
 
-    .select-btn{
+    .select-btn {
 
         // border-radius: 5px;
         background-color: rgba(0, 0, 0, 0);

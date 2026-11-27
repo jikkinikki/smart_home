@@ -204,7 +204,7 @@ onUnmounted(stopPolling);
     }
 
     .error {
-        color: rgb(240, 110, 110);
+        color: var(--text-error);
     }
 
     .changes {
@@ -215,7 +215,7 @@ onUnmounted(stopPolling);
 
     .change {
 
-        border: 2px solid var(--button-col);
+        border: 2px solid var(--border-dark);
         padding: 8px;
         cursor: pointer;
         overflow: hidden;
@@ -242,14 +242,14 @@ onUnmounted(stopPolling);
         font-size: 0.8em;
         padding: 2px 6px;
         border-radius: 4px;
-        color: rgb(15, 15, 15);
+        color: var(--text-on-accent);
 
         &.new {
-            background-color: rgb(120, 200, 120);
+            background-color: var(--success);
         }
 
         &.changed {
-            background-color: orange;
+            background-color: var(--accent);
         }
     }
 

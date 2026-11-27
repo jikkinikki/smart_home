@@ -52,7 +52,7 @@ function onclick(){
 
 .card {
 
-    box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.493);
+    box-shadow: 0px 0px 5px 5px var(--shadow);
     padding: 10px;
     border-radius: 15px;
 
@@ -63,7 +63,7 @@ function onclick(){
 
     .icon {
 
-        background-color: orange;
+        background-color: var(--accent);
 
         width: 40px;
         aspect-ratio: 1;
@@ -82,7 +82,7 @@ function onclick(){
 
     .toggle-on {
 
-        background-color: rgb(236, 232, 225);
+        background-color: var(--white);
 
         width: 40px;
         aspect-ratio: 1;
@@ -101,7 +101,7 @@ function onclick(){
 
     .isOn {
 
-        background-color: rgb(236, 232, 225);
+        background-color: var(--white);
 
         img {
 
@@ -111,7 +111,7 @@ function onclick(){
 
     .isOff {
 
-        background-color: rgb(63, 63, 63);
+        background-color: var(--surface-light);
 
         img {
 

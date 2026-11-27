@@ -182,7 +182,7 @@ p {
 }
 
 .error {
-    color: rgb(240, 110, 110);
+    color: var(--text-error);
 }
 
 .add-room {
@@ -214,7 +214,7 @@ p {
 .room {
 
     padding: 10px 14px;
-    border: 2px solid var(--button-col);
+    border: 2px solid var(--border-dark);
     border-radius: 10px;
     cursor: pointer;
     font-size: 1em;
@@ -225,9 +225,9 @@ p {
     }
 
     &.selected {
-        background-color: orange;
-        border-color: orange;
-        color: rgb(15, 15, 15);
+        background-color: var(--accent);
+        border-color: var(--accent);
+        color: var(--text-on-accent);
         font-weight: 600;
 
         .count {
@@ -265,7 +265,7 @@ p {
 
 .device {
 
-    border: 2px solid var(--button-col);
+    border: 2px solid var(--border-dark);
     border-radius: 10px;
     padding: 8px;
     cursor: pointer;
@@ -285,11 +285,11 @@ p {
 
     // The device is in the selected room
     &.in-selected {
-        border-color: orange;
-        background-color: rgba(255, 165, 0, 0.15);
+        border-color: var(--accent);
+        background-color: var(--accent-faded);
 
         .device-room {
-            color: orange;
+            color: var(--accent);
             opacity: 1;
         }
     }
