@@ -1,9 +1,27 @@
 import { apiRequest } from "./ApiClient";
-import type { Device } from "@/types/Device";
+import type { Device, LightMode } from "@/types/Device";
 
 export function getDevices(): Promise<Device[]> {
 
     return apiRequest<Device[]>("GET", "api/devices");
+}
+
+// The values read from a device. null = the device doesn't have it or didn't answer.
+export interface DeviceState {
+
+    id: string,
+    power: boolean | null,
+    brightness: number | null,
+    temperature: number | null,
+    color: [number, number, number] | null,
+    mode: LightMode | null
+}
+
+// Asks the devices themselves, so it can take a few seconds
+export function getDevicesState(ids: string[]): Promise<DeviceState[]> {
+
+    const query = new URLSearchParams(ids.map(id => ["ids", id]));
+    return apiRequest<DeviceState[]>("GET", `api/devices/state?${query}`);
 }
 
 // A device id plus only the values that should change

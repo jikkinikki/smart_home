@@ -1,6 +1,6 @@
 import devices.Device as Device
 import devices.Lamp as Lamp
-from zigbee.zigbee_remote import SharedZigbeeRemote, rgb_to_xy
+from zigbee.zigbee_remote import SharedZigbeeRemote, rgb_to_xy, xy_to_rgb
 
 class InnrLamp(Device.Device, Lamp.Lamp):
     def __init__(self):
@@ -79,3 +79,27 @@ class InnrLamp(Device.Device, Lamp.Lamp):
 
     def status(self):
         return self.zigbee.run(self.zigbee.remote.lamp_state(self.nwk, self.endpoint))
+
+    def get_state(self):
+        state = self.status()
+        level = state["level"]
+        mireds = state["color_temp_mireds"]
+        xy = state["color_xy"]
+
+        brightness = None if level is None else round(level / 254 * 100)
+
+        # The reverse of set_temperature: mireds back to 0 (warmest) - 100 (coolest)
+        temperature = None
+        if self._hasTemperature and mireds is not None:
+            temperature = round((self.mireds_max - mireds) / (self.mireds_max - self.mireds_min) * 100)
+            temperature = max(0, min(100, temperature))
+
+        color = list(xy_to_rgb(*xy)) if self._hasRGB and xy is not None else None
+
+        return {
+            "power": state["on"],
+            "brightness": brightness,
+            "temperature": temperature,
+            "color": color,
+            "mode": {"color_temperature": "temperature", "xy": "color", "hue_saturation": "color"}.get(state["color_mode"]),
+        }

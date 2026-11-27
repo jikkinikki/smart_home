@@ -21,6 +21,13 @@ class Lamp():
 
         return capabilities
 
+    # The lamp's current values, read from the lamp, in the same units as the setters:
+    # {"power": bool, "brightness": 0-100, "temperature": 0-100, "color": [r, g, b],
+    #  "mode": "temperature" | "color" (which of the two the lamp is showing)}.
+    # A value is None when the lamp doesn't have it. None for all = can't be read.
+    def get_state(self) -> dict | None:
+        return None
+
     def turn_on(self, nowait: bool = False):
 
         self.allow_auto_updates = False

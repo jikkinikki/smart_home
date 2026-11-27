@@ -1,5 +1,10 @@
+import threading
+
+
 class Device:
     def __init__(self):
+        # One command or state read at a time, so their replies don't get mixed up
+        self.connection_lock = threading.Lock()
         self._is_ready = False
         self.allow_auto_updates = True
         self._device_name = ""

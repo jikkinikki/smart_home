@@ -34,6 +34,27 @@ class TuyaLamp(Device.Device, Lamp.Lamp):
         if hasattr(self, "tuyaDevice"):
             self.tuyaDevice.close()
 
+    def get_state(self):
+        state = self.tuyaDevice.state()
+
+        if "Error" in state:
+            raise RuntimeError(state["Error"])
+
+        # In colour mode the brightness is the colour's value (HSV), not the white brightness
+        if state.get("mode") == "colour":
+            brightness = self.tuyaDevice.colour_hsv(state=state)[2] * 100
+        else:
+            brightness = self.tuyaDevice.get_brightness_percentage(state=state)
+
+        return {
+            "power": state.get("is_on"),
+            "brightness": round(brightness),
+            "temperature": round(self.tuyaDevice.get_colourtemp_percentage(state=state)) if self._hasTemperature else None,
+            "color": list(self.tuyaDevice.colour_rgb(state=state)) if self._hasRGB else None,
+            # Tuya also has "scene" and "music", which are neither
+            "mode": {"white": "temperature", "colour": "color"}.get(state.get("mode")),
+        }
+
     def turn_on(self, nowait: bool = False):
         super().turn_on(nowait=nowait)
 

@@ -843,9 +843,12 @@ class ZigbeeRemote:
                 return None
             return record.value.value
 
-        onoff = await self.radio.read_attribute_records(nwk, ep, ONOFF_CLUSTER, [0x0000])
-        level = await self.radio.read_attribute_records(nwk, ep, LEVEL_CLUSTER, [0x0000])
-        color = await self.radio.read_attribute_records(nwk, ep, COLOR_CLUSTER, [0x0003, 0x0004, 0x0007, 0x0008])
+        # Asked at the same time, the replies are matched by their sequence number
+        onoff, level, color = await asyncio.gather(
+            self.radio.read_attribute_records(nwk, ep, ONOFF_CLUSTER, [0x0000]),
+            self.radio.read_attribute_records(nwk, ep, LEVEL_CLUSTER, [0x0000]),
+            self.radio.read_attribute_records(nwk, ep, COLOR_CLUSTER, [0x0003, 0x0004, 0x0007, 0x0008]),
+        )
 
         x, y, mode = value(color, 0x0003), value(color, 0x0004), value(color, 0x0008)
         on = value(onoff, 0x0000)
@@ -879,6 +882,33 @@ def rgb_to_xy(r: int, g: int, b: int) -> tuple[float, float]:
     if total == 0:
         return 0.3127, 0.3290  # black: fall back to the white point
     return X / total, Y / total
+
+
+def xy_to_rgb(x: float, y: float) -> tuple[int, int, int]:
+    """CIE 1931 xy -> sRGB (0-255), the reverse of rgb_to_xy. xy has no brightness,
+    so the colour comes back at full brightness (the brightest channel is 255)."""
+    if y == 0:
+        return 255, 255, 255
+
+    X = x / y
+    Y = 1.0
+    Z = (1 - x - y) / y
+
+    r = X * 3.2406 - Y * 1.5372 - Z * 0.4986
+    g = -X * 0.9689 + Y * 1.8758 + Z * 0.0415
+    b = X * 0.0557 - Y * 0.2040 + Z * 1.0570
+
+    # Colours outside sRGB give negative channels
+    r, g, b = max(r, 0), max(g, 0), max(b, 0)
+    brightest = max(r, g, b)
+    if brightest == 0:
+        return 255, 255, 255
+    r, g, b = r / brightest, g / brightest, b / brightest
+
+    def gamma(c):
+        return 1.055 * c ** (1 / 2.4) - 0.055 if c > 0.0031308 else c * 12.92
+
+    return tuple(round(gamma(c) * 255) for c in (r, g, b))
 
 
 # ---------------------------------------------------------------------------

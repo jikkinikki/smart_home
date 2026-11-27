@@ -1,6 +1,6 @@
-import { getDevices, setDevicesValues, type DeviceUpdate } from '@/api/DeviceApi';
+import { getDevices, getDevicesState, setDevicesValues, type DeviceUpdate } from '@/api/DeviceApi';
 import { computed, ref } from 'vue';
-import { canToggle, hasCapability, type Device } from '@/types/Device';
+import { canToggle, hasCapability, type Device, type LightMode } from '@/types/Device';
 import type { Vertical } from '@/types/DbDevice';
 
 // roomId = only load the devices in that room. Leave it out to load all devices.
@@ -22,6 +22,89 @@ export function useDevices(roomId?: number) {
 
             selectedDevices.value.push(device);
         }
+
+        try {
+            await loadDevicesState();
+        }
+        finally {
+            // Also when it fails, so the controls still show up
+            isStateLoaded.value = true;
+        }
+    }
+
+    // Becomes true once the devices' values have arrived, so the controls can be built with them
+    const isStateLoaded = ref(false);
+
+    // Fills in the devices' current values. After this the values are only changed here,
+    // so a value set while the devices were being read is kept.
+    async function loadDevicesState() {
+
+        if (devices.value.length == 0)
+            return;
+
+        const states = await getDevicesState(devices.value.map(device => device.id));
+
+        for (const state of states) {
+
+            const device = devices.value.find(device => device.id == state.id);
+
+            if (!device)
+                continue;
+
+            device.isOn ??= state.power ?? undefined;
+            device.brightness ??= state.brightness ?? undefined;
+            device.temperature ??= state.temperature ?? undefined;
+            device.color ??= state.color ?? undefined;
+            device.mode ??= state.mode ?? undefined;
+        }
+
+        modeOnLoad.value = getMajorityMode(devices.value);
+    }
+
+    // The mode most devices were in when they were loaded. Only set on load,
+    // so picking devices afterwards doesn't switch the tab.
+    const modeOnLoad = ref<LightMode | undefined>();
+
+    // The selected devices' values put together, for the controls.
+    // Brightness, temperature and color are averages; undefined = no selected device has that value.
+    const selectedValues = computed(() => {
+
+        const selected = selectedDevices.value;
+        const colors = selected.map(device => device.color).filter(color => color !== undefined);
+
+        return {
+            isOn: selected.some(device => device.isOn),
+            brightness: average(selected.map(device => device.brightness)),
+            temperature: average(selected.map(device => device.temperature)),
+            color: colors.length == 0
+                ? undefined
+                : [0, 1, 2].map(channel => Math.round(average(colors.map(color => color[channel]))!)) as [number, number, number]
+        };
+    });
+
+    // The mode most of the devices are in. undefined on a tie or when none is known.
+    function getMajorityMode(devices: Device[]): LightMode | undefined {
+
+        const colorCount = devices.filter(device => device.mode == "color").length;
+        const temperatureCount = devices.filter(device => device.mode == "temperature").length;
+
+        if (colorCount > temperatureCount)
+            return "color";
+
+        if (temperatureCount > colorCount)
+            return "temperature";
+
+        return undefined;
+    }
+
+    function average(values: (number | undefined)[]): number | undefined {
+
+        const known = values.filter(value => value !== undefined);
+
+        if (known.length == 0)
+            return undefined;
+
+        return Math.round(known.reduce((sum, value) => sum + value, 0) / known.length);
     }
 
     function getIsSelected(deviceId: string) {
@@ -84,6 +167,7 @@ export function useDevices(roomId?: number) {
         for (const device of hasHue) {
 
             device.temperature = hue;
+            device.mode = "temperature";
         }
 
         updateDevices(hasHue.map(device => ({ id: device.id, temperature: hue })));
@@ -96,6 +180,7 @@ export function useDevices(roomId?: number) {
         for (const device of hasColor) {
 
             device.color = color;
+            device.mode = "color";
         }
 
         updateDevices(hasColor.map(device => ({ id: device.id, color })));
@@ -121,6 +206,9 @@ export function useDevices(roomId?: number) {
     return {
         devices,
         selectedDevices,
+        selectedValues,
+        modeOnLoad,
+        isStateLoaded,
         loadDevices,
         getIsSelected,
         toggleSelectedDevice,

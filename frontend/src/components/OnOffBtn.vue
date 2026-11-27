@@ -1,30 +1,28 @@
 <script setup lang="ts">
 import { ref, defineEmits } from 'vue';
 import LabeledSlider from './LabeledSlider.vue';
-import { watch } from 'vue';
 
 import powerIcon from '@/assets/icons/control-power.svg'
 
 const inRGBMode = ref(false);
 
-const isOn = ref(false);
+// Shown on the button. Clicking only asks for the change, the parent sets isOn.
+defineProps<{
+
+    isOn: boolean
+}>();
 
 const emits = defineEmits<{
 
     isOn: [value: boolean]
 }>();
 
-watch(isOn, () => {
-
-    emits("isOn", isOn.value);
-})
-
 
 </script>
 
 <template>
 
-    <button @click="isOn = !isOn" :class="{ on: isOn }"><img :src="powerIcon" alt=""></button>
+    <button @click="emits('isOn', !isOn)" :class="{ on: isOn }"><img :src="powerIcon" alt=""></button>
 
 </template>
 

@@ -1,7 +1,7 @@
 from concurrent.futures import ThreadPoolExecutor
 from typing import List, Optional, Tuple
 
-from fastapi import APIRouter, Request, HTTPException
+from fastapi import APIRouter, Request, HTTPException, Query
 from pydantic import BaseModel, Field
 
 router = APIRouter(prefix="/devices", tags=["Devices"])
@@ -31,6 +31,17 @@ def get_devices(request: Request):
         }
         for device in devices
     ]
+
+# Must come before /{device_id}, or "state" would be taken as a device id
+@router.get("/state")
+def get_devices_state(request: Request, ids: Optional[List[str]] = Query(None)):
+    """
+    The devices' current values (ids = only these, leave out for all shown devices).
+    They come from memory, which is kept up to date in the background (see control/device_states.py).
+    A value is null when the device doesn't have it or hasn't answered yet.
+    """
+    return request.app.state.device_states.get(ids)
+
 
 @router.get("/{device_id}")
 def get_device(device_id: str, request: Request):
@@ -73,13 +84,27 @@ def set_devices_values(updates: List[DeviceValues], request: Request):
     if not pairs:
         raise HTTPException(status_code=404, detail="No devices found")
 
+    device_states = request.app.state.device_states
+
     with ThreadPoolExecutor(max_workers=len(pairs)) as pool:
-        results = list(pool.map(lambda p: _apply_values(*p), pairs))
+        results = list(pool.map(lambda p: _apply_and_remember(*p, device_states), pairs))
 
     return {
         "results": results,
         "missing": missing,
     }
+
+
+def _apply_and_remember(device, values: DeviceValues, device_states):
+    # Remembered while holding the lock, so a state read can't overwrite it with older values
+    with device.connection_lock:
+        results = _apply_values(device, values)
+
+        capabilities = _get_capabilities(device)
+        sent = values.model_dump(exclude={"id"}, exclude_none=True)
+        device_states.remember(device, {key: value for key, value in sent.items() if key in capabilities})
+
+    return results
 
 
 def _apply_values(device, values: DeviceValues):

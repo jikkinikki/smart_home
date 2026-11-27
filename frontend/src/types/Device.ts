@@ -15,8 +15,12 @@ export interface Device {
     isOn?: boolean,
     brightness?: number,
     temperature?: number,
-    color?: [number, number, number]
+    color?: [number, number, number],
+    mode?: LightMode
 }
+
+// Which of the two the lamp is showing: its white temperature or a color
+export type LightMode = "temperature" | "color";
 
 export function hasCapability(device: Device, capability: Capability): boolean {
 

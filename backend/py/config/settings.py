@@ -5,6 +5,12 @@
 TTS_ENGINE = "drama-3"
 TTS_AUDIO_FORMAT = "mp3"   # mp3, wav, opus, pcm
 
+# ---------- Device states ----------
+
+# How often the devices' current values are read in the background (see control/device_states.py).
+# A change made outside the app (wall switch, Tuya app) shows up within this time.
+DEVICE_STATE_REFRESH_SECONDS = 10
+
 # ---------- Zigbee remote (USB dongle joined to the Innr bridge) ----------
 
 ZIGBEE_PORT = "COM4"

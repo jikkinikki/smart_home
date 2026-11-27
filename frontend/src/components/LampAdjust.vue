@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { computed, ref, defineEmits } from 'vue';
+import { computed, ref, watch, defineEmits } from 'vue';
 import LabeledSlider from './LabeledSlider.vue';
+import type { LightMode } from '@/types/Device';
 
 const inRGBMode = ref(false);
 
@@ -46,9 +47,64 @@ const brightnessStops: [number, number][] = [
     [100, 1]
 ];
 
+// The values the selected devices have, shown on the sliders. undefined = unknown, the slider stays where it is.
+const props = defineProps<{
+
+    deviceBrightness?: number
+    deviceTemperature?: number
+    deviceColor?: RGB
+    deviceMode?: LightMode  // opens that tab
+}>();
+
+watch(() => props.deviceMode, mode => {
+
+    if (mode !== undefined)
+        inRGBMode.value = mode == "color";
+}, { immediate: true });
+
 // Starts at 0, same as the slider
+const brightness = ref(0);
 const temperature = ref(0);
 const hue = ref(0);
+
+watch(() => props.deviceBrightness, value => {
+
+    if (value !== undefined)
+        brightness.value = value;
+}, { immediate: true });
+
+watch(() => props.deviceTemperature, value => {
+
+    if (value !== undefined)
+        temperature.value = value;
+}, { immediate: true });
+
+watch(() => props.deviceColor, value => {
+
+    if (value !== undefined)
+        hue.value = getHuePosition(value);
+}, { immediate: true });
+
+// Where a color is on the color slider (0-100), the reverse of colorStops. Gray/white gives 0.
+function getHuePosition([r, g, b]: RGB): number {
+
+    const max = Math.max(r, g, b);
+    const range = max - Math.min(r, g, b);
+
+    if (range == 0)
+        return 0;
+
+    let hueDegrees;
+
+    if (max == r)
+        hueDegrees = 60 * (((g - b) / range + 6) % 6);
+    else if (max == g)
+        hueDegrees = 60 * ((b - r) / range + 2);
+    else
+        hueDegrees = 60 * ((r - g) / range + 4);
+
+    return Math.round(hueDegrees / 360 * 100);
+}
 
 // The color at a position (0-100) between the stops
 function getStopColor(stops: [number, RGB][], position: number): RGB {
@@ -145,7 +201,7 @@ function onColorSliderChange(value: number) {
 
     <div class="back-panel">
 
-        <LabeledSlider @change="(brightness) => emits('brightness', brightness)" class="brightness-slider"
+        <LabeledSlider v-model="brightness" @change="(value) => emits('brightness', value)" class="brightness-slider"
             :style="{ '--track-gradient': brightnessGradient }" label="Brightness"></LabeledSlider>
     </div>
 

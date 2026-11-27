@@ -8,6 +8,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from api import db_devices, device_refetch, devices, rooms
 from control.device_refetch import DeviceRefetch
+from control.device_states import DeviceStates
 from utils.startup_reporter import StartupReporter
 
 
@@ -29,6 +30,8 @@ async def lifespan(app: FastAPI):
     app.state.device_handler = device_handler
     app.state.device_commands = device_commands
     app.state.device_refetch = DeviceRefetch(device_handler)
+    app.state.device_states = DeviceStates(device_handler)
+    app.state.device_states.start()
 
     StartupReporter(device_handler).start()
 

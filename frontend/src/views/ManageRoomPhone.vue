@@ -12,7 +12,7 @@ const props = defineProps<{
     roomId?: number  // leave out for all rooms
 }>();
 
-const { devices, loadDevices, getIsSelected, toggleSelectedDevice, isAllSelected, toggleSelectAll, selectByVertical,
+const { devices, selectedValues, modeOnLoad, isStateLoaded, loadDevices, getIsSelected, toggleSelectedDevice, isAllSelected, toggleSelectAll, selectByVertical,
     toggleIsOn, setBrightness, setHue, setColor } = useDevices(props.roomId);
 
 const verticalFilters: { value: Vertical, label: string }[] = [
@@ -77,7 +77,10 @@ onMounted(loadDevices);
 
             <h2>Adjust</h2>
             <div>
-                <LampAdjust @brightness="setBrightness" @hue="setHue" @color="setColor"></LampAdjust>
+                <!-- Built once the values are in, so the tab and sliders start in the right place without sliding there -->
+                <LampAdjust v-if="isStateLoaded" :deviceBrightness="selectedValues.brightness" :deviceTemperature="selectedValues.temperature"
+                    :deviceColor="selectedValues.color" :modeOnLoad="modeOnLoad" @brightness="setBrightness" @hue="setHue" @color="setColor">
+                </LampAdjust>
 
             </div>
 
@@ -88,10 +91,10 @@ onMounted(loadDevices);
             <div class="info">
                 <div class="color-div"></div>
 
-                <p>On 72%</p>
+                <p>{{ selectedValues.isOn ? "On" : "Off" }} {{ selectedValues.brightness ?? "-" }}%</p>
             </div>
 
-            <OnOffBtn @isOn="toggleIsOn"></OnOffBtn>
+            <OnOffBtn :isOn="selectedValues.isOn" @isOn="toggleIsOn"></OnOffBtn>
 
         </div>
 
