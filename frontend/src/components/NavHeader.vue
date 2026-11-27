@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
 import homeIcon from '@/assets/icons/room-home.svg'
+import HamburgerMenu, { type MenuLink } from './HamburgerMenu.vue'
+
+const menuLinks: MenuLink[] = [
+    { to: "/manageDevices", label: "Manage devices" },
+    { to: "/manageRooms", label: "Manage rooms" }
+];
 </script>
 
 <template>
@@ -12,10 +18,7 @@ import homeIcon from '@/assets/icons/room-home.svg'
 
         </RouterLink>
 
-        <nav class="nav-links">
-            <RouterLink to="/manageDevices">Manage devices</RouterLink>
-            <RouterLink to="/manageRooms">Manage rooms</RouterLink>
-        </nav>
+        <HamburgerMenu :links="menuLinks"></HamburgerMenu>
 
     </header>
 
@@ -31,11 +34,6 @@ import homeIcon from '@/assets/icons/room-home.svg'
     background-color: var(--surface);
 }
 
-a {
-    color: var(--text-body);
-    text-decoration: none;
-}
-
 .home-btn {
     display: flex;
     align-items: center;
@@ -45,16 +43,6 @@ a {
         height: 24px;
         // SVG strokes render black inside <img>; invert to light grey on the dark header
         filter: invert(85%);
-    }
-}
-
-.nav-links {
-    display: flex;
-    gap: 16px;
-
-    a.router-link-exact-active {
-        color: var(--text-link-active);
-        font-weight: 600;
     }
 }
 

@@ -9,7 +9,6 @@ import lampDefault from "@/assets/icons/lamp-bulb.svg";
 import type { Device } from "@/types/Device";
 import type { Vertical } from "@/types/DbDevice";
 
-// A lamp's icon depends on how high up it's placed
 const lampIcons: Record<Vertical, string> = {
 
     high: ceilingIcon,

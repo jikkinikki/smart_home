@@ -60,7 +60,7 @@ onMounted(loadDevices);
                 </FilterDropdown>
 
                 <button class="select-btn" @click="onToggleSelectAll">{{ isAllSelected ? "Deselect all" : "Select all"
-                }}</button>
+                    }}</button>
 
             </div>
 
@@ -71,7 +71,6 @@ onMounted(loadDevices);
                 </button_device>
 
             </div>
-            <br>
         </div>
 
         <div>
@@ -102,12 +101,19 @@ onMounted(loadDevices);
 h2 {
 
     text-transform: uppercase;
+    font-weight: 300;
+    color: var(--text-body);
+    font-size: 20px;
+
+    margin: 10px 0px;
 }
 
 .devices {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 5px;
+
+    margin-bottom: 20px;
 
     div {
 
@@ -156,8 +162,7 @@ h2 {
 
     @media (max-width: $phone-limit) {
 
-
-        margin-top: 50px;
+        margin-top: 20px;
 
         // position: fixed;
         // bottom: 10px;

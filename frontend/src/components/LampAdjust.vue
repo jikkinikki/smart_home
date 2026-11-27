@@ -210,6 +210,7 @@ function onColorSliderChange(value: number) {
     height: 40px;
     background-color: var(--black);
     border-radius: 10px;
+    margin-bottom: .5em;
 
     position: relative;
     top: 0px;

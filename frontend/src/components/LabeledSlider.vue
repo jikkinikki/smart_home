@@ -28,7 +28,6 @@ function updateSlider() {
             <p>{{ amount }}%</p>
         </div>
 
-        <!-- Optional extras between the label and the slider (e.g. preset buttons) -->
         <slot></slot>
 
         <input @input="updateSlider" v-model.number="amount" type="range" name="" id="" min="1" max="100">
@@ -49,7 +48,8 @@ function updateSlider() {
 
     p{
 
-        margin-top: 0.5em;
+        margin-top: 0;
+        margin-bottom: 0.5em;
     }
 
     input {
@@ -57,6 +57,8 @@ function updateSlider() {
         width: 100%;
         appearance: none;
         border-radius: 1000px;
+
+        margin-top: 0.5em;
         
         &::-webkit-slider-runnable-track {
             
