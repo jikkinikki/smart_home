@@ -2,6 +2,7 @@
 import { computed, ref, watch, defineEmits } from 'vue';
 import LabeledSlider from './LabeledSlider.vue';
 import type { LightMode } from '@/types/Device';
+import { getStopColor, getTemperatureColor, temperatureStops, type RGB } from '@/utils/lightColor';
 
 const inRGBMode = ref(false);
 
@@ -11,19 +12,6 @@ const emits = defineEmits<{
     hue: [value: number]
     color: [value: [number, number, number]]
 }>();
-
-type RGB = [number, number, number];
-
-// The light's color at a temperature. 0 = warmest (~2200K, amber), 100 = coolest (~6500K, daylight).
-// Also used for the temperature slider's track, keep them the same.
-const temperatureStops: [number, RGB][] = [
-    [0, [255, 147, 44]],
-    [12, [255, 169, 87]],
-    [30, [255, 196, 137]],
-    [53, [255, 219, 186]],
-    [77, [255, 236, 224]],
-    [100, [235, 242, 255]]
-];
 
 // The color wheel unrolled: full-saturation hues, red -> yellow -> green -> cyan -> blue -> magenta -> red.
 // Also used for the color slider's track, so the track shows exactly the color we send.
@@ -104,29 +92,6 @@ function getHuePosition([r, g, b]: RGB): number {
         hueDegrees = 60 * ((r - g) / range + 4);
 
     return Math.round(hueDegrees / 360 * 100);
-}
-
-// The color at a position (0-100) between the stops
-function getStopColor(stops: [number, RGB][], position: number): RGB {
-
-    for (let i = 1; i < stops.length; i++) {
-
-        const [pos, color] = stops[i]!;
-        const [prevPos, prevColor] = stops[i - 1]!;
-
-        if (position <= pos) {
-
-            const t = (position - prevPos) / (pos - prevPos);
-            return prevColor.map((value, c) => value + (color[c]! - value) * t) as RGB;
-        }
-    }
-
-    return stops[stops.length - 1]![1];
-}
-
-function getTemperatureColor(temperature: number): RGB {
-
-    return getStopColor(temperatureStops, temperature);
 }
 
 function toCss(gradient: string[]) {

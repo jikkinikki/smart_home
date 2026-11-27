@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import button_device from '@/components/button_device.vue';
 import LampAdjust from '@/components/LampAdjust.vue';
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
+import { getTemperatureColor, type RGB } from '@/utils/lightColor';
 import FilterDropdown from '@/components/FilterDropdown.vue';
 import OnOffBtn from '@/components/OnOffBtn.vue';
 import { useDevices } from '@/composables/useDevices';
@@ -40,6 +41,28 @@ function onDeviceClick(deviceId: string) {
     toggleSelectedDevice(deviceId);
     activeFilter.value = null;
 }
+
+// The color the selected lamps are giving off, for the dot next to the power button.
+// undefined = unknown, the dot keeps its default color.
+const lightColor = computed(() => {
+
+    const { mode, color, temperature } = selectedValues.value;
+
+    let rgb: RGB | undefined;
+
+    if (mode == "color" && color)
+        rgb = color;
+    else if (temperature !== undefined)
+        rgb = getTemperatureColor(temperature);
+    else
+        rgb = color;
+
+    if (!rgb)
+        return undefined;
+
+    const [r, g, b] = rgb.map(Math.round);
+    return `rgb(${r}, ${g}, ${b})`;
+});
 
 onMounted(loadDevices);
 
@@ -89,7 +112,7 @@ onMounted(loadDevices);
         <div class="toggle-active-area">
 
             <div class="info">
-                <div class="color-div"></div>
+                <div class="color-div" :style="lightColor ? { backgroundColor: lightColor } : {}"></div>
 
                 <p>{{ selectedValues.isOn ? "On" : "Off" }} {{ selectedValues.brightness ?? "-" }}%</p>
             </div>

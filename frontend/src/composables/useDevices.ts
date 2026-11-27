@@ -78,7 +78,8 @@ export function useDevices(roomId?: number) {
             temperature: average(selected.map(device => device.temperature)),
             color: colors.length == 0
                 ? undefined
-                : [0, 1, 2].map(channel => Math.round(average(colors.map(color => color[channel]))!)) as [number, number, number]
+                : [0, 1, 2].map(channel => Math.round(average(colors.map(color => color[channel]))!)) as [number, number, number],
+            mode: getMajorityMode(selected)
         };
     });
 
