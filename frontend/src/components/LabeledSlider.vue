@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-
-const amount = ref(0);
+// Optional v-model, so a parent can move the slider (e.g. the temperature presets)
+const amount = defineModel<number>({ default: 0 });
 
 const emit = defineEmits<{
 
@@ -28,6 +27,9 @@ function updateSlider() {
             <p>{{ label }}</p>
             <p>{{ amount }}%</p>
         </div>
+
+        <!-- Optional extras between the label and the slider (e.g. preset buttons) -->
+        <slot></slot>
 
         <input @input="updateSlider" v-model.number="amount" type="range" name="" id="" min="1" max="100">
 

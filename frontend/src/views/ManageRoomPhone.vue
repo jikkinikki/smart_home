@@ -13,7 +13,7 @@ const props = defineProps<{
 }>();
 
 const { devices, loadDevices, getIsSelected, toggleSelectedDevice, isAllSelected, toggleSelectAll, selectByVertical,
-    toggleIsOn, setBrightness, setHue } = useDevices(props.roomId);
+    toggleIsOn, setBrightness, setHue, setColor } = useDevices(props.roomId);
 
 const verticalFilters: { value: Vertical, label: string }[] = [
     { value: "high", label: "High" },
@@ -77,7 +77,7 @@ onMounted(loadDevices);
 
             <h2>Adjust</h2>
             <div>
-                <LampAdjust @brightness="setBrightness" @hue="setHue"></LampAdjust>
+                <LampAdjust @brightness="setBrightness" @hue="setHue" @color="setColor"></LampAdjust>
 
             </div>
 

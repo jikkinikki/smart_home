@@ -89,6 +89,18 @@ export function useDevices(roomId?: number) {
         updateDevices(hasHue.map(device => ({ id: device.id, temperature: hue })));
     }
 
+    function setColor(color: [number, number, number]) {
+
+        const hasColor = selectedDevices.value.filter(device => hasCapability(device, "color"));
+
+        for (const device of hasColor) {
+
+            device.color = color;
+        }
+
+        updateDevices(hasColor.map(device => ({ id: device.id, color })));
+    }
+
     function setBrightness(brightness: number) {
 
         const dimmable = selectedDevices.value.filter(device => hasCapability(device, "brightness"));
@@ -117,6 +129,7 @@ export function useDevices(roomId?: number) {
         selectByVertical,
         toggleIsOn,
         setBrightness,
-        setHue
+        setHue,
+        setColor
     };
 }
