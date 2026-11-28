@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, defineEmits } from 'vue';
-import LabeledSlider from './LabeledSlider.vue';
 
 import powerIcon from '@/assets/icons/control-power.svg'
 

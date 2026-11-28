@@ -151,7 +151,13 @@ export function useDevices(roomId?: number) {
 
     function toggleIsOn(isOn: boolean) {
 
-        const toggleable = selectedDevices.value.filter(canToggle);
+        setPower(selectedDevices.value, isOn);
+    }
+
+    // Turns the given devices on or off (the ones that can be switched)
+    function setPower(targets: Device[], isOn: boolean) {
+
+        const toggleable = targets.filter(canToggle);
 
         for (const device of toggleable) {
 
@@ -217,6 +223,7 @@ export function useDevices(roomId?: number) {
         toggleSelectAll,
         selectByVertical,
         toggleIsOn,
+        setPower,
         setBrightness,
         setHue,
         setColor

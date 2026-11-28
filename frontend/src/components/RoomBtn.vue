@@ -2,23 +2,29 @@
 
 import icon from '@/assets/icons/room-home.svg'
 import onoff from '@/assets/icons/control-power.svg'
-import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import OnOffFillBtn from './OnOffFillBtn.vue';
 
 const router = useRouter();
-
-const isOn = ref(false);
 
 const props = withDefaults(defineProps<{
 
     roomName?: string,
-    roomId: string
+    roomId: string,
+    lampsOnPercent?: number
 
 }>(), {
 
-    roomName: "room name"
+    roomName: "room name",
+    lampsOnPercent: 0
 
 });
+
+// Asks to turn all the room's lamps on or off, the parent does it and updates lampsOnPercent
+const emit = defineEmits<{
+
+    power: [isOn: boolean]
+}>();
 
 function onclick(){
 
@@ -37,8 +43,8 @@ function onclick(){
         <div class="info">
             <p>{{ roomName }}</p>
         </div>
-        <div @click.stop="isOn = !isOn" class="toggle-on" :class="{ isOn: isOn, isOff: !isOn }"><img :src="onoff" alt=""></div>
-
+        <OnOffFillBtn class="room-toggle" @click.stop :isOn="lampsOnPercent == 100" :fillPercent="lampsOnPercent"
+            @isOn="(isOn) => emit('power', isOn)"></OnOffFillBtn>
 
     </div>
 
@@ -78,6 +84,14 @@ function onclick(){
 
             filter: brightness(0);
         }
+    }
+
+    // Same size as the old toggle, the OnOffFillBtn is bigger by default
+    .room-toggle {
+
+        width: 40px;
+        height: 40px;
+        padding: 8px;
     }
 
     .toggle-on {
