@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { computed, ref, watch, defineEmits } from 'vue';
+import { ref, watch, defineEmits } from 'vue';
 import LabeledSlider from './LabeledSlider.vue';
 import ColorPresets from './ColorPresets.vue';
 import type { LightMode } from '@/types/Device';
-import { colorGradient, colorStops, getBrightnessGradient, getHueColor, getHuePosition, hexToRgb, temperatureGradient,
+import { colorGradient, colorStops, getHueColor, getHuePosition, hexToRgb, temperatureGradient,
     temperatureStops, type RGB } from '@/utils/lightColor';
 
 const inRGBMode = ref(false);
@@ -53,9 +53,6 @@ watch(() => props.deviceColor, value => {
         hue.value = getHuePosition(value);
 }, { immediate: true });
 
-// Follows the temperature
-const brightnessGradient = computed(() => getBrightnessGradient(temperature.value));
-
 function onHueChange(value: number) {
 
     hue.value = value;
@@ -98,7 +95,7 @@ function onColorSliderChange(value: number) {
     <div class="back-panel">
 
         <LabeledSlider v-model="brightness" @change="(value) => emits('brightness', value)" class="brightness-slider"
-            :style="{ '--track-gradient': brightnessGradient }" label="Brightness"></LabeledSlider>
+            label="Brightness"></LabeledSlider>
     </div>
 
     <div class="back-panel">
@@ -211,10 +208,16 @@ function onColorSliderChange(value: number) {
 
         &::-webkit-slider-runnable-track {
 
-            // Set from the script (brightnessGradient), it follows the temperature.
-            // The Color slider also has this class but no gradient yet, so it uses the fallback.
-            background: var(--track-gradient, linear-gradient(90deg, rgb(49, 48, 48), yellow));
+            // Filled up to the thumb, empty after it
+            background: linear-gradient(90deg, var(--slider-fill) var(--thumb-center), var(--surface-light) var(--thumb-center));
         }
+
+        &::-webkit-slider-thumb {
+
+            background-color: rgba(0, 0, 0, 0);
+            border: none;
+        }
+
     }
 }
 
