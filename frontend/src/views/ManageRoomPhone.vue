@@ -14,7 +14,7 @@ const props = defineProps<{
 }>();
 
 const { devices, selectedValues, modeOnLoad, isStateLoaded, loadDevices, getIsSelected, toggleSelectedDevice, isAllSelected, toggleSelectAll, selectByVertical,
-    toggleIsOn, setBrightness, setHue, setColor } = useDevices(props.roomId);
+    toggleIsOn, setPower, setBrightness, setHue, setColor } = useDevices(props.roomId);
 
 const verticalFilters: { value: Vertical, label: string }[] = [
     { value: "high", label: "High" },
@@ -83,10 +83,11 @@ onMounted(loadDevices);
 
             </div>
 
-            <div class="devices">
+            <!-- Built once the values are in, so each device starts showing the right on/off instead of off -->
+            <div v-if="isStateLoaded" class="devices">
 
                 <button_device :class="{ deviceSelected: getIsSelected(device.id) }" v-for="device in devices"
-                    @click="onDeviceClick(device.id)" :device="device">
+                    @click="onDeviceClick(device.id)" @power="(isOn) => setPower([device], isOn)" :device="device">
                 </button_device>
 
             </div>

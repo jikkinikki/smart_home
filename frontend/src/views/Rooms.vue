@@ -58,7 +58,16 @@ function getLampsOnPercent(roomId?: number) {
             <div class="individual-rooms">
 
                 <RoomBtn v-for="room in rooms" :key="room.id" :roomName="room.name" :roomId="String(room.id)"
-                    :lampsOnPercent="getLampsOnPercent(room.id)" @power="(isOn) => setRoomPower(isOn, room.id)"></RoomBtn>
+                    :lampsOnPercent="getLampsOnPercent(room.id)" @power="(isOn) => setRoomPower(isOn, room.id)">
+                </RoomBtn>
+
+                <RoomBtn v-for="room in rooms" :key="room.id" :roomName="room.name" :roomId="String(room.id)"
+                    :lampsOnPercent="getLampsOnPercent(room.id)" @power="(isOn) => setRoomPower(isOn, room.id)">
+                </RoomBtn>
+                <RoomBtn v-for="room in rooms" :key="room.id" :roomName="room.name" :roomId="String(room.id)"
+                    :lampsOnPercent="getLampsOnPercent(room.id)" @power="(isOn) => setRoomPower(isOn, room.id)">
+                </RoomBtn>
+
 
             </div>
 
@@ -77,13 +86,17 @@ function getLampsOnPercent(roomId?: number) {
     .room-all {
 
         margin: 10px 0px;
+        margin-bottom: 25px;
     }
 
     .individual-rooms {
 
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 10px;
+
+        margin-bottom: 50px;
+
     }
 }
 </style>

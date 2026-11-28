@@ -66,16 +66,18 @@ export function useDevices(roomId?: number) {
     const modeOnLoad = ref<LightMode | undefined>();
 
     // The selected devices' values put together, for the controls.
-    // Brightness, temperature and color are averages; undefined = no selected device has that value.
+    // Brightness, temperature and color are averages of the lamps that aren't off;
+    // undefined = none of them has that value (e.g. every selected lamp is off).
     const selectedValues = computed(() => {
 
         const selected = selectedDevices.value;
-        const colors = selected.map(device => device.color).filter(color => color !== undefined);
+        const notOff = selected.filter(device => device.isOn !== false);
+        const colors = notOff.map(device => device.color).filter(color => color !== undefined);
 
         return {
             isOn: selected.some(device => device.isOn),
-            brightness: average(selected.map(device => device.brightness)),
-            temperature: average(selected.map(device => device.temperature)),
+            brightness: average(notOff.map(device => device.brightness)),
+            temperature: average(notOff.map(device => device.temperature)),
             color: colors.length == 0
                 ? undefined
                 : [0, 1, 2].map(channel => Math.round(average(colors.map(color => color[channel]))!)) as [number, number, number],

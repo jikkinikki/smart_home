@@ -6,7 +6,7 @@ import deskIcon from "@/assets/icons/lamp-floor.svg";
 import floorIcon from "@/assets/icons/lamp-desk.svg";
 import lampDefault from "@/assets/icons/lamp-bulb.svg";
 
-import type { Device } from "@/types/Device";
+import { canToggle, type Device } from "@/types/Device";
 import type { Vertical } from "@/types/DbDevice";
 
 const lampIcons: Record<Vertical, string> = {
@@ -20,17 +20,21 @@ const props = defineProps<{
     device: Device
 }>();
 
+// Asks to turn this device on or off, the parent does it and updates device.isOn
+const emit = defineEmits<{
+
+    power: [isOn: boolean]
+}>();
+
 function getDeviceIcon() {
 
     const { type, vertical } = props.device;
 
-    // Not a lamp, e.g. an outlet
     if (type != "lamp") {
 
         return placeholderIcon;
     }
 
-    // A lamp with no height set
     if (!vertical) {
 
         return lampDefault;
@@ -45,11 +49,13 @@ function getDeviceIcon() {
 
     <div class="button-wrapper">
 
-        <div class="icon">
+        <!-- .stop so switching it doesn't also select/deselect the device -->
+        <button class="icon" :class="{ on: device.isOn }" :disabled="!canToggle(device)"
+            @click.stop="emit('power', !device.isOn)">
 
             <img :src="getDeviceIcon()" alt="">
 
-        </div>
+        </button>
 
         <p class="device-name">{{ device.name.replaceAll("_", " ") }}</p>
 
@@ -74,12 +80,16 @@ function getDeviceIcon() {
     align-items: center;
     gap: 6px;
 
+    /* Same on/off look as OnOffBtn */
     .icon {
 
         height: 100%;
         aspect-ratio: 1;
-        background-color: var(--accent);
+        padding: 0;
+        background-color: var(--surface-light);
         border-radius: 1000px;
+        cursor: pointer;
+        transition: .2s;
 
         img {
 
@@ -88,6 +98,22 @@ function getDeviceIcon() {
             margin: calc((100% - var(--width)) / 2);
             width: var(--width);
 
+            filter: brightness(0) invert(.7);
+        }
+
+        &.on {
+
+            background-color: var(--accent);
+
+            img {
+
+                filter: brightness(0);
+            }
+        }
+
+        &:disabled {
+
+            cursor: default;
         }
     }
 

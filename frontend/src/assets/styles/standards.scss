@@ -41,6 +41,9 @@
 body{
 
     margin: 0px;
+
+    // Phones flash a box over anything tapped, it doesn't follow round buttons. Inherited, so this covers everything.
+    -webkit-tap-highlight-color: transparent;
 }
 
 button{

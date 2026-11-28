@@ -86,6 +86,11 @@ function onclick(){
         }
     }
 
+    .info{
+
+        text-transform: capitalize;
+    }
+
     // Same size as the old toggle, the OnOffFillBtn is bigger by default
     .room-toggle {
 
