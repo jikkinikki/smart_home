@@ -6,6 +6,8 @@ class TuyaLamp(Device.Device, Lamp.Lamp):
     def __init__(self, hasRGB: bool):
         super().__init__()
 
+        # Device.__init__ doesn't call Lamp.__init__, so this isn't set otherwise (same as InnrLamp)
+        self._isOn = False
         self._hasRGB = hasRGB
         self._hasTemperature = True
         self.tuya_connection_timeout = 3

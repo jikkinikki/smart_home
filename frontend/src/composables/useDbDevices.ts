@@ -1,4 +1,4 @@
-import { getDbDevices, updateDbDevice, type DbDeviceUpdate } from '@/api/DbDeviceApi';
+import { deleteDbDevice, getDbDevices, updateDbDevice, type DbDeviceUpdate } from '@/api/DbDeviceApi';
 import { ref } from 'vue';
 import type { DbDevice } from '@/types/DbDevice';
 
@@ -40,11 +40,24 @@ export function useDbDevices() {
         }
     }
 
+    async function deleteDevice(deviceId: string) {
+
+        try {
+            await deleteDbDevice(deviceId);
+            devices.value = devices.value.filter(device => device.id != deviceId);
+            error.value = null;
+        }
+        catch (e) {
+            error.value = e instanceof Error ? e.message : String(e);
+        }
+    }
+
     return {
         devices,
         error,
         loadDevices,
         getDeviceById,
-        updateDevice
+        updateDevice,
+        deleteDevice
     };
 }

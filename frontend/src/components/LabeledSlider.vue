@@ -72,6 +72,9 @@ function updateSlider() {
         // so it moves across the track's width minus its own.
         --thumb-center: calc(var(--thumb-size) / 2 + var(--thumb-progress) * (100% - var(--thumb-size)));
 
+        // Where a fill should end so the track is empty at min and full at max
+        --fill-end: calc(var(--thumb-progress) * 100%);
+
         width: 100%;
         appearance: none;
         border-radius: 1000px;

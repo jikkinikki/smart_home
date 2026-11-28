@@ -208,8 +208,8 @@ function onColorSliderChange(value: number) {
 
         &::-webkit-slider-runnable-track {
 
-            // Filled up to the thumb, empty after it
-            background: linear-gradient(90deg, var(--slider-fill) var(--thumb-center), var(--surface-light) var(--thumb-center));
+            // Filled up to the current value, empty after it
+            background: linear-gradient(90deg, var(--slider-fill) var(--fill-end), var(--surface-light) var(--fill-end));
         }
 
         &::-webkit-slider-thumb {

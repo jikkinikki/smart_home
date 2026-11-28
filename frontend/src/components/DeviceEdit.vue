@@ -10,7 +10,15 @@ const props = defineProps<{
 // The page does the saving, so the component doesn't talk to the API itself
 const emit = defineEmits<{
     save: [deviceId: string, changes: DbDeviceUpdate]
+    delete: [deviceId: string]
 }>();
+
+// Deleting can't be undone, so it asks first
+function confirmDelete() {
+
+    if (confirm(`Delete "${props.device.name || props.device.id}"? A scan can add it again if it's still found.`))
+        emit("delete", props.device.id);
+}
 
 const isOpen = ref(false);
 
@@ -39,7 +47,12 @@ function cancel() {
     <div class="device" :class="{ disabled: device.disabled }">
 
         <div v-if="!isOpen">
-            <h3>{{ device.name || "(no name)" }}</h3>
+            <div class="title">
+                <h3>{{ device.name || "(no name)" }}</h3>
+
+                <!-- Room for controls next to the name, e.g. an on/off button -->
+                <slot></slot>
+            </div>
             <p>{{ device.type }} · {{ device.source }}</p>
             <p>{{ device.address }}</p>
             <p class="id">{{ device.id }}</p>
@@ -49,6 +62,7 @@ function cancel() {
 
             <div class="buttons">
                 <button @click="isOpen = true">Edit</button>
+                <button class="delete" @click="confirmDelete">Delete</button>
             </div>
 
         </div>
@@ -93,6 +107,14 @@ function cancel() {
     padding: 8px;
     overflow: hidden;
 
+    .title {
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 6px;
+    }
+
     h3, .name-inp{
 
         height: 30px;
@@ -122,6 +144,11 @@ function cancel() {
         button {
 
             flex: 1;
+        }
+
+        .delete {
+
+            color: var(--text-error);
         }
 
     }

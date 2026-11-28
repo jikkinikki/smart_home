@@ -4,10 +4,24 @@ import { useDbDevices } from '@/composables/useDbDevices';
 import { useRooms } from '@/composables/useRooms';
 import DeviceEdit from '@/components/DeviceEdit.vue';
 import DeviceRefetch from '@/components/DeviceRefetch.vue';
+import OnOffBtn from '@/components/OnOffBtn.vue';
+import { useDevices } from '@/composables/useDevices';
+import { canToggle } from '@/types/Device';
 import type { DbDevice } from '@/types/DbDevice';
 
-const { devices, error, loadDevices, updateDevice } = useDbDevices();
+const { devices, error, loadDevices, updateDevice, deleteDevice } = useDbDevices();
 const { loadRooms, getRoomById } = useRooms();
+
+// The same devices with their live state (on/off), for the on/off buttons
+const { devices: liveDevices, isStateLoaded, loadDevices: loadLiveDevices, setPower } = useDevices();
+
+// undefined = the device can't be switched (or isn't reachable), so it gets no button
+function getSwitchableDevice(deviceId: string) {
+
+    const device = liveDevices.value.find(device => device.id == deviceId);
+
+    return device && canToggle(device) ? device : undefined;
+}
 
 function roomName(device: DbDevice) {
 
@@ -33,6 +47,7 @@ onMounted(() => {
 
     loadDevices();
     loadRooms();
+    loadLiveDevices();
 });
 
 </script>
@@ -49,7 +64,15 @@ onMounted(() => {
 
             <div class="devices">
 
-                <DeviceEdit v-for="device in sortedDevices" :key="device.id" :device="device" @save="updateDevice"></DeviceEdit>
+                <DeviceEdit v-for="device in sortedDevices" :key="device.id" :device="device" @save="updateDevice"
+                    @delete="deleteDevice">
+
+                    <template v-if="isStateLoaded && getSwitchableDevice(device.id)">
+                        <OnOffBtn class="power-toggle" :isOn="getSwitchableDevice(device.id)!.isOn === true"
+                            @isOn="(isOn) => setPower([getSwitchableDevice(device.id)!], isOn)"></OnOffBtn>
+                    </template>
+
+                </DeviceEdit>
 
             </div>
 
@@ -77,6 +100,16 @@ onMounted(() => {
 
 h2 {
     text-transform: uppercase;
+}
+
+// Same height as the device name, the OnOffBtn is bigger by default
+.power-toggle {
+
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    padding: 7px;
+    box-shadow: none;
 }
 
 .devices {

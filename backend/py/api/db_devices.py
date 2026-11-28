@@ -80,3 +80,22 @@ def update_db_device(device_id: str, changes: DbDeviceUpdate, request: Request,
         handler.set_device_vertical(device_id, values["vertical"])
 
     return device
+
+
+@router.delete("/{device_id}", status_code=204)
+def delete_db_device(device_id: str, request: Request, session: Session = Depends(get_session)):
+    """Remove the device from the database. A scan can add it again if it's still found."""
+    device = session.get(Device, device_id)
+
+    if device is None:
+        raise HTTPException(status_code=404, detail="Device not found")
+
+    session.delete(device)
+    session.commit()
+
+    # The loaded devices are kept in a list that loading threads write into by position,
+    # so a single one can't be taken out safely. Load them all again without it.
+    handler = request.app.state.device_handler
+
+    if handler.getDeviceById(device_id) != "null":
+        handler.restart_devices()

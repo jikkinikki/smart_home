@@ -90,7 +90,13 @@ class DeviceRefetch:
         pending = {}
 
         for source in ("tuya", "zigbee"):
-            for fetched in results.get(source, []):
+            for fetched, was_found in results.get(source, []):
+
+                # Only devices that answered during the scan can be added. The Tuya cloud and the
+                # bridge also list devices that are gone or switched off.
+                if fetched.id not in current and not was_found:
+                    continue
+
                 change = self._compare(current.get(fetched.id), fetched)
                 if change is not None:
                     pending[fetched.id] = change
@@ -100,8 +106,9 @@ class DeviceRefetch:
             self.state = "done"
             self.finished_at = time.time()
 
-    def _fetch_tuya(self) -> list[Device]:
-        """Run the tinytuya wizard (same as `python -m tinytuya wizard` answering yes to everything)."""
+    def _fetch_tuya(self) -> list[tuple[Device, bool]]:
+        """Run the tinytuya wizard (same as `python -m tinytuya wizard` answering yes to everything).
+        Returns (device, was_found): was_found = it answered on the local network during this scan."""
         # The wizard uses tinytuya.scanner for the local scan but never imports it
         # (`python -m tinytuya` does that first), so import it here
         from tinytuya import scanner, wizard
@@ -116,13 +123,16 @@ class DeviceRefetch:
         if not TUYA_CONFIG_FILE.exists():
             raise RuntimeError(f"No {TUYA_CONFIG_FILE.name}. Run `python -m tinytuya wizard` once to set up the Tuya cloud keys")
 
-        before = TUYA_DEVICES_FILE.stat().st_mtime if TUYA_DEVICES_FILE.exists() else None
+        devices_before = self._modified_time(TUYA_DEVICES_FILE)
+        snapshot_before = self._modified_time(TUYA_SNAPSHOT_FILE)
 
         wizard.wizard(color=False, assume_yes=True)
 
         # The wizard only prints its errors, but it only writes devices.json when the cloud answered
-        if not TUYA_DEVICES_FILE.exists() or TUYA_DEVICES_FILE.stat().st_mtime == before:
+        if self._modified_time(TUYA_DEVICES_FILE) in (None, devices_before):
             raise RuntimeError("The Tuya wizard didn't get the device list (expired IoT subscription or wrong keys?). See the backend terminal")
+
+        found_on_network = self._read_tuya_scan() if self._modified_time(TUYA_SNAPSHOT_FILE) != snapshot_before else {}
 
         devices = []
 
@@ -130,21 +140,40 @@ class DeviceRefetch:
             if not data.get("id"):
                 continue
 
-            devices.append(Device(
+            # devices.json also has addresses from earlier scans, so the address only comes from this scan
+            scanned = found_on_network.get(data["id"])
+
+            devices.append((Device(
                 id=data["id"],
                 name=data.get("name") or "",
                 type="lamp" if data.get("category") == "dj" else "unknown",  # dj = light
                 source="tuya",
-                address=data.get("ip") or None,             # empty if the local scan didn't find it
+                address=scanned["ip"] if scanned else None,
                 local_key=data.get("key") or None,
-                version=str(data["version"]) if data.get("version") else None,
-            ))
+                version=scanned["ver"] if scanned else None,
+            ), scanned is not None))
 
         return devices
 
-    def _fetch_zigbee(self) -> list[Device]:
+    @staticmethod
+    def _read_tuya_scan() -> dict[str, dict]:
+        """The Tuya devices that answered on the local network: device id -> {"ip", "ver"}."""
+        snapshot = json.loads(TUYA_SNAPSHOT_FILE.read_text(encoding="utf-8"))
+
+        return {
+            entry["id"]: {"ip": entry["ip"], "ver": str(entry["ver"]) if entry.get("ver") else None}
+            for entry in snapshot.get("devices", [])
+            if entry.get("id") and entry.get("ip")
+        }
+
+    @staticmethod
+    def _modified_time(path) -> float | None:
+        return path.stat().st_mtime if path.exists() else None
+
+    def _fetch_zigbee(self) -> list[tuple[Device, bool]]:
         """Read every device on the Innr bridge (same as `python -m zigbee.zigbee_remote devices`),
-        through the dongle connection the loaded devices already share."""
+        through the dongle connection the loaded devices already share.
+        Returns (device, was_found): was_found = it answered, not only listed by the bridge."""
         from zigbee.zigbee_remote import SharedZigbeeRemote, DEFAULT_DEVICES_FILE
 
         zigbee = SharedZigbeeRemote.get()
@@ -161,9 +190,10 @@ class DeviceRefetch:
                 continue
 
             device = Device(id=ieee, name="", type="unknown", source="zigbee", address=zb["nwk"])
+            answered = "endpoints" in zb
 
             # A device that didn't answer only tells us its address, so leave the rest as it is
-            if "endpoints" in zb:
+            if answered:
                 if zb.get("is_light"):
                     device.type = "lamp"
                 elif zb.get("role") == "Coordinator":
@@ -187,7 +217,7 @@ class DeviceRefetch:
             else:
                 device.extra = None  # unknown, see _compare
 
-            devices.append(device)
+            devices.append((device, answered))
 
         return devices
 
