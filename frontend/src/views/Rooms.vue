@@ -61,14 +61,6 @@ function getLampsOnPercent(roomId?: number) {
                     :lampsOnPercent="getLampsOnPercent(room.id)" @power="(isOn) => setRoomPower(isOn, room.id)">
                 </RoomBtn>
 
-                <RoomBtn v-for="room in rooms" :key="room.id" :roomName="room.name" :roomId="String(room.id)"
-                    :lampsOnPercent="getLampsOnPercent(room.id)" @power="(isOn) => setRoomPower(isOn, room.id)">
-                </RoomBtn>
-                <RoomBtn v-for="room in rooms" :key="room.id" :roomName="room.name" :roomId="String(room.id)"
-                    :lampsOnPercent="getLampsOnPercent(room.id)" @power="(isOn) => setRoomPower(isOn, room.id)">
-                </RoomBtn>
-
-
             </div>
 
         </div>
