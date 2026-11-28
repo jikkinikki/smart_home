@@ -3,15 +3,15 @@
 
 export type RGB = [number, number, number];
 
-// The light's color at a temperature. 0 = warmest (~2200K, amber), 100 = coolest (~6500K, daylight).
+// The light's color at a temperature. 0 = warmest (amber), 50 = neutral white, 100 = coolest (blue-white).
 // Also used for the temperature slider's track, keep them the same.
 export const temperatureStops: [number, RGB][] = [
     [0, [255, 147, 44]],
-    [12, [255, 169, 87]],
-    [30, [255, 196, 137]],
-    [53, [255, 219, 186]],
-    [77, [255, 236, 224]],
-    [100, [235, 242, 255]]
+    [15, [255, 180, 107]],
+    [35, [255, 219, 186]],
+    [50, [255, 246, 237]],
+    [70, [225, 235, 255]],
+    [100, [175, 205, 255]]
 ];
 
 // The color wheel unrolled: full-saturation hues, red -> yellow -> green -> cyan -> blue -> magenta -> red.

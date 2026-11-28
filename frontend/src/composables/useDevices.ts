@@ -197,7 +197,13 @@ export function useDevices(roomId?: number) {
 
     function setBrightness(brightness: number) {
 
-        const dimmable = selectedDevices.value.filter(device => hasCapability(device, "brightness"));
+        setBrightnessFor(selectedDevices.value, brightness);
+    }
+
+    // Sets the brightness of the given devices (the ones that can be dimmed)
+    function setBrightnessFor(targets: Device[], brightness: number) {
+
+        const dimmable = targets.filter(device => hasCapability(device, "brightness"));
 
         for (const device of dimmable) {
 
@@ -227,6 +233,7 @@ export function useDevices(roomId?: number) {
         toggleIsOn,
         setPower,
         setBrightness,
+        setBrightnessFor,
         setHue,
         setColor
     };
